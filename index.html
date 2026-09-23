@@ -1,0 +1,975 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+  <title>Spice Street — Authentic Indian Restaurant & Online Food Delivery</title>
+  <meta name="description" content="Order authentic biryanis, crispy starters, slow-cooked royal curries, lassis and desserts from Spice Street. Good Food • Great Mood. Fast delivery in Indian Rupees (₹)." />
+  <meta name="theme-color" content="#0d0d0d" />
+
+  <!-- Open Graph / Social Meta Tags -->
+  <meta property="og:title" content="Spice Street — Good Food • Great Mood" />
+  <meta property="og:description" content="Authentic Indian Flavours, Made Fresh. Biryanis, Starters, Curries, Beverages and Desserts delivered hot to your door." />
+  <meta property="og:image" content="https://images.unsplash.com/photo-1563379091339-03b21ab4a4f8?w=1200&auto=format&fit=crop&q=80" />
+  <meta property="og:type" content="restaurant.menu" />
+
+  <!-- Google Fonts: Playfair Display (Serif Headings) & Outfit (Modern Sans) -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&family=Playfair+Display:ital,wght@0,600;0,700;0,800;0,900;1,600&display=swap" rel="stylesheet" />
+
+  <!-- Supabase JS Client for Cloud Realtime Sync -->
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+
+  <!-- Main Stylesheet -->
+  <link rel="stylesheet" href="css/styles.css" />
+</head>
+<body>
+
+  <!-- ==========================================================================
+       1. NAVIGATION BAR (Sticky, Responsive Mobile-First)
+       ========================================================================== -->
+  <header class="site-header">
+    <div class="container header-container">
+      <!-- Brand Logo -->
+      <a href="#home" class="brand-logo">
+        <div class="logo-badge">
+          <!-- Flame / Spice Insignia SVG -->
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M8.5 14.5A2.5 2.5 0 0 0 11 12c0-1.38-.5-2-1-3-1.072-2.143-.224-4.054 2-6 .5 2.5 2 4.9 4 6.5 2 1.6 3 3.5 3 5.5a7 7 0 1 1-14 0c0-1.153.433-2.294 1-3a2.5 2.5 0 0 0 2.5 2.5z"></path>
+          </svg>
+        </div>
+        <div>
+          <div class="brand-name">SPICE STREET</div>
+          <div class="brand-tagline">Good Food • Great Mood</div>
+        </div>
+      </a>
+
+      <!-- Desktop Nav Links -->
+      <nav class="desktop-nav">
+        <a href="#home" class="nav-link active">Home</a>
+        <a href="#menu" class="nav-link">Menu</a>
+        <a href="#about" class="nav-link">About</a>
+        <a href="#contact" class="nav-link">Contact</a>
+        <a href="javascript:void(0)" class="nav-link" onclick="showTrackSearchPrompt()">Track Order</a>
+        <a href="dashboard.html" target="_blank" class="nav-link" style="color: var(--gold-accent); font-weight: 700;">
+          <span>👨‍🍳</span> Dashboard
+        </a>
+      </nav>
+
+      <!-- Header Actions -->
+      <div class="header-actions">
+        <!-- Cart Toggle Button -->
+        <button class="cart-toggle-btn" onclick="toggleCartDrawer(true)" aria-label="View Shopping Cart">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <circle cx="9" cy="21" r="1"></circle>
+            <circle cx="20" cy="21" r="1"></circle>
+            <path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"></path>
+          </svg>
+          <span class="cart-count-badge" style="display: none;">0</span>
+        </button>
+
+        <!-- Order Now CTA (Prominent on Desktop and Mobile) -->
+        <a href="#menu" class="btn-primary header-order-now-btn">
+          <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+            <circle cx="9" cy="21" r="1"></circle>
+            <circle cx="20" cy="21" r="1"></circle>
+            <path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"></path>
+          </svg>
+          <span>ORDER NOW</span>
+        </a>
+
+        <!-- Mobile Menu Toggle Button -->
+        <button class="mobile-menu-btn" id="mobile-menu-btn" aria-label="Toggle Mobile Navigation">
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <line x1="3" y1="12" x2="21" y2="12"></line>
+            <line x1="3" y1="6" x2="21" y2="6"></line>
+            <line x1="3" y1="18" x2="21" y2="18"></line>
+          </svg>
+        </button>
+      </div>
+    </div>
+
+    <!-- Mobile Slide-Down Menu -->
+    <div class="mobile-nav-panel" id="mobile-nav-panel">
+      <a href="#home" class="mobile-nav-link">Home</a>
+      <a href="#menu" class="mobile-nav-link">Browse Menu</a>
+      <a href="#about" class="mobile-nav-link">About Spice Street</a>
+      <a href="#contact" class="mobile-nav-link">Contact & Location</a>
+      <a href="javascript:void(0)" class="mobile-nav-link" onclick="showTrackSearchPrompt()">🔍 Track My Order</a>
+      <a href="dashboard.html" target="_blank" class="mobile-nav-link text-gold" style="font-weight: 700;">👨‍🍳 Live Kitchen Dashboard</a>
+      <a href="tel:+918341643180" class="mobile-nav-link text-gold">📞 Call Kitchen (+91 83416 43180)</a>
+    </div>
+  </header>
+
+  <!-- ==========================================================================
+       2. HERO SECTION
+       ========================================================================== -->
+  <section class="hero-section" id="home">
+    <div class="container">
+      <div class="hero-grid">
+        <!-- Hero Text Content -->
+        <div class="hero-text-col">
+          <div class="hero-badge">
+            <span>🌶️</span> SPICE STREET • AUTHENTIC INDIAN KITCHEN
+          </div>
+
+          <h1 class="hero-title">
+            Authentic Indian Flavours, <span class="text-gradient">Made Fresh.</span>
+          </h1>
+
+          <h2 class="hero-headline">
+            Good Food • Great Mood
+          </h2>
+
+          <p class="hero-subtext">
+            Delicious slow-dum biryanis, sizzling tandoori starters, aromatic royal curries, refreshing lassis and warm desserts — freshly prepared with heritage Indian spices for you.
+          </p>
+
+          <div class="hero-cta-group">
+            <a href="#menu" class="btn-primary">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                <circle cx="9" cy="21" r="1"></circle>
+                <circle cx="20" cy="21" r="1"></circle>
+                <path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"></path>
+              </svg>
+              ORDER NOW
+            </a>
+            <a href="#menu" class="btn-outline">
+              VIEW FULL MENU
+            </a>
+          </div>
+
+          <div class="hero-highlights">
+            <div class="highlight-item">
+              <span class="highlight-num">100%</span>
+              <span class="highlight-label">Fresh & Hand-ground Spices</span>
+            </div>
+            <div class="highlight-item">
+              <span class="highlight-num">30 Min</span>
+              <span class="highlight-label">Hot Express Delivery</span>
+            </div>
+            <div class="highlight-item">
+              <span class="highlight-num">4.9 ★</span>
+              <span class="highlight-label">Over 1,500+ Happy Foodies</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Hero Graphic / Dish Visual -->
+        <div class="hero-image-wrapper">
+          <div class="hero-image-container">
+            <img src="https://images.unsplash.com/photo-1563379091339-03b21ab4a4f8?w=800&auto=format&fit=crop&q=80" alt="Royal Spice Street Special Dum Biryani" class="hero-main-img" />
+          </div>
+
+          <!-- Floating Bestseller Card -->
+          <div class="hero-floating-card">
+            <div class="floating-card-icon">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon>
+              </svg>
+            </div>
+            <div>
+              <div style="font-size: 0.75rem; color: var(--gold-accent); font-weight: 700; text-transform: uppercase;">TODAY'S SPECIAL</div>
+              <div style="font-size: 0.95rem; font-weight: 700; color: #fff;">Chicken Biryani</div>
+              <div style="font-size: 0.85rem; color: var(--primary-orange); font-weight: 800;">₹180 only</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ==========================================================================
+       3. MENU SECTION (Categorized, Filterable, Live Search)
+       ========================================================================== -->
+  <section class="menu-section" id="menu" style="padding: 4.5rem 0 2rem;">
+    <div class="container">
+      <div class="section-header">
+        <span class="section-pretitle">OUR CULINARY CREATIONS</span>
+        <h2 class="section-title">Explore Spice Street Menu</h2>
+        <p class="section-subtitle">
+          Handcrafted authentic recipes prepared fresh on order with pure desi ghee and aromatic Indian whole spices.
+        </p>
+      </div>
+
+      <!-- Menu Controls: Categories, Search, Diet Toggles -->
+      <div class="menu-controls">
+        <!-- Category Filter Buttons -->
+        <div class="category-scroll-container" id="category-pills-container">
+          <!-- Injected dynamically from data.js -->
+        </div>
+
+        <div style="display: flex; gap: 0.75rem; flex-wrap: wrap;">
+          <!-- Dietary Filter Pills -->
+          <div class="dietary-filters">
+            <button class="diet-filter-btn active" data-diet="all">All</button>
+            <button class="diet-filter-btn" data-diet="veg">
+              <span style="color: var(--veg-green);">●</span> Pure Veg
+            </button>
+            <button class="diet-filter-btn" data-diet="non-veg">
+              <span style="color: var(--nonveg-red);">▲</span> Non-Veg
+            </button>
+          </div>
+
+          <!-- Search Input -->
+          <div class="menu-search-box">
+            <svg class="search-icon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <circle cx="11" cy="11" r="8"></circle>
+              <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+            </svg>
+            <input type="text" id="menu-search-input" class="search-input" placeholder="Search biryani, starter, curry..." />
+          </div>
+        </div>
+      </div>
+
+      <!-- Separated Food Menu Sections (Non-Veg, Veg, Dessert, Beverages) -->
+      <div class="menu-sections-container" id="menu-sections-container">
+        <!-- Rendered dynamically by app.js -->
+      </div>
+    </div>
+  </section>
+
+  <!-- ==========================================================================
+       10. ABOUT SPICE STREET SECTION
+       ========================================================================== -->
+  <section class="about-section" id="about">
+    <div class="container">
+      <div class="about-grid">
+        <div>
+          <span class="section-pretitle">THE SPICE STREET PROMISE</span>
+          <h2 class="section-title" style="text-align: left;">
+            Good Food • Great Mood<br/><span class="text-gradient">Crafted With Heritage Passion</span>
+          </h2>
+          <p style="color: var(--text-secondary); font-size: 1.05rem; margin-bottom: 1.25rem;">
+            At <strong>Spice Street</strong>, we bring authentic Indian flavours to your table with freshly prepared food, aromatic spices and delicious recipes passed down through generations.
+          </p>
+          <p style="color: var(--text-muted); font-size: 0.92rem; line-height: 1.7;">
+            From the slow-cooked handi dum of our signature biryanis to the rich buttery silk of our curries, each dish is made to order using cold-pressed oils, pure desi ghee, and freshly roasted masala blends. We believe great food doesn't just satisfy hunger — it elevates your mood!
+          </p>
+
+          <div class="about-features-list">
+            <div class="about-feature-box">
+              <div class="feature-icon-wrapper">✓</div>
+              <div class="feature-title">Freshly Prepared</div>
+              <div class="feature-desc">Never pre-cooked or frozen. Prepared fresh when you order.</div>
+            </div>
+            <div class="about-feature-box">
+              <div class="feature-icon-wrapper">✓</div>
+              <div class="feature-title">Authentic Flavours</div>
+              <div class="feature-desc">Slow dum cooking with true Indian whole spices.</div>
+            </div>
+            <div class="about-feature-box">
+              <div class="feature-icon-wrapper">✓</div>
+              <div class="feature-title">Quality Ingredients</div>
+              <div class="feature-desc">Premium basmati, farm poultry, and fresh paneer.</div>
+            </div>
+            <div class="about-feature-box">
+              <div class="feature-icon-wrapper">✓</div>
+              <div class="feature-title">Fast Delivery</div>
+              <div class="feature-desc">Insulated thermal packaging to keep food steaming hot.</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="about-gallery">
+          <div class="about-img-box">
+            <img src="https://images.unsplash.com/photo-1596797038530-2c107229654b?w=600&auto=format&fit=crop&q=80" alt="Fragrant basmati rice and whole spices" />
+          </div>
+          <div class="about-img-box">
+            <img src="https://images.unsplash.com/photo-1631452180519-c014fe946bc7?w=600&auto=format&fit=crop&q=80" alt="Royal Indian curries" />
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ==========================================================================
+       11. CONTACT & LOCATION SECTION
+       ========================================================================== -->
+  <section class="contact-section" id="contact">
+    <div class="container">
+      <div class="section-header">
+        <span class="section-pretitle">VISIT OR ORDER DIRECT</span>
+        <h2 class="section-title">Get In Touch With Spice Street</h2>
+        <p class="section-subtitle">Have questions, special dietary preferences, or party catering orders? We are here to help!</p>
+      </div>
+
+      <div class="contact-grid">
+        <div class="contact-cards-container">
+          <!-- Contact Card 1: Phone -->
+          <div class="contact-card">
+            <div class="contact-card-icon">
+              <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"></path>
+              </svg>
+            </div>
+            <div class="contact-card-content">
+              <h4>Phone Order & Helpline</h4>
+              <p>Direct kitchen connection for quick delivery and updates.</p>
+              <div style="font-weight: 700; color: var(--gold-accent); margin-top: 0.35rem;">+91 83416 43180</div>
+            </div>
+          </div>
+
+          <!-- Contact Card 2: WhatsApp -->
+          <div class="contact-card">
+            <div class="contact-card-icon" style="background: rgba(37, 211, 102, 0.15); color: #25d366;">
+              <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"></path>
+              </svg>
+            </div>
+            <div class="contact-card-content">
+              <h4>WhatsApp Fast Support</h4>
+              <p>Instant chat with restaurant manager & live order alerts.</p>
+              <div style="font-weight: 700; color: #25d366; margin-top: 0.35rem;">+91 83416 43180</div>
+            </div>
+          </div>
+
+          <!-- Contact Card 3: Address & Timings -->
+          <div class="contact-card">
+            <div class="contact-card-icon">
+              <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path>
+                <circle cx="12" cy="10" r="3"></circle>
+              </svg>
+            </div>
+            <div class="contact-card-content">
+              <h4>Restaurant Address & Timings</h4>
+              <p>Plot 42, Food Street, Near Metro Station, Madhapur, Hyderabad - 500081</p>
+              <div style="font-size: 0.8rem; color: var(--gold-accent); margin-top: 0.25rem;">🕒 Open All 7 Days: 11:30 AM – 11:30 PM</div>
+            </div>
+          </div>
+
+          <!-- Quick Action Buttons -->
+          <div class="contact-quick-actions">
+            <a href="tel:+918341643180" class="btn-contact">
+              📞 CALL NOW
+            </a>
+            <a href="https://wa.me/918341643180?text=Hi%20Spice%20Street!%20I%20would%20like%20to%20place%20an%20order." target="_blank" class="btn-contact btn-whatsapp">
+              💬 WHATSAPP US
+            </a>
+            <a href="https://maps.google.com/?q=Madhapur+Hyderabad" target="_blank" class="btn-contact">
+              🧭 GET DIRECTIONS
+            </a>
+          </div>
+        </div>
+
+        <!-- Google Maps Section -->
+        <div class="map-card">
+          <iframe 
+            src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3806.312959954005!2d78.38466657493608!3d17.444738583452445!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3bcb9158f201b205%3A0x11bbe7be7792411b!2sMadhapur%2C%20Hyderabad%2C%20Telangana!5e0!3m2!1sen!2sin!4v1700000000000!5m2!1sen!2sin" 
+            allowfullscreen="" 
+            loading="lazy" 
+            referrerpolicy="no-referrer-when-downgrade"
+            title="Spice Street Restaurant Location">
+          </iframe>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ==========================================================================
+       12. FOOTER SECTION
+       ========================================================================== -->
+  <footer class="site-footer">
+    <div class="container">
+      <div class="footer-top">
+        <div class="footer-brand">
+          <div class="brand-logo">
+            <div class="logo-badge">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2">
+                <path d="M8.5 14.5A2.5 2.5 0 0 0 11 12c0-1.38-.5-2-1-3-1.072-2.143-.224-4.054 2-6 .5 2.5 2 4.9 4 6.5 2 1.6 3 3.5 3 5.5a7 7 0 1 1-14 0c0-1.153.433-2.294 1-3a2.5 2.5 0 0 0 2.5 2.5z"></path>
+              </svg>
+            </div>
+            <div>
+              <div class="brand-name">SPICE STREET</div>
+              <div class="brand-tagline">Good Food • Great Mood</div>
+            </div>
+          </div>
+          <p>
+            Serving authentic slow-dum biryanis, aromatic curries, and tandoori sizzlers across India. Freshly cooked with love and pure spices.
+          </p>
+        </div>
+
+        <div>
+          <h4 class="footer-col-title">Navigation</h4>
+          <ul class="footer-links">
+            <li><a href="#home" class="footer-link">Home</a></li>
+            <li><a href="#menu" class="footer-link">Full Menu</a></li>
+            <li><a href="#about" class="footer-link">About Us</a></li>
+            <li><a href="#contact" class="footer-link">Contact & Location</a></li>
+            <li><a href="javascript:void(0)" class="footer-link" onclick="showTrackSearchPrompt()">Live Order Tracking</a></li>
+          </ul>
+        </div>
+
+        <div>
+          <h4 class="footer-col-title">Legal & Policies</h4>
+          <ul class="footer-links">
+            <li><a href="javascript:void(0)" class="footer-link" onclick="showToast('Privacy Policy: Customer data is never shared.')">Privacy Policy</a></li>
+            <li><a href="javascript:void(0)" class="footer-link" onclick="showToast('Terms: Fresh food prepared on demand.')">Terms & Conditions</a></li>
+            <li><a href="javascript:void(0)" class="footer-link" onclick="showToast('Refund: Instant refund on cancellation prior to cooking.')">Refund Policy</a></li>
+            <li><a href="javascript:void(0)" class="footer-link" onclick="openModal('admin-modal'); adminManager.renderDashboard();">Staff Portal</a></li>
+          </ul>
+        </div>
+
+        <div>
+          <h4 class="footer-col-title">Payment Partners</h4>
+          <p style="font-size: 0.82rem; color: var(--text-muted); margin-bottom: 0.75rem;">
+            100% Safe & Secure Official Checkout. No sensitive card data stored.
+          </p>
+          <div class="payment-methods-strip">
+            <span class="payment-badge">UPI</span>
+            <span class="payment-badge">Google Pay</span>
+            <span class="payment-badge">PhonePe</span>
+            <span class="payment-badge">Paytm</span>
+            <span class="payment-badge">Visa</span>
+            <span class="payment-badge">Mastercard</span>
+            <span class="payment-badge">RuPay</span>
+            <span class="payment-badge">Cash on Delivery</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="footer-bottom">
+        <div>
+          © 2026 Spice Street Restaurant. All Rights Reserved. Made with authentic Indian passion.
+        </div>
+        <div style="display: flex; gap: 1rem;">
+          <a href="javascript:void(0)" onclick="openModal('admin-modal'); adminManager.renderDashboard();" style="color: var(--gold-accent); text-decoration: underline; font-size: 0.8rem;">
+            Owner / Admin Dashboard
+          </a>
+        </div>
+      </div>
+    </div>
+  </footer>
+
+  <!-- ==========================================================================
+       MOBILE STICKY BOTTOM BAR (Mobile-First UX)
+       ========================================================================== -->
+  <div class="mobile-bottom-bar">
+    <a href="#home" class="mobile-bar-item">
+      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+        <path d="m3 9 9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path>
+      </svg>
+      <span>Home</span>
+    </a>
+    <a href="#menu" class="mobile-bar-item">
+      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+        <path d="M18 8h1a4 4 0 0 1 0 8h-1"></path>
+        <path d="M2 8h16v9a4 4 0 0 1-4 4H6a4 4 0 0 1-4-4V8z"></path>
+        <line x1="6" y1="1" x2="6" y2="4"></line>
+        <line x1="10" y1="1" x2="10" y2="4"></line>
+        <line x1="14" y1="1" x2="14" y2="4"></line>
+      </svg>
+      <span>Menu</span>
+    </a>
+    <a href="javascript:void(0)" class="mobile-bar-item" onclick="toggleCartDrawer(true)">
+      <div style="position: relative;">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <circle cx="9" cy="21" r="1"></circle>
+          <circle cx="20" cy="21" r="1"></circle>
+          <path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"></path>
+        </svg>
+        <span class="cart-count-badge" style="display: none; top: -6px; right: -8px;">0</span>
+      </div>
+      <span>Cart</span>
+    </a>
+    <a href="javascript:void(0)" class="mobile-bar-item" onclick="showTrackSearchPrompt()">
+      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+        <path d="M12 22s-8-4.5-8-11.8A8 8 0 0 1 12 2a8 8 0 0 1 8 8.2c0 7.3-8 11.8-8 11.8z"></path>
+        <circle cx="12" cy="10" r="3"></circle>
+      </svg>
+      <span>Track</span>
+    </a>
+    <a href="tel:+918341643180" class="mobile-bar-item" style="color: var(--primary-orange);">
+      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+        <path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"></path>
+      </svg>
+      <span>Call</span>
+    </a>
+  </div>
+
+  <!-- ==========================================================================
+       MODAL BACKDROP (Shared for Drawer & Modals)
+       ========================================================================== -->
+  <div class="modal-backdrop" id="modal-backdrop" onclick="closeAllModals()"></div>
+
+  <!-- ==========================================================================
+       5. SHOPPING CART DRAWER
+       ========================================================================== -->
+  <aside class="cart-drawer" id="cart-drawer">
+    <div class="drawer-header">
+      <h3 class="drawer-title">
+        <span>🛒</span> Your Order Cart
+      </h3>
+      <button class="close-btn" onclick="toggleCartDrawer(false)" aria-label="Close Cart">✕</button>
+    </div>
+
+    <div class="drawer-body">
+      <!-- Items Container -->
+      <div class="cart-items-list" id="cart-items-container">
+        <!-- Injected via JavaScript -->
+      </div>
+
+      <!-- Empty State -->
+      <div class="empty-cart-state" id="cart-empty-state">
+        <div class="empty-cart-icon">
+          <svg width="34" height="34" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <circle cx="9" cy="21" r="1"></circle>
+            <circle cx="20" cy="21" r="1"></circle>
+            <path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"></path>
+          </svg>
+        </div>
+        <h4 style="font-size: 1.15rem; font-weight: 700;">Your cart is currently empty</h4>
+        <p style="color: var(--text-muted); font-size: 0.85rem;">Discover our authentic biryanis, starters, and curries and add your favorites.</p>
+        <button class="btn-primary" onclick="toggleCartDrawer(false); location.href='#menu';">Explore Menu</button>
+      </div>
+    </div>
+
+    <!-- Drawer Footer (Bill breakdown & Checkout CTA) -->
+    <div class="drawer-footer" id="cart-footer" style="display: none;">
+      <div class="bill-summary">
+        <div class="bill-row">
+          <span>Item Subtotal</span>
+          <span id="cart-subtotal">₹0</span>
+        </div>
+        <div class="bill-row">
+          <span>Delivery Charge (Free above ₹500)</span>
+          <span id="cart-delivery-fee">₹40</span>
+        </div>
+        <div class="bill-row">
+          <span>Taxes & GST (5%)</span>
+          <span id="cart-taxes">₹0</span>
+        </div>
+        <div class="bill-row total">
+          <span>Grand Total</span>
+          <span id="cart-grand-total" style="color: var(--gold-accent);">₹0</span>
+        </div>
+      </div>
+
+      <!-- Payment Method Picker in Cart Drawer -->
+      <div class="cart-payment-selection-box" style="margin-bottom: 0.85rem; background: rgba(255, 183, 3, 0.05); padding: 0.75rem; border-radius: var(--radius-md); border: 1px solid rgba(255, 183, 3, 0.25);">
+        <div style="font-size: 0.8rem; font-weight: 800; color: var(--gold-accent); margin-bottom: 0.45rem; display: flex; justify-content: space-between; align-items: center;">
+          <span>💳 CHOOSE PAYMENT:</span>
+          <span style="font-size: 0.68rem; background: rgba(34,197,94,0.2); color: #86efac; padding: 0.15rem 0.45rem; border-radius: 4px; font-weight: 800;">UPI: 8341643180@ptyes</span>
+        </div>
+        <div class="cart-payment-pills-grid" style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 0.4rem; margin-bottom: 0.45rem;">
+          <button type="button" class="cart-pay-pill active" id="cart-pill-gpay" onclick="quickSelectCartPayment('gpay')">
+            <span>🔵 G Pay</span>
+          </button>
+          <button type="button" class="cart-pay-pill" id="cart-pill-phonepe" onclick="quickSelectCartPayment('phonepe')">
+            <span>🟣 PhonePe</span>
+          </button>
+          <button type="button" class="cart-pay-pill" id="cart-pill-paytm" onclick="quickSelectCartPayment('paytm')">
+            <span>🔷 Paytm</span>
+          </button>
+          <button type="button" class="cart-pay-pill" id="cart-pill-upi" onclick="quickSelectCartPayment('upi')">
+            <span>⚡ QR / UPI</span>
+          </button>
+          <button type="button" class="cart-pay-pill" id="cart-pill-card" onclick="quickSelectCartPayment('card')">
+            <span>💳 Card</span>
+          </button>
+          <button type="button" class="cart-pay-pill" id="cart-pill-cod" onclick="quickSelectCartPayment('cod')">
+            <span>💵 COD</span>
+          </button>
+        </div>
+        <div style="font-size: 0.72rem; color: var(--text-secondary); text-align: center;">
+          Tap to pay via <strong style="color: var(--gold-accent);">8341643180@ptyes</strong> or Cards
+        </div>
+      </div>
+
+      <!-- Main Pay Online CTA -->
+      <button class="btn-primary checkout-btn" id="cart-btn-pay-online" onclick="proceedWithOnlinePayment()" style="margin-bottom: 0.5rem; font-size: 1.05rem; font-weight: 800; padding: 0.95rem; justify-content: center; background: linear-gradient(135deg, #FF6B00 0%, #FFB703 100%); box-shadow: 0 4px 20px rgba(255, 107, 0, 0.45);">
+        <span>⚡ PAY ONLINE NOW (G Pay / PhonePe / Card)</span>
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+          <line x1="5" y1="12" x2="19" y2="12"></line>
+          <polyline points="12 5 19 12 12 19"></polyline>
+        </svg>
+      </button>
+
+      <!-- Cash On Delivery Button -->
+      <button class="btn-outline checkout-btn" onclick="proceedWithCodPayment()" style="margin-bottom: 0.5rem; justify-content: center; font-size: 0.88rem; font-weight: 700; padding: 0.7rem; border-color: rgba(255,255,255,0.25);">
+        <span>💵 Cash on Delivery (COD)</span>
+      </button>
+
+      <!-- WhatsApp Order -->
+      <button class="btn-contact btn-whatsapp checkout-btn" onclick="directOrderOnWhatsAppFromCart()" style="justify-content: center; font-size: 0.88rem; font-weight: 700; padding: 0.7rem;">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"></path>
+        </svg>
+        <span>💬 Order via WhatsApp</span>
+      </button>
+    </div>
+  </aside>
+
+  <!-- ==========================================================================
+       6. CHECKOUT MODAL (Customer Details & Address Validation)
+       ========================================================================== -->
+  <div class="center-modal" id="checkout-modal">
+    <div class="modal-header">
+      <h3 style="font-size: 1.15rem; font-weight: 700; display: flex; align-items: center; gap: 0.5rem;">
+        <span>💳</span> Checkout & Payment (UPI ID: 8341643180@ptyes)
+      </h3>
+      <button class="close-btn" onclick="closeAllModals()">✕</button>
+    </div>
+
+    <form id="checkout-form" onsubmit="handleCheckoutSubmit(event)">
+      <div class="modal-body">
+
+        <!-- STEP 1: CHOOSE PAYMENT METHOD (PROMINENT AT TOP) -->
+        <div style="background: rgba(255, 183, 3, 0.08); border: 2px solid var(--gold-accent); border-radius: var(--radius-lg); padding: 1.1rem; margin-bottom: 1.25rem;">
+          <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 0.75rem; flex-wrap: wrap; gap: 0.5rem;">
+            <label class="form-label" style="font-size: 0.95rem; font-weight: 800; color: #fff; margin: 0; display: flex; align-items: center; gap: 0.4rem;">
+              <span>💳</span> STEP 1: SELECT PAYMENT METHOD
+            </label>
+            <span style="font-size: 0.75rem; font-weight: 800; background: rgba(34, 197, 94, 0.2); color: #86efac; border: 1px solid rgba(34, 197, 94, 0.4); padding: 0.25rem 0.6rem; border-radius: 6px;">
+              UPI: 8341643180@ptyes
+            </span>
+          </div>
+
+          <div class="payment-options-grid" style="margin-top: 0.4rem; gap: 0.65rem;">
+            <!-- Option 1: Google Pay -->
+            <div class="payment-option-card selected" id="payment-card-gpay" onclick="selectPaymentMethod('gpay')">
+              <input type="radio" name="payment-method-radio" class="payment-radio" checked />
+              <div class="payment-option-info">
+                <div class="payment-title" style="display: flex; align-items: center; gap: 0.5rem; flex-wrap: wrap;">
+                  <span>Google Pay (G Pay)</span>
+                  <span style="background: rgba(66, 133, 244, 0.2); color: #60a5fa; font-size: 0.7rem; padding: 0.15rem 0.5rem; border-radius: 4px; font-weight: 800;">FAST UPI</span>
+                </div>
+                <div class="payment-subtitle" style="margin-top: 0.2rem;">
+                  Pay via G Pay app or QR scanner • UPI: <strong style="color: var(--gold-accent);">8341643180@ptyes</strong>
+                </div>
+              </div>
+              <span style="font-size: 1.3rem;">🔵</span>
+            </div>
+
+            <!-- Option 2: PhonePe -->
+            <div class="payment-option-card" id="payment-card-phonepe" onclick="selectPaymentMethod('phonepe')">
+              <input type="radio" name="payment-method-radio" class="payment-radio" />
+              <div class="payment-option-info">
+                <div class="payment-title" style="display: flex; align-items: center; gap: 0.5rem; flex-wrap: wrap;">
+                  <span>PhonePe</span>
+                  <span style="background: rgba(168, 85, 247, 0.2); color: #c084fc; font-size: 0.7rem; padding: 0.15rem 0.5rem; border-radius: 4px; font-weight: 800;">1-CLICK</span>
+                </div>
+                <div class="payment-subtitle" style="margin-top: 0.2rem;">
+                  Pay via PhonePe app or scanner • UPI: <strong style="color: var(--gold-accent);">8341643180@ptyes</strong>
+                </div>
+              </div>
+              <span style="font-size: 1.3rem;">🟣</span>
+            </div>
+
+            <!-- Option 3: Paytm -->
+            <div class="payment-option-card" id="payment-card-paytm" onclick="selectPaymentMethod('paytm')">
+              <input type="radio" name="payment-method-radio" class="payment-radio" />
+              <div class="payment-option-info">
+                <div class="payment-title" style="display: flex; align-items: center; gap: 0.5rem; flex-wrap: wrap;">
+                  <span>Paytm UPI & Wallet</span>
+                  <span style="background: rgba(0, 186, 242, 0.2); color: #38bdf8; font-size: 0.7rem; padding: 0.15rem 0.5rem; border-radius: 4px; font-weight: 800;">POPULAR</span>
+                </div>
+                <div class="payment-subtitle" style="margin-top: 0.2rem;">
+                  Pay via Paytm app or scanner • UPI: <strong style="color: var(--gold-accent);">8341643180@ptyes</strong>
+                </div>
+              </div>
+              <span style="font-size: 1.3rem;">🔷</span>
+            </div>
+
+            <!-- Option 4: Any UPI App & QR Scanner -->
+            <div class="payment-option-card" id="payment-card-upi" onclick="selectPaymentMethod('upi')">
+              <input type="radio" name="payment-method-radio" class="payment-radio" />
+              <div class="payment-option-info">
+                <div class="payment-title" style="display: flex; align-items: center; gap: 0.5rem; flex-wrap: wrap;">
+                  <span>Any UPI App & QR Scanner</span>
+                  <span style="background: rgba(255, 183, 3, 0.2); color: var(--gold-accent); font-size: 0.7rem; padding: 0.15rem 0.5rem; border-radius: 4px; font-weight: 800;">QR SCANNER</span>
+                </div>
+                <div class="payment-subtitle" style="margin-top: 0.2rem;">
+                  BHIM, Cred, Amazon Pay, Any Bank QR • UPI: <strong style="color: var(--gold-accent);">8341643180@ptyes</strong>
+                </div>
+              </div>
+              <span style="font-size: 1.3rem;">⚡</span>
+            </div>
+
+            <!-- Option 5: Credit / Debit Card -->
+            <div class="payment-option-card" id="payment-card-card" onclick="selectPaymentMethod('card')">
+              <input type="radio" name="payment-method-radio" class="payment-radio" />
+              <div class="payment-option-info">
+                <div class="payment-title" style="display: flex; align-items: center; gap: 0.5rem; flex-wrap: wrap;">
+                  <span>Credit / Debit Card (Full Working)</span>
+                  <span style="background: rgba(34, 197, 94, 0.2); color: #86efac; font-size: 0.7rem; padding: 0.15rem 0.5rem; border-radius: 4px; font-weight: 800;">3D SECURE OTP</span>
+                </div>
+                <div class="payment-subtitle" style="margin-top: 0.2rem;">
+                  Visa, Mastercard, RuPay with live interactive card & bank OTP check
+                </div>
+              </div>
+              <span style="font-size: 1.3rem;">💳</span>
+            </div>
+
+            <!-- Option 6: Cash on Delivery -->
+            <div class="payment-option-card" id="payment-card-cod" onclick="selectPaymentMethod('cod')">
+              <input type="radio" name="payment-method-radio" class="payment-radio" />
+              <div class="payment-option-info">
+                <div class="payment-title">Cash on Delivery (COD)</div>
+                <div class="payment-subtitle" style="margin-top: 0.2rem;">
+                  Pay in cash or scan delivery rider's QR upon arrival
+                </div>
+              </div>
+              <span style="font-size: 1.3rem;">💵</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- STEP 2: DELIVERY ADDRESS & CONTACT -->
+        <div style="margin-bottom: 1.25rem;">
+          <h4 style="font-size: 0.95rem; font-weight: 800; color: var(--gold-accent); margin-bottom: 0.75rem; display: flex; align-items: center; gap: 0.4rem;">
+            <span>📍</span> STEP 2: DELIVERY ADDRESS & CONTACT
+          </h4>
+
+          <div class="form-row-2">
+            <div class="form-group">
+              <label class="form-label">Full Name *</label>
+              <input type="text" id="checkout-name" class="form-input" placeholder="e.g. Vinay Palsam" required />
+            </div>
+            <div class="form-group">
+              <label class="form-label">Mobile Number *</label>
+              <input type="tel" id="checkout-phone" class="form-input" placeholder="10-digit number (e.g. 9849012345)" maxlength="10" required />
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label class="form-label">Email Address (Optional)</label>
+            <input type="email" id="checkout-email" class="form-input" placeholder="receipt@example.com" />
+          </div>
+
+          <div class="form-row-2">
+            <div class="form-group">
+              <label class="form-label">Flat / House / Floor No. *</label>
+              <input type="text" id="checkout-flat" class="form-input" placeholder="Flat 302, Sai Residency" required />
+            </div>
+            <div class="form-group">
+              <label class="form-label">Street / Area / Landmark *</label>
+              <input type="text" id="checkout-street" class="form-input" placeholder="Road No 1, Parvathapur" required />
+            </div>
+          </div>
+
+          <div class="form-row-3">
+            <div class="form-group">
+              <label class="form-label">City *</label>
+              <input type="text" id="checkout-city" class="form-input" value="Hyderabad" required />
+            </div>
+            <div class="form-group">
+              <label class="form-label">State</label>
+              <input type="text" id="checkout-state" class="form-input" value="Telangana" readonly />
+            </div>
+            <div class="form-group">
+              <label class="form-label">PIN Code *</label>
+              <input type="text" id="checkout-pincode" class="form-input" placeholder="500098" maxlength="6" required />
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label class="form-label">Delivery Instructions (Optional)</label>
+            <textarea id="checkout-instructions" class="form-input" rows="2" placeholder="e.g. Ring bell twice, leave with security, extra spicy biryani"></textarea>
+          </div>
+        </div>
+
+        <!-- STEP 3: ORDER BILL SUMMARY -->
+        <div style="background: var(--bg-card); border: 1px solid var(--border-subtle); border-radius: var(--radius-md); padding: 1rem; margin-top: 0.5rem;">
+          <h4 style="font-size: 0.9rem; font-weight: 800; color: var(--gold-accent); margin-bottom: 0.5rem; display: flex; align-items: center; gap: 0.4rem;">
+            <span>🧾</span> STEP 3: ORDER BILL SUMMARY
+          </h4>
+          <div style="display: flex; justify-content: space-between; font-size: 0.85rem; color: var(--text-secondary);">
+            <span>Subtotal:</span> <span id="checkout-subtotal">₹0</span>
+          </div>
+          <div style="display: flex; justify-content: space-between; font-size: 0.85rem; color: var(--text-secondary); margin-top: 0.25rem;">
+            <span>Delivery:</span> <span id="checkout-delivery">₹40</span>
+          </div>
+          <div style="display: flex; justify-content: space-between; font-size: 0.85rem; color: var(--text-secondary); margin-top: 0.25rem;">
+            <span>Taxes (5% GST):</span> <span id="checkout-taxes">₹0</span>
+          </div>
+          <div style="display: flex; justify-content: space-between; font-size: 1.05rem; font-weight: 800; border-top: 1px solid var(--border-subtle); margin-top: 0.5rem; padding-top: 0.5rem;">
+            <span>Total Payable:</span> <span id="checkout-grand-total" style="color: var(--gold-accent);">₹0</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Modal Footer with Bold Confirm Order Buttons -->
+      <div class="modal-footer" style="flex-direction: column; gap: 0.75rem;">
+        <button type="submit" id="checkout-submit-btn" class="btn-primary checkout-btn" style="width: 100%; justify-content: center; font-size: 1.15rem; font-weight: 800; padding: 1rem; box-shadow: 0 4px 20px rgba(255, 107, 0, 0.45); letter-spacing: 0.03em;">
+          <span>⚡ PROCEED TO PAYMENT & CONFIRM ORDER</span>
+        </button>
+
+        <button type="button" class="btn-contact btn-whatsapp checkout-btn" style="width: 100%; justify-content: center; font-size: 1rem; font-weight: 800; padding: 0.85rem;" onclick="submitOrderToWhatsAppDirectly(event)">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"></path>
+          </svg>
+          <span>💬 CONFIRM ORDER VIA WHATSAPP</span>
+        </button>
+
+        <button type="button" class="btn-outline" style="width: 100%; justify-content: center; font-size: 0.85rem; padding: 0.45rem;" onclick="closeAllModals()">
+          Cancel
+        </button>
+      </div>
+    </form>
+  </div>
+
+  <!-- ==========================================================================
+       7. PAYMENT OPTIONS MODAL (COD, Official UPI, Hosted Gateway)
+       ========================================================================== -->
+  <div class="center-modal" id="payment-modal">
+    <div class="modal-header">
+      <h3 style="font-size: 1.15rem; font-weight: 700; display: flex; align-items: center; gap: 0.5rem;">
+        <span>💳</span> Choose Payment Option
+      </h3>
+      <button class="close-btn" onclick="closeAllModals()">✕</button>
+    </div>
+
+    <div class="modal-body">
+      <div style="display: flex; justify-content: space-between; align-items: center; background: var(--bg-card); padding: 0.85rem 1.25rem; border-radius: var(--radius-md); border: 1px solid var(--border-subtle); margin-bottom: 1.25rem;">
+        <span style="font-size: 0.9rem; color: var(--text-secondary);">Total to Pay:</span>
+        <span id="payment-total-display" style="font-size: 1.3rem; font-weight: 800; color: var(--gold-accent);">₹0</span>
+      </div>
+
+      <!-- Payment Grid -->
+      <div class="payment-options-grid">
+        <!-- Option 1: Google Pay -->
+        <div class="payment-option-card selected" id="payment-card-gpay-alt" onclick="selectPaymentMethod('gpay')">
+          <input type="radio" name="payment-method-alt" class="payment-radio" checked />
+          <div class="payment-option-info">
+            <div class="payment-title">Google Pay (G Pay)</div>
+            <div class="payment-subtitle">UPI ID: 8341643180@ptyes • Scan or 1-Click App</div>
+          </div>
+          <span style="font-size: 1.2rem;">🔵</span>
+        </div>
+
+        <!-- Option 2: PhonePe -->
+        <div class="payment-option-card" id="payment-card-phonepe-alt" onclick="selectPaymentMethod('phonepe')">
+          <input type="radio" name="payment-method-alt" class="payment-radio" />
+          <div class="payment-option-info">
+            <div class="payment-title">PhonePe</div>
+            <div class="payment-subtitle">UPI ID: 8341643180@ptyes • Scan or 1-Click App</div>
+          </div>
+          <span style="font-size: 1.2rem;">🟣</span>
+        </div>
+
+        <!-- Option 3: Paytm -->
+        <div class="payment-option-card" id="payment-card-paytm-alt" onclick="selectPaymentMethod('paytm')">
+          <input type="radio" name="payment-method-alt" class="payment-radio" />
+          <div class="payment-option-info">
+            <div class="payment-title">Paytm UPI & Wallet</div>
+            <div class="payment-subtitle">UPI ID: 8341643180@ptyes • Scan or 1-Click App</div>
+          </div>
+          <span style="font-size: 1.2rem;">🔷</span>
+        </div>
+
+        <!-- Option 4: Any UPI App & QR Scanner -->
+        <div class="payment-option-card" id="payment-card-upi-alt" onclick="selectPaymentMethod('upi')">
+          <input type="radio" name="payment-method-alt" class="payment-radio" />
+          <div class="payment-option-info">
+            <div class="payment-title">Any UPI App & QR Scanner</div>
+            <div class="payment-subtitle">BHIM, Cred, Amazon Pay (8341643180@ptyes)</div>
+          </div>
+          <span style="font-size: 1.2rem;">⚡</span>
+        </div>
+
+        <!-- Option 5: Credit / Debit Card -->
+        <div class="payment-option-card" id="payment-card-card-alt" onclick="selectPaymentMethod('card')">
+          <input type="radio" name="payment-method-alt" class="payment-radio" />
+          <div class="payment-option-info">
+            <div class="payment-title">Credit / Debit Card (Full Working)</div>
+            <div class="payment-subtitle">Visa, Mastercard, RuPay with 3D Secure OTP</div>
+          </div>
+          <span style="font-size: 1.2rem;">💳</span>
+        </div>
+
+        <!-- Option 6: Cash on Delivery -->
+        <div class="payment-option-card" id="payment-card-cod-alt" onclick="selectPaymentMethod('cod')">
+          <input type="radio" name="payment-method-alt" class="payment-radio" />
+          <div class="payment-option-info">
+            <div class="payment-title">Cash on Delivery (COD)</div>
+            <div class="payment-subtitle">Pay cash or scan rider's QR upon arrival.</div>
+          </div>
+          <span style="font-size: 1.2rem;">💵</span>
+        </div>
+      </div>
+
+      <!-- Security Notice -->
+      <div style="margin-top: 1.5rem; padding: 0.85rem; background: rgba(34, 197, 94, 0.08); border: 1px solid rgba(34, 197, 94, 0.2); border-radius: var(--radius-sm); display: flex; gap: 0.65rem; align-items: center;">
+        <span style="color: var(--veg-green); font-size: 1.1rem;">🛡️</span>
+        <span style="font-size: 0.78rem; color: var(--text-secondary);">
+          <strong>Strict Security Guarantee:</strong> We never capture, store, or view your card numbers, CVVs, or UPI PINs. Online payments occur entirely on verified banking interfaces.
+        </span>
+      </div>
+    </div>
+
+    <div class="modal-footer">
+      <button class="btn-outline" onclick="openModal('checkout-modal')">← Back</button>
+      <button class="btn-primary" onclick="handlePaymentConfirm()" style="font-size: 1.05rem; font-weight: 800; padding: 0.85rem 1.6rem;">
+        🎉 CONFIRM ORDER NOW
+      </button>
+    </div>
+  </div>
+
+  <!-- ==========================================================================
+       HOSTED PAYMENT / UPI GATEWAY INTERACTION MODAL
+       ========================================================================== -->
+  <div class="center-modal" id="payment-gateway-modal">
+    <div class="modal-header">
+      <h3 style="font-size: 1.1rem; font-weight: 700;">Secure Payment Checkout</h3>
+      <button class="close-btn" onclick="closeAllModals()">✕</button>
+    </div>
+    <div class="modal-body" id="payment-gateway-modal-body">
+      <!-- Injected dynamically by checkoutController -->
+    </div>
+  </div>
+
+  <!-- ==========================================================================
+       8. ORDER CONFIRMATION MODAL
+       ========================================================================== -->
+  <div class="center-modal" id="confirmation-modal">
+    <div class="modal-body" id="confirmation-modal-body">
+      <!-- Injected dynamically -->
+    </div>
+  </div>
+
+  <!-- ==========================================================================
+       9. LIVE ORDER TRACKING MODAL
+       ========================================================================== -->
+  <div class="center-modal" id="tracking-modal">
+    <div class="modal-header">
+      <h3 style="font-size: 1.15rem; font-weight: 700; display: flex; align-items: center; gap: 0.5rem;">
+        <span>🚀</span> Live Order Tracking
+      </h3>
+      <button class="close-btn" onclick="closeAllModals()">✕</button>
+    </div>
+    <div class="modal-body" id="tracking-content">
+      <!-- Injected dynamically -->
+    </div>
+  </div>
+
+  <!-- ==========================================================================
+       ADMIN / RESTAURANT MANAGEMENT PORTAL MODAL
+       ========================================================================== -->
+  <div class="center-modal" id="admin-modal" style="max-width: 860px;">
+    <div class="modal-header">
+      <h3 style="font-size: 1.15rem; font-weight: 700; display: flex; align-items: center; gap: 0.5rem;">
+        <span>👨‍🍳</span> Restaurant Owner Portal
+      </h3>
+      <button class="close-btn" onclick="closeAllModals()">✕</button>
+    </div>
+    <div class="modal-body" id="admin-content">
+      <!-- Injected dynamically -->
+    </div>
+  </div>
+
+  <!-- Toast Notification Anchor -->
+  <div class="toast-container" id="toast-container"></div>
+
+  <!-- Application Scripts -->
+  <script src="js/data.js"></script>
+  <script src="js/cart.js"></script>
+  <script src="js/checkout.js"></script>
+  <script src="js/tracking.js"></script>
+  <script src="js/admin.js"></script>
+  <script src="js/app.js"></script>
+
+</body>
+</html>

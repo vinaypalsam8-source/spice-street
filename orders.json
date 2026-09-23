@@ -1,0 +1,388 @@
+﻿[
+    {
+        "orderId":  "SS-0633-3526",
+        "createdAt":  "2026-09-22T11:30:40.633Z",
+        "displayDate":  "22 Sept 2026, 05:00 pm",
+        "customer":  {
+                         "fullName":  "siddharatha collage",
+                         "phone":  "9640340527",
+                         "email":  "vinaypalsam8@gmail.com",
+                         "address":  {
+                                         "flatNo":  "502",
+                                         "street":  "narapally",
+                                         "city":  "Hyderabad",
+                                         "state":  "Telangana",
+                                         "pincode":  "500039"
+                                     },
+                         "deliveryInstructions":  ""
+                     },
+        "items":  [
+                      {
+                          "id":  "biryani-3",
+                          "name":  "Veg Biryani",
+                          "price":  140,
+                          "image":  "https://images.unsplash.com/photo-1642821373181-696a54913e9a?w=700\u0026auto=format\u0026fit=crop\u0026q=80",
+                          "isVeg":  true,
+                          "quantity":  1
+                      }
+                  ],
+        "pricing":  {
+                        "subtotal":  140,
+                        "deliveryFee":  40,
+                        "taxes":  7,
+                        "grandTotal":  187
+                    },
+        "payment":  {
+                        "method":  "Cash on Delivery (COD)",
+                        "status":  "COD / Pending",
+                        "transactionId":  null
+                    },
+        "status":  "Order Confirmed",
+        "estimatedDeliveryTime":  "25-35 mins",
+        "shipment":  {
+                         "partner":  "Swiggy Fleet",
+                         "riderName":  "Rahul Sharma (Zomato Fleet)",
+                         "riderPhone":  "9849012345",
+                         "vehicleNo":  "TS 09 UB 8921",
+                         "rating":  "4.9★",
+                         "status":  "Assigned"
+                     },
+        "deliveryRider":  {
+                              "partner":  "Swiggy Fleet",
+                              "name":  "Rahul Sharma (Zomato Fleet)",
+                              "phone":  "9849012345",
+                              "status":  "Assigned"
+                          }
+    },
+    {
+        "orderId":  "SS-3024-9332",
+        "createdAt":  "2026-09-22T11:26:33.024Z",
+        "displayDate":  "22 Sept 2026, 04:56 pm",
+        "customer":  {
+                         "fullName":  "siddharatha collage",
+                         "phone":  "9640340527",
+                         "email":  "vinaypalsam8@gmail.com",
+                         "address":  {
+                                         "flatNo":  "502",
+                                         "street":  "narapally",
+                                         "city":  "Hyderabad",
+                                         "state":  "Telangana",
+                                         "pincode":  "500039"
+                                     },
+                         "deliveryInstructions":  ""
+                     },
+        "items":  [
+                      {
+                          "id":  "biryani-1",
+                          "name":  "Chicken Biryani",
+                          "price":  180,
+                          "image":  "https://images.unsplash.com/photo-1563379091339-03b21ab4a4f8?w=700\u0026auto=format\u0026fit=crop\u0026q=80",
+                          "isVeg":  false,
+                          "quantity":  1
+                      }
+                  ],
+        "pricing":  {
+                        "subtotal":  180,
+                        "deliveryFee":  40,
+                        "taxes":  9,
+                        "grandTotal":  229
+                    },
+        "payment":  {
+                        "method":  "Cash on Delivery (COD)",
+                        "status":  "COD / Pending",
+                        "transactionId":  null
+                    },
+        "status":  "Order Confirmed",
+        "estimatedDeliveryTime":  "25-35 mins",
+        "shipment":  {
+                         "partner":  "Swiggy Fleet",
+                         "riderName":  "Rahul Sharma (Zomato Fleet)",
+                         "riderPhone":  "9849012345",
+                         "vehicleNo":  "TS 09 UB 8921",
+                         "rating":  "4.9★",
+                         "status":  "Assigned"
+                     },
+        "deliveryRider":  {
+                              "partner":  "Swiggy Fleet",
+                              "name":  "Rahul Sharma (Zomato Fleet)",
+                              "phone":  "9849012345",
+                              "status":  "Assigned"
+                          }
+    },
+    {
+        "orderId":  "SS-2358-7191",
+        "createdAt":  "2026-09-21T16:07:12.857Z",
+        "displayDate":  "21 Sept 2026, 09:37 pm",
+        "customer":  {
+                         "fullName":  "siddharatha collage",
+                         "phone":  "9640340527",
+                         "email":  "vinaypalsam8@gmail.com",
+                         "address":  {
+                                         "flatNo":  "502",
+                                         "street":  "narapally",
+                                         "city":  "Hyderabad",
+                                         "state":  "Telangana",
+                                         "pincode":  "500039"
+                                     },
+                         "deliveryInstructions":  ""
+                     },
+        "items":  [
+                      {
+                          "id":  "biryani-1",
+                          "name":  "Chicken Biryani",
+                          "price":  180,
+                          "image":  "https://images.unsplash.com/photo-1563379091339-03b21ab4a4f8?w=700\u0026auto=format\u0026fit=crop\u0026q=80",
+                          "isVeg":  false,
+                          "quantity":  1
+                      }
+                  ],
+        "pricing":  {
+                        "subtotal":  180,
+                        "deliveryFee":  40,
+                        "taxes":  9,
+                        "grandTotal":  229
+                    },
+        "payment":  {
+                        "method":  "UPI (Paytm UPI \u0026 Wallet)",
+                        "status":  "Paid",
+                        "transactionId":  "UPI_TXN_1790006832863"
+                    },
+        "status":  "Order Confirmed",
+        "estimatedDeliveryTime":  "30-40 mins",
+        "deliveryRider":  {
+                              "name":  "Ramesh Kumar",
+                              "phone":  "+91 98490 12345",
+                              "status":  "Assigned"
+                          }
+    },
+    {
+        "orderId":  "SS-7923-7849",
+        "createdAt":  "2026-09-21T16:00:17.651Z",
+        "displayDate":  "21 Sept 2026, 09:30 pm",
+        "customer":  {
+                         "fullName":  "siddharatha collage",
+                         "phone":  "9640340527",
+                         "email":  "vinaypalsam8@gmail.com",
+                         "address":  {
+                                         "flatNo":  "502",
+                                         "street":  "narapally",
+                                         "city":  "Hyderabad",
+                                         "state":  "Telangana",
+                                         "pincode":  "500039"
+                                     },
+                         "deliveryInstructions":  ""
+                     },
+        "items":  [
+                      {
+                          "id":  "biryani-1",
+                          "name":  "Chicken Biryani",
+                          "price":  180,
+                          "image":  "https://images.unsplash.com/photo-1563379091339-03b21ab4a4f8?w=700\u0026auto=format\u0026fit=crop\u0026q=80",
+                          "isVeg":  false,
+                          "quantity":  1
+                      }
+                  ],
+        "pricing":  {
+                        "subtotal":  180,
+                        "deliveryFee":  40,
+                        "taxes":  9,
+                        "grandTotal":  229
+                    },
+        "payment":  {
+                        "method":  "UPI (Google Pay (G Pay))",
+                        "status":  "Paid",
+                        "transactionId":  "UPI_TXN_1790006417659"
+                    },
+        "status":  "Order Confirmed",
+        "estimatedDeliveryTime":  "30-40 mins",
+        "deliveryRider":  {
+                              "name":  "Ramesh Kumar",
+                              "phone":  "+91 98490 12345",
+                              "status":  "Assigned"
+                          }
+    },
+    {
+        "orderId":  "SS-8499-2382",
+        "createdAt":  "2026-09-21T15:11:28.499Z",
+        "displayDate":  "21 Sept 2026, 08:41 pm",
+        "customer":  {
+                         "fullName":  "siddharatha collage",
+                         "phone":  "9640340527",
+                         "email":  "vinaypalsam8@gmail.com",
+                         "address":  {
+                                         "flatNo":  "502",
+                                         "street":  "narapally",
+                                         "city":  "Hyderabad",
+                                         "state":  "Telangana",
+                                         "pincode":  "500039"
+                                     },
+                         "deliveryInstructions":  ""
+                     },
+        "items":  [
+                      {
+                          "id":  "biryani-1",
+                          "name":  "Chicken Biryani",
+                          "price":  180,
+                          "image":  "https://images.unsplash.com/photo-1563379091339-03b21ab4a4f8?w=700\u0026auto=format\u0026fit=crop\u0026q=80",
+                          "isVeg":  false,
+                          "quantity":  1
+                      }
+                  ],
+        "pricing":  {
+                        "subtotal":  180,
+                        "deliveryFee":  40,
+                        "taxes":  9,
+                        "grandTotal":  229
+                    },
+        "payment":  {
+                        "method":  "Cash on Delivery (COD)",
+                        "status":  "COD / Pending",
+                        "transactionId":  null
+                    },
+        "status":  "Order Confirmed",
+        "estimatedDeliveryTime":  "30-40 mins",
+        "deliveryRider":  {
+                              "name":  "Ramesh Kumar",
+                              "phone":  "+91 98490 12345",
+                              "status":  "Assigned"
+                          }
+    },
+    {
+        "orderId":  "SS-2545-1614",
+        "createdAt":  "2026-09-21T14:24:32.545Z",
+        "displayDate":  "21 Sept 2026, 07:54 pm",
+        "customer":  {
+                         "fullName":  "siddharatha collage",
+                         "phone":  "9640340527",
+                         "email":  "vinaypalsam8@gmail.com",
+                         "address":  {
+                                         "flatNo":  "502",
+                                         "street":  "narapally",
+                                         "city":  "Hyderabad",
+                                         "state":  "Telangana",
+                                         "pincode":  "500039"
+                                     },
+                         "deliveryInstructions":  ""
+                     },
+        "items":  [
+                      {
+                          "id":  "biryani-1",
+                          "name":  "Chicken Biryani",
+                          "price":  180,
+                          "image":  "https://images.unsplash.com/photo-1563379091339-03b21ab4a4f8?w=700\u0026auto=format\u0026fit=crop\u0026q=80",
+                          "isVeg":  false,
+                          "quantity":  1
+                      }
+                  ],
+        "pricing":  {
+                        "subtotal":  180,
+                        "deliveryFee":  40,
+                        "taxes":  9,
+                        "grandTotal":  229
+                    },
+        "payment":  {
+                        "method":  "cod",
+                        "status":  "COD / Pending",
+                        "transactionId":  null
+                    },
+        "status":  "Order Confirmed",
+        "estimatedDeliveryTime":  "30-40 mins",
+        "deliveryRider":  {
+                              "name":  "Ramesh Kumar",
+                              "phone":  "+91 98490 12345",
+                              "status":  "Assigned"
+                          }
+    },
+    {
+        "orderId":  "SS-9078-5990",
+        "createdAt":  "2026-09-21T13:17:39.078Z",
+        "displayDate":  "21 Sept 2026, 06:47 pm",
+        "customer":  {
+                         "fullName":  "siddharatha collage",
+                         "phone":  "9640340527",
+                         "email":  "vinaypalsam8@gmail.com",
+                         "address":  {
+                                         "flatNo":  "502",
+                                         "street":  "narapally",
+                                         "city":  "Hyderabad",
+                                         "state":  "Telangana",
+                                         "pincode":  "500039"
+                                     },
+                         "deliveryInstructions":  ""
+                     },
+        "items":  [
+                      {
+                          "id":  "biryani-1",
+                          "name":  "Chicken Biryani",
+                          "price":  180,
+                          "image":  "https://images.unsplash.com/photo-1563379091339-03b21ab4a4f8?w=700\u0026auto=format\u0026fit=crop\u0026q=80",
+                          "isVeg":  false,
+                          "quantity":  1
+                      }
+                  ],
+        "pricing":  {
+                        "subtotal":  180,
+                        "deliveryFee":  40,
+                        "taxes":  9,
+                        "grandTotal":  229
+                    },
+        "payment":  {
+                        "method":  "cod",
+                        "status":  "COD / Pending",
+                        "transactionId":  null
+                    },
+        "status":  "Order Confirmed",
+        "estimatedDeliveryTime":  "30-40 mins",
+        "deliveryRider":  {
+                              "name":  "Ramesh Kumar",
+                              "phone":  "+91 98490 12345",
+                              "status":  "Assigned"
+                          }
+    },
+    {
+        "orderId":  "SS-2482-3182",
+        "createdAt":  "2026-09-21T13:08:02.482Z",
+        "displayDate":  "21 Sept 2026, 06:38 pm",
+        "customer":  {
+                         "fullName":  "siddharatha collage",
+                         "phone":  "9640340527",
+                         "email":  "vinaypalsam8@gmail.com",
+                         "address":  {
+                                         "flatNo":  "502",
+                                         "street":  "narapally",
+                                         "city":  "Hyderabad",
+                                         "state":  "Telangana",
+                                         "pincode":  "500039"
+                                     },
+                         "deliveryInstructions":  ""
+                     },
+        "items":  [
+                      {
+                          "id":  "biryani-1",
+                          "name":  "Chicken Biryani",
+                          "price":  180,
+                          "image":  "https://images.unsplash.com/photo-1563379091339-03b21ab4a4f8?w=700\u0026auto=format\u0026fit=crop\u0026q=80",
+                          "isVeg":  false,
+                          "quantity":  1
+                      }
+                  ],
+        "pricing":  {
+                        "subtotal":  180,
+                        "deliveryFee":  40,
+                        "taxes":  9,
+                        "grandTotal":  229
+                    },
+        "payment":  {
+                        "method":  "cod",
+                        "status":  "COD / Pending",
+                        "transactionId":  null
+                    },
+        "status":  "Order Confirmed",
+        "estimatedDeliveryTime":  "30-40 mins",
+        "deliveryRider":  {
+                              "name":  "Ramesh Kumar",
+                              "phone":  "+91 98490 12345",
+                              "status":  "Assigned"
+                          }
+    }
+]
