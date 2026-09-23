@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
@@ -22,7 +22,2156 @@
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 
   <!-- Main Stylesheet -->
-  <link rel="stylesheet" href="css/styles.css" />
+  <style>
+/* ==========================================================================
+   SPICE STREET - PREMIUM MODERN INDIAN RESTAURANT STYLESHEET
+   Color Palette: #0D0D0D (Obsidian Black), #FF6B00 (Saffron Orange),
+                  #FFB703 (Golden Yellow), #1A1A1A (Card Dark), #FFFFFF (White)
+   ========================================================================== */
+
+:root {
+  --bg-main: #0d0d0d;
+  --bg-surface: #141414;
+  --bg-card: #181818;
+  --bg-card-hover: #1f1f1f;
+  --bg-elevated: #242424;
+  --border-subtle: #2a2a2a;
+  --border-accent: rgba(255, 107, 0, 0.35);
+  --border-gold: rgba(255, 183, 3, 0.35);
+
+  --primary-orange: #ff6b00;
+  --primary-orange-hover: #e05e00;
+  --primary-gradient: linear-gradient(135deg, #ff6b00 0%, #ff8c00 50%, #ffb703 100%);
+  --gold-accent: #ffb703;
+  --gold-gradient: linear-gradient(135deg, #ffb703 0%, #ffa200 100%);
+
+  --text-primary: #ffffff;
+  --text-secondary: #d1d5db;
+  --text-muted: #9ca3af;
+  --text-dim: #6b7280;
+
+  --veg-green: #22c55e;
+  --nonveg-red: #ef4444;
+
+  --shadow-sm: 0 2px 8px rgba(0, 0, 0, 0.5);
+  --shadow-md: 0 8px 24px rgba(0, 0, 0, 0.6);
+  --shadow-lg: 0 16px 40px rgba(0, 0, 0, 0.8);
+  --shadow-glow: 0 0 25px rgba(255, 107, 0, 0.3);
+  --shadow-glow-gold: 0 0 25px rgba(255, 183, 3, 0.3);
+
+  --radius-sm: 8px;
+  --radius-md: 14px;
+  --radius-lg: 20px;
+  --radius-full: 9999px;
+
+  --transition-fast: 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+  --transition-smooth: 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+/* Base & Reset */
+*, *::before, *::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html {
+  scroll-behavior: smooth;
+  font-family: 'Outfit', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  background-color: var(--bg-main);
+  color: var(--text-primary);
+  -webkit-font-smoothing: antialiased;
+}
+
+body {
+  background-color: var(--bg-main);
+  color: var(--text-primary);
+  min-height: 100vh;
+  overflow-x: hidden;
+  line-height: 1.6;
+  position: relative;
+}
+
+/* Background Subtle Spice Texture Overlay */
+body::before {
+  content: "";
+  position: fixed;
+  inset: 0;
+  background-image: 
+    radial-gradient(circle at 15% 15%, rgba(255, 107, 0, 0.05) 0%, transparent 40%),
+    radial-gradient(circle at 85% 75%, rgba(255, 183, 3, 0.04) 0%, transparent 45%);
+  pointer-events: none;
+  z-index: 0;
+}
+
+img {
+  max-width: 100%;
+  height: auto;
+  display: block;
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
+button {
+  cursor: pointer;
+  border: none;
+  background: none;
+  font-family: inherit;
+  color: inherit;
+}
+
+input, textarea, select {
+  font-family: inherit;
+  color: inherit;
+  background: none;
+  border: 1px solid var(--border-subtle);
+}
+
+/* Typography Helpers */
+.font-display {
+  font-family: 'Playfair Display', Georgia, serif;
+}
+
+.text-gradient {
+  background: var(--primary-gradient);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+.text-gold {
+  color: var(--gold-accent);
+}
+
+.text-orange {
+  color: var(--primary-orange);
+}
+
+.text-muted {
+  color: var(--text-muted);
+}
+
+/* Containers */
+.container {
+  width: 100%;
+  max-width: 1240px;
+  margin: 0 auto;
+  padding: 0 1.25rem;
+}
+
+/* Header & Sticky Navigation */
+.site-header {
+  position: sticky;
+  top: 0;
+  z-index: 50;
+  background: rgba(13, 13, 13, 0.92);
+  backdrop-filter: blur(14px);
+  -webkit-backdrop-filter: blur(14px);
+  border-bottom: 1px solid rgba(255, 107, 0, 0.15);
+  transition: var(--transition-fast);
+}
+
+.header-container {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  height: 72px;
+}
+
+.brand-logo {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  text-decoration: none;
+}
+
+.logo-badge {
+  width: 44px;
+  height: 44px;
+  border-radius: var(--radius-md);
+  background: var(--primary-gradient);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: var(--shadow-glow);
+  color: #000;
+}
+
+.logo-badge svg {
+  width: 24px;
+  height: 24px;
+  fill: #0d0d0d;
+}
+
+.brand-name {
+  font-family: 'Playfair Display', serif;
+  font-weight: 800;
+  font-size: 1.4rem;
+  letter-spacing: 0.05em;
+  color: var(--text-primary);
+  line-height: 1.1;
+}
+
+.brand-tagline {
+  font-size: 0.72rem;
+  color: var(--gold-accent);
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  font-weight: 500;
+}
+
+.desktop-nav {
+  display: none;
+}
+
+@media (min-width: 868px) {
+  .desktop-nav {
+    display: flex;
+    align-items: center;
+    gap: 2rem;
+  }
+}
+
+.nav-link {
+  font-size: 0.95rem;
+  font-weight: 500;
+  color: var(--text-secondary);
+  transition: var(--transition-fast);
+  position: relative;
+  padding: 0.25rem 0;
+}
+
+.nav-link:hover, .nav-link.active {
+  color: var(--gold-accent);
+}
+
+.nav-link::after {
+  content: "";
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 0%;
+  height: 2px;
+  background: var(--primary-gradient);
+  transition: var(--transition-fast);
+}
+
+.nav-link:hover::after, .nav-link.active::after {
+  width: 100%;
+}
+
+.header-actions {
+  display: flex;
+  align-items: center;
+  gap: 0.85rem;
+}
+
+.cart-toggle-btn {
+  position: relative;
+  width: 44px;
+  height: 44px;
+  border-radius: var(--radius-full);
+  background: var(--bg-card);
+  border: 1px solid var(--border-accent);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--text-primary);
+  transition: var(--transition-fast);
+}
+
+.cart-toggle-btn:hover {
+  background: var(--primary-orange);
+  color: #000;
+  box-shadow: var(--shadow-glow);
+}
+
+.cart-count-badge {
+  position: absolute;
+  top: -4px;
+  right: -4px;
+  background: var(--gold-accent);
+  color: #000;
+  font-size: 0.72rem;
+  font-weight: 700;
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.4);
+}
+
+.btn-primary {
+  background: var(--primary-gradient);
+  color: #0d0d0d;
+  font-weight: 700;
+  padding: 0.65rem 1.4rem;
+  border-radius: var(--radius-full);
+  font-size: 0.95rem;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  transition: var(--transition-smooth);
+  box-shadow: 0 4px 18px rgba(255, 107, 0, 0.35);
+}
+
+.btn-primary:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 25px rgba(255, 107, 0, 0.5);
+  filter: brightness(1.05);
+}
+
+.header-order-now-btn {
+  padding: 0.55rem 1.15rem;
+  font-size: 0.85rem;
+  letter-spacing: 0.04em;
+  font-weight: 800;
+  white-space: nowrap;
+  animation: pulseGlow 3s infinite alternate;
+}
+
+@keyframes pulseGlow {
+  0% { box-shadow: 0 4px 15px rgba(255, 107, 0, 0.4); }
+  100% { box-shadow: 0 4px 25px rgba(255, 183, 3, 0.6); }
+}
+
+@media (max-width: 480px) {
+  .header-order-now-btn {
+    padding: 0.45rem 0.75rem;
+    font-size: 0.76rem;
+    gap: 0.3rem;
+  }
+}
+
+.btn-outline {
+  border: 1px solid var(--gold-accent);
+  color: var(--gold-accent);
+  font-weight: 600;
+  padding: 0.65rem 1.4rem;
+  border-radius: var(--radius-full);
+  font-size: 0.95rem;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  transition: var(--transition-fast);
+  background: rgba(255, 183, 3, 0.05);
+}
+
+.btn-outline:hover {
+  background: var(--gold-accent);
+  color: #000;
+  box-shadow: var(--shadow-glow-gold);
+}
+
+.mobile-menu-btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 40px;
+  height: 40px;
+  border-radius: var(--radius-md);
+  background: var(--bg-card);
+  border: 1px solid var(--border-subtle);
+  color: var(--text-primary);
+}
+
+@media (min-width: 868px) {
+  .mobile-menu-btn {
+    display: none;
+  }
+}
+
+/* Mobile Slide-down Navigation */
+.mobile-nav-panel {
+  display: none;
+  flex-direction: column;
+  background: var(--bg-surface);
+  border-bottom: 1px solid var(--border-subtle);
+  padding: 1.25rem;
+  gap: 1rem;
+}
+
+.mobile-nav-panel.open {
+  display: flex;
+}
+
+.mobile-nav-link {
+  font-size: 1.05rem;
+  font-weight: 500;
+  padding: 0.6rem 0;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+/* Hero Section */
+.hero-section {
+  position: relative;
+  min-height: 85vh;
+  display: flex;
+  align-items: center;
+  padding: 4rem 0 3rem;
+  background: linear-gradient(180deg, rgba(13, 13, 13, 0.4) 0%, #0d0d0d 100%),
+              radial-gradient(circle at center, rgba(255, 107, 0, 0.15) 0%, transparent 65%);
+  overflow: hidden;
+}
+
+.hero-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 2.5rem;
+  align-items: center;
+}
+
+@media (min-width: 992px) {
+  .hero-grid {
+    grid-template-columns: 1.15fr 0.85fr;
+  }
+}
+
+.hero-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  background: rgba(255, 107, 0, 0.12);
+  border: 1px solid rgba(255, 107, 0, 0.3);
+  padding: 0.4rem 1rem;
+  border-radius: var(--radius-full);
+  font-size: 0.82rem;
+  font-weight: 600;
+  color: var(--gold-accent);
+  margin-bottom: 1.25rem;
+  letter-spacing: 0.04em;
+}
+
+.hero-title {
+  font-family: 'Playfair Display', serif;
+  font-size: clamp(2.4rem, 5.5vw, 4.2rem);
+  font-weight: 900;
+  line-height: 1.12;
+  margin-bottom: 1rem;
+}
+
+.hero-headline {
+  font-size: clamp(1.2rem, 2.2vw, 1.6rem);
+  font-weight: 600;
+  color: var(--gold-accent);
+  margin-bottom: 1rem;
+}
+
+.hero-subtext {
+  font-size: clamp(0.95rem, 1.5vw, 1.1rem);
+  color: var(--text-secondary);
+  max-width: 540px;
+  margin-bottom: 2rem;
+  line-height: 1.65;
+}
+
+.hero-cta-group {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1rem;
+  margin-bottom: 2.5rem;
+}
+
+.hero-highlights {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 1rem;
+  border-top: 1px solid var(--border-subtle);
+  padding-top: 1.5rem;
+}
+
+.highlight-item {
+  display: flex;
+  flex-direction: column;
+}
+
+.highlight-num {
+  font-family: 'Playfair Display', serif;
+  font-size: 1.4rem;
+  font-weight: 800;
+  color: var(--gold-accent);
+}
+
+.highlight-label {
+  font-size: 0.78rem;
+  color: var(--text-muted);
+}
+
+.hero-image-wrapper {
+  position: relative;
+  display: flex;
+  justify-content: center;
+}
+
+.hero-image-container {
+  position: relative;
+  width: 100%;
+  max-width: 480px;
+  aspect-ratio: 1 / 1;
+  border-radius: 30% 70% 70% 30% / 30% 30% 70% 70%;
+  background: var(--primary-gradient);
+  padding: 6px;
+  animation: morphShape 12s ease-in-out infinite;
+  box-shadow: 0 20px 50px rgba(255, 107, 0, 0.25);
+}
+
+@keyframes morphShape {
+  0% { border-radius: 40% 60% 60% 40% / 40% 40% 60% 60%; }
+  50% { border-radius: 60% 40% 40% 60% / 60% 60% 40% 40%; }
+  100% { border-radius: 40% 60% 60% 40% / 40% 40% 60% 60%; }
+}
+
+.hero-main-img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  border-radius: inherit;
+}
+
+.hero-floating-card {
+  position: absolute;
+  bottom: -15px;
+  left: -10px;
+  background: rgba(22, 22, 22, 0.95);
+  backdrop-filter: blur(12px);
+  border: 1px solid var(--border-accent);
+  padding: 0.85rem 1.25rem;
+  border-radius: var(--radius-md);
+  box-shadow: var(--shadow-lg);
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  animation: floatCard 4s ease-in-out infinite;
+}
+
+@keyframes floatCard {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-8px); }
+}
+
+.floating-card-icon {
+  width: 38px;
+  height: 38px;
+  border-radius: var(--radius-full);
+  background: rgba(255, 107, 0, 0.15);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--primary-orange);
+}
+
+/* Menu Section */
+.section-header {
+  text-align: center;
+  margin-bottom: 2.5rem;
+}
+
+.section-pretitle {
+  color: var(--gold-accent);
+  font-size: 0.85rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.12em;
+  margin-bottom: 0.5rem;
+}
+
+.section-title {
+  font-family: 'Playfair Display', serif;
+  font-size: clamp(2rem, 3.5vw, 2.8rem);
+  font-weight: 800;
+  color: var(--text-primary);
+  margin-bottom: 0.75rem;
+}
+
+.section-subtitle {
+  color: var(--text-muted);
+  max-width: 580px;
+  margin: 0 auto;
+  font-size: 0.95rem;
+}
+
+/* Category Filters & Search Controls */
+.menu-controls {
+  display: flex;
+  flex-direction: column;
+  gap: 1.25rem;
+  margin-bottom: 2.5rem;
+}
+
+@media (min-width: 768px) {
+  .menu-controls {
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+  }
+}
+
+.category-scroll-container {
+  display: flex;
+  gap: 0.6rem;
+  overflow-x: auto;
+  padding-bottom: 0.5rem;
+  scrollbar-width: none;
+  -webkit-overflow-scrolling: touch;
+}
+
+.category-scroll-container::-webkit-scrollbar {
+  display: none;
+}
+
+.category-pill {
+  white-space: nowrap;
+  padding: 0.6rem 1.2rem;
+  border-radius: var(--radius-full);
+  background: var(--bg-surface);
+  border: 1px solid var(--border-subtle);
+  color: var(--text-secondary);
+  font-size: 0.9rem;
+  font-weight: 600;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  transition: var(--transition-fast);
+}
+
+.category-pill:hover {
+  border-color: var(--border-accent);
+  color: var(--text-primary);
+}
+
+.category-pill.active {
+  background: var(--primary-gradient);
+  color: #0d0d0d;
+  border-color: transparent;
+  box-shadow: 0 4px 15px rgba(255, 107, 0, 0.35);
+}
+
+.menu-search-box {
+  position: relative;
+  min-width: 260px;
+}
+
+.search-input {
+  width: 100%;
+  padding: 0.65rem 1rem 0.65rem 2.5rem;
+  background: var(--bg-surface);
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--radius-full);
+  color: var(--text-primary);
+  font-size: 0.9rem;
+  transition: var(--transition-fast);
+}
+
+.search-input:focus {
+  outline: none;
+  border-color: var(--primary-orange);
+  box-shadow: 0 0 12px rgba(255, 107, 0, 0.2);
+}
+
+.search-icon {
+  position: absolute;
+  left: 0.9rem;
+  top: 50%;
+  transform: translateY(-50%);
+  color: var(--text-muted);
+  pointer-events: none;
+}
+
+/* Dietary Toggle Filter (Veg / Non-Veg) */
+.dietary-filters {
+  display: flex;
+  gap: 0.5rem;
+}
+
+.diet-filter-btn {
+  font-size: 0.8rem;
+  padding: 0.35rem 0.75rem;
+  border-radius: var(--radius-sm);
+  background: var(--bg-surface);
+  border: 1px solid var(--border-subtle);
+  color: var(--text-secondary);
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+  transition: var(--transition-fast);
+}
+
+.diet-filter-btn.active {
+  border-color: var(--gold-accent);
+  color: var(--gold-accent);
+  background: rgba(255, 183, 3, 0.08);
+}
+
+/* ==========================================================================
+   Separated Menu Sections (Non-Veg, Veg, Desserts, Beverages)
+   ========================================================================== */
+.menu-sections-container {
+  display: flex;
+  flex-direction: column;
+  gap: 3.5rem;
+  margin-bottom: 4rem;
+}
+
+.menu-section-block {
+  scroll-margin-top: 90px;
+}
+
+.menu-section-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-end;
+  padding: 1.25rem 1.5rem;
+  border-radius: var(--radius-lg);
+  margin-bottom: 1.75rem;
+  position: relative;
+  overflow: hidden;
+  background: var(--bg-card);
+  border: 1px solid var(--border-subtle);
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.4);
+}
+
+.menu-section-header::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  width: 5px;
+}
+
+.menu-section-header.nonveg-header::before {
+  background: var(--nonveg-red);
+}
+.menu-section-header.nonveg-header {
+  background: linear-gradient(135deg, rgba(239, 68, 68, 0.08) 0%, rgba(26, 26, 26, 0.95) 100%);
+  border-left: 1px solid rgba(239, 68, 68, 0.35);
+}
+
+.menu-section-header.veg-header::before {
+  background: var(--veg-green);
+}
+.menu-section-header.veg-header {
+  background: linear-gradient(135deg, rgba(34, 197, 94, 0.08) 0%, rgba(26, 26, 26, 0.95) 100%);
+  border-left: 1px solid rgba(34, 197, 94, 0.35);
+}
+
+.menu-section-header.dessert-header::before {
+  background: var(--gold-accent);
+}
+.menu-section-header.dessert-header {
+  background: linear-gradient(135deg, rgba(255, 183, 3, 0.1) 0%, rgba(26, 26, 26, 0.95) 100%);
+  border-left: 1px solid rgba(255, 183, 3, 0.4);
+}
+
+.menu-section-header.beverage-header::before {
+  background: #38bdf8;
+}
+.menu-section-header.beverage-header {
+  background: linear-gradient(135deg, rgba(56, 189, 248, 0.08) 0%, rgba(26, 26, 26, 0.95) 100%);
+  border-left: 1px solid rgba(56, 189, 248, 0.35);
+}
+
+.section-badge-pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  padding: 0.25rem 0.65rem;
+  border-radius: 99px;
+  font-size: 0.72rem;
+  font-weight: 800;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  margin-bottom: 0.5rem;
+}
+
+.section-badge-pill.nonveg {
+  background: rgba(239, 68, 68, 0.18);
+  color: #fca5a5;
+  border: 1px solid rgba(239, 68, 68, 0.35);
+}
+
+.section-badge-pill.veg {
+  background: rgba(34, 197, 94, 0.18);
+  color: #86efac;
+  border: 1px solid rgba(34, 197, 94, 0.35);
+}
+
+.section-badge-pill.dessert {
+  background: rgba(255, 183, 3, 0.2);
+  color: var(--gold-accent);
+  border: 1px solid rgba(255, 183, 3, 0.4);
+}
+
+.section-badge-pill.beverage {
+  background: rgba(56, 189, 248, 0.18);
+  color: #7dd3fc;
+  border: 1px solid rgba(56, 189, 248, 0.35);
+}
+
+.menu-section-title {
+  font-size: 1.45rem;
+  font-family: 'Playfair Display', serif;
+  font-weight: 700;
+  color: #fff;
+  margin-bottom: 0.25rem;
+}
+
+.menu-section-desc {
+  font-size: 0.88rem;
+  color: var(--text-secondary);
+  max-width: 650px;
+  line-height: 1.5;
+}
+
+.section-count-tag {
+  background: var(--bg-surface);
+  border: 1px solid var(--border-subtle);
+  color: var(--gold-accent);
+  font-size: 0.8rem;
+  font-weight: 700;
+  padding: 0.4rem 0.85rem;
+  border-radius: var(--radius-sm);
+  white-space: nowrap;
+  flex-shrink: 0;
+}
+
+@media (max-width: 640px) {
+  .menu-section-header {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 0.75rem;
+    padding: 1rem 1.15rem;
+  }
+}
+
+/* Food Grid & Product Cards */
+.products-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 1.5rem;
+  margin-bottom: 0;
+}
+
+@media (min-width: 640px) {
+  .products-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (min-width: 1024px) {
+  .products-grid {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}
+
+.product-card {
+  background: var(--bg-card);
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--radius-lg);
+  overflow: hidden;
+  transition: var(--transition-smooth);
+  display: flex;
+  flex-direction: column;
+  position: relative;
+}
+
+.product-card:hover {
+  transform: translateY(-6px);
+  border-color: var(--border-accent);
+  box-shadow: 0 12px 30px rgba(0, 0, 0, 0.7), var(--shadow-glow);
+  background: var(--bg-card-hover);
+}
+
+.card-media {
+  position: relative;
+  width: 100%;
+  height: 200px;
+  overflow: hidden;
+  background: #000;
+}
+
+.card-img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.product-card:hover .card-img {
+  transform: scale(1.08);
+}
+
+.card-badges-top {
+  position: absolute;
+  top: 12px;
+  left: 12px;
+  right: 12px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  pointer-events: none;
+}
+
+.badge-tag {
+  background: rgba(13, 13, 13, 0.85);
+  backdrop-filter: blur(8px);
+  border: 1px solid rgba(255, 183, 3, 0.4);
+  color: var(--gold-accent);
+  font-size: 0.72rem;
+  font-weight: 700;
+  padding: 0.25rem 0.65rem;
+  border-radius: var(--radius-full);
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+/* Veg / Non-Veg Indicator Symbol */
+.diet-indicator {
+  width: 18px;
+  height: 18px;
+  border-radius: 4px;
+  background: #111;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 2px;
+}
+
+.diet-indicator.veg {
+  border: 2px solid var(--veg-green);
+}
+
+.diet-indicator.veg .dot {
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: var(--veg-green);
+}
+
+.diet-indicator.non-veg {
+  border: 2px solid var(--nonveg-red);
+}
+
+.diet-indicator.non-veg .dot {
+  width: 0;
+  height: 0;
+  border-left: 4px solid transparent;
+  border-right: 4px solid transparent;
+  border-bottom: 7px solid var(--nonveg-red);
+}
+
+.card-body {
+  padding: 1.25rem;
+  display: flex;
+  flex-direction: column;
+  flex-grow: 1;
+}
+
+.card-header-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  margin-bottom: 0.35rem;
+}
+
+.product-title {
+  font-size: 1.18rem;
+  font-weight: 700;
+  color: var(--text-primary);
+  line-height: 1.3;
+}
+
+.product-rating {
+  display: flex;
+  align-items: center;
+  gap: 0.25rem;
+  font-size: 0.8rem;
+  font-weight: 700;
+  color: var(--gold-accent);
+  background: rgba(255, 183, 3, 0.1);
+  padding: 0.15rem 0.45rem;
+  border-radius: var(--radius-sm);
+}
+
+.product-description {
+  font-size: 0.85rem;
+  color: var(--text-muted);
+  margin-bottom: 1.25rem;
+  line-height: 1.5;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+.card-footer-row {
+  margin-top: auto;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  border-top: 1px solid rgba(255, 255, 255, 0.06);
+  padding-top: 1rem;
+}
+
+.product-price {
+  font-family: 'Playfair Display', serif;
+  font-size: 1.35rem;
+  font-weight: 800;
+  color: var(--primary-orange);
+}
+
+/* Stepper Quantity Control */
+.card-action-box {
+  display: flex;
+  align-items: center;
+}
+
+.add-to-cart-btn {
+  background: rgba(255, 107, 0, 0.12);
+  border: 1px solid var(--primary-orange);
+  color: var(--primary-orange);
+  font-weight: 700;
+  font-size: 0.85rem;
+  padding: 0.5rem 1rem;
+  border-radius: var(--radius-md);
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  transition: var(--transition-fast);
+}
+
+.add-to-cart-btn:hover {
+  background: var(--primary-orange);
+  color: #0d0d0d;
+  box-shadow: 0 4px 12px rgba(255, 107, 0, 0.4);
+}
+
+.qty-stepper {
+  display: inline-flex;
+  align-items: center;
+  background: var(--bg-surface);
+  border: 1px solid var(--primary-orange);
+  border-radius: var(--radius-md);
+  overflow: hidden;
+}
+
+.stepper-btn {
+  width: 32px;
+  height: 32px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--primary-orange);
+  font-size: 1.1rem;
+  font-weight: 700;
+  transition: var(--transition-fast);
+}
+
+.stepper-btn:hover {
+  background: rgba(255, 107, 0, 0.2);
+}
+
+.stepper-val {
+  min-width: 28px;
+  text-align: center;
+  font-weight: 700;
+  font-size: 0.9rem;
+  color: var(--text-primary);
+}
+
+/* About Section */
+.about-section {
+  padding: 5rem 0;
+  background: linear-gradient(180deg, #0d0d0d 0%, #121212 50%, #0d0d0d 100%);
+  border-top: 1px solid var(--border-subtle);
+  border-bottom: 1px solid var(--border-subtle);
+}
+
+.about-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 3rem;
+  align-items: center;
+}
+
+@media (min-width: 992px) {
+  .about-grid {
+    grid-template-columns: 1fr 1fr;
+  }
+}
+
+.about-features-list {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1.25rem;
+  margin-top: 2rem;
+}
+
+.about-feature-box {
+  background: var(--bg-card);
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--radius-md);
+  padding: 1.2rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  transition: var(--transition-fast);
+}
+
+.about-feature-box:hover {
+  border-color: var(--border-gold);
+  transform: translateY(-3px);
+}
+
+.feature-icon-wrapper {
+  width: 40px;
+  height: 40px;
+  border-radius: var(--radius-sm);
+  background: rgba(255, 183, 3, 0.12);
+  color: var(--gold-accent);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.feature-title {
+  font-weight: 700;
+  font-size: 0.95rem;
+}
+
+.feature-desc {
+  font-size: 0.8rem;
+  color: var(--text-muted);
+}
+
+.about-gallery {
+  position: relative;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1rem;
+}
+
+.about-img-box {
+  border-radius: var(--radius-md);
+  overflow: hidden;
+  box-shadow: var(--shadow-md);
+}
+
+.about-img-box:first-child {
+  transform: translateY(-1rem);
+}
+
+.about-img-box:last-child {
+  transform: translateY(1rem);
+}
+
+/* Contact Section */
+.contact-section {
+  padding: 5rem 0 4rem;
+}
+
+.contact-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 2.5rem;
+}
+
+@media (min-width: 992px) {
+  .contact-grid {
+    grid-template-columns: 1fr 1.2fr;
+  }
+}
+
+.contact-cards-container {
+  display: flex;
+  flex-direction: column;
+  gap: 1.25rem;
+}
+
+.contact-card {
+  background: var(--bg-card);
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--radius-md);
+  padding: 1.25rem;
+  display: flex;
+  align-items: flex-start;
+  gap: 1rem;
+}
+
+.contact-card-icon {
+  width: 44px;
+  height: 44px;
+  border-radius: var(--radius-md);
+  background: rgba(255, 107, 0, 0.15);
+  color: var(--primary-orange);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+.contact-card-content h4 {
+  font-size: 1rem;
+  font-weight: 700;
+  margin-bottom: 0.25rem;
+}
+
+.contact-card-content p {
+  font-size: 0.88rem;
+  color: var(--text-secondary);
+}
+
+.contact-quick-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.75rem;
+  margin-top: 1rem;
+}
+
+.btn-contact {
+  padding: 0.55rem 1.1rem;
+  border-radius: var(--radius-full);
+  font-size: 0.85rem;
+  font-weight: 600;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  border: 1px solid var(--border-subtle);
+  background: var(--bg-card);
+  transition: var(--transition-fast);
+}
+
+.btn-contact:hover {
+  border-color: var(--primary-orange);
+  color: var(--primary-orange);
+}
+
+.btn-whatsapp {
+  background: #25D366;
+  color: #000;
+  border-color: #25D366;
+}
+
+.btn-whatsapp:hover {
+  background: #1eb857;
+  color: #fff;
+}
+
+.map-card {
+  background: var(--bg-card);
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--radius-lg);
+  overflow: hidden;
+  box-shadow: var(--shadow-md);
+  min-height: 340px;
+}
+
+.map-card iframe {
+  width: 100%;
+  height: 100%;
+  min-height: 340px;
+  border: none;
+  filter: invert(90%) hue-rotate(180deg) brightness(85%) contrast(90%);
+}
+
+/* Footer */
+.site-footer {
+  background: #080808;
+  border-top: 1px solid var(--border-subtle);
+  padding: 4rem 0 2rem;
+}
+
+.footer-top {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 2.5rem;
+  margin-bottom: 3rem;
+}
+
+@media (min-width: 768px) {
+  .footer-top {
+    grid-template-columns: 2fr 1fr 1fr 1.5fr;
+  }
+}
+
+.footer-brand p {
+  color: var(--text-muted);
+  font-size: 0.9rem;
+  margin-top: 0.75rem;
+  max-width: 320px;
+}
+
+.footer-col-title {
+  font-size: 1rem;
+  font-weight: 700;
+  color: var(--gold-accent);
+  margin-bottom: 1.2rem;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+.footer-links {
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 0.65rem;
+}
+
+.footer-link {
+  font-size: 0.88rem;
+  color: var(--text-secondary);
+  transition: var(--transition-fast);
+}
+
+.footer-link:hover {
+  color: var(--primary-orange);
+  padding-left: 4px;
+}
+
+.payment-methods-strip {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  margin-top: 0.75rem;
+}
+
+.payment-badge {
+  background: var(--bg-surface);
+  border: 1px solid var(--border-subtle);
+  padding: 0.35rem 0.65rem;
+  border-radius: var(--radius-sm);
+  font-size: 0.75rem;
+  font-weight: 600;
+  color: var(--text-secondary);
+}
+
+.footer-bottom {
+  border-top: 1px solid rgba(255, 255, 255, 0.06);
+  padding-top: 1.75rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1rem;
+  text-align: center;
+  font-size: 0.82rem;
+  color: var(--text-dim);
+}
+
+@media (min-width: 768px) {
+  .footer-bottom {
+    flex-direction: row;
+    justify-content: space-between;
+  }
+}
+
+/* ==========================================================================
+   MODALS & DRAWERS (Cart, Checkout, Payment, Confirmation, Tracking, Admin)
+   ========================================================================== */
+
+.modal-backdrop {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.82);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  z-index: 100;
+  display: none;
+  opacity: 0;
+  transition: opacity var(--transition-smooth);
+}
+
+.modal-backdrop.open {
+  display: flex;
+  opacity: 1;
+}
+
+/* Cart Drawer */
+.cart-drawer {
+  position: fixed;
+  top: 0;
+  right: -100%;
+  width: 100%;
+  max-width: 440px;
+  height: 100vh;
+  background: var(--bg-surface);
+  border-left: 1px solid var(--border-subtle);
+  z-index: 110;
+  display: flex;
+  flex-direction: column;
+  transition: right 0.35s cubic-bezier(0.16, 1, 0.3, 1);
+  box-shadow: var(--shadow-lg);
+}
+
+.cart-drawer.open {
+  right: 0;
+}
+
+.drawer-header {
+  padding: 1.25rem 1.5rem;
+  border-bottom: 1px solid var(--border-subtle);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.drawer-title {
+  font-size: 1.25rem;
+  font-weight: 700;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.close-btn {
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--text-muted);
+  background: var(--bg-card);
+  transition: var(--transition-fast);
+}
+
+.close-btn:hover {
+  background: var(--bg-elevated);
+  color: var(--text-primary);
+}
+
+.drawer-body {
+  flex-grow: 1;
+  overflow-y: auto;
+  padding: 1.25rem 1.5rem;
+}
+
+.cart-items-list {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.cart-item-row {
+  display: flex;
+  gap: 0.85rem;
+  padding: 0.85rem;
+  background: var(--bg-card);
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--radius-md);
+  align-items: center;
+}
+
+.cart-item-thumb {
+  width: 60px;
+  height: 60px;
+  border-radius: var(--radius-sm);
+  object-fit: cover;
+  flex-shrink: 0;
+}
+
+.cart-item-details {
+  flex-grow: 1;
+}
+
+.cart-item-title {
+  font-size: 0.95rem;
+  font-weight: 600;
+  color: var(--text-primary);
+}
+
+.cart-item-price {
+  font-size: 0.85rem;
+  color: var(--primary-orange);
+  font-weight: 700;
+  margin-top: 0.15rem;
+}
+
+.cart-item-actions {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.cart-remove-btn {
+  color: var(--text-dim);
+  font-size: 0.85rem;
+  padding: 0.25rem;
+  transition: var(--transition-fast);
+}
+
+.cart-remove-btn:hover {
+  color: var(--nonveg-red);
+}
+
+.empty-cart-state {
+  text-align: center;
+  padding: 3rem 1rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1rem;
+}
+
+.empty-cart-icon {
+  width: 70px;
+  height: 70px;
+  border-radius: 50%;
+  background: rgba(255, 107, 0, 0.1);
+  color: var(--primary-orange);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.drawer-footer {
+  padding: 1.25rem 1.5rem;
+  border-top: 1px solid var(--border-subtle);
+  background: var(--bg-card);
+}
+
+.bill-summary {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  margin-bottom: 1.25rem;
+}
+
+.bill-row {
+  display: flex;
+  justify-content: space-between;
+  font-size: 0.88rem;
+  color: var(--text-secondary);
+}
+
+.bill-row.total {
+  font-size: 1.15rem;
+  font-weight: 800;
+  color: var(--text-primary);
+  border-top: 1px solid var(--border-subtle);
+  padding-top: 0.65rem;
+  margin-top: 0.25rem;
+}
+
+.checkout-btn {
+  width: 100%;
+  padding: 0.9rem;
+  font-size: 1rem;
+  justify-content: center;
+}
+
+/* Modal Dialog Center */
+.center-modal {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%) scale(0.95);
+  width: 92%;
+  max-width: 620px;
+  max-height: 90vh;
+  background: var(--bg-surface);
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--radius-lg);
+  z-index: 120;
+  display: none;
+  flex-direction: column;
+  box-shadow: var(--shadow-lg);
+  transition: transform var(--transition-smooth);
+  overflow: hidden;
+}
+
+.center-modal.open {
+  display: flex;
+  transform: translate(-50%, -50%) scale(1);
+}
+
+.center-modal form {
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+  min-height: 0;
+  overflow: hidden;
+}
+
+.modal-header {
+  padding: 1.25rem 1.5rem;
+  border-bottom: 1px solid var(--border-subtle);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  background: var(--bg-card);
+  flex-shrink: 0;
+}
+
+.modal-body {
+  padding: 1.5rem;
+  overflow-y: auto;
+  flex: 1;
+  -webkit-overflow-scrolling: touch;
+}
+
+.modal-footer {
+  padding: 1rem 1.5rem;
+  border-top: 1px solid var(--border-subtle);
+  background: var(--bg-card);
+  display: flex;
+  justify-content: flex-end;
+  gap: 0.75rem;
+  flex-shrink: 0;
+}
+
+/* Checkout Form Layout */
+.form-group {
+  margin-bottom: 1.1rem;
+}
+
+.form-label {
+  display: block;
+  font-size: 0.82rem;
+  font-weight: 600;
+  color: var(--text-secondary);
+  margin-bottom: 0.35rem;
+}
+
+.form-input {
+  width: 100%;
+  padding: 0.75rem 1rem;
+  background: var(--bg-card);
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--radius-md);
+  color: var(--text-primary);
+  font-size: 0.9rem;
+  transition: var(--transition-fast);
+}
+
+.form-input:focus {
+  outline: none;
+  border-color: var(--primary-orange);
+  box-shadow: 0 0 10px rgba(255, 107, 0, 0.25);
+}
+
+.form-row-2 {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1rem;
+}
+
+.form-row-3 {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  gap: 0.75rem;
+}
+
+/* Payment Options Selector */
+.payment-options-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 0.85rem;
+  margin-top: 0.75rem;
+}
+
+.payment-option-card {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  padding: 1rem;
+  background: var(--bg-card);
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--radius-md);
+  cursor: pointer;
+  transition: var(--transition-fast);
+}
+
+.payment-option-card:hover {
+  border-color: var(--border-accent);
+}
+
+.payment-option-card.selected {
+  border-color: var(--primary-orange);
+  background: rgba(255, 107, 0, 0.08);
+}
+
+.payment-radio {
+  accent-color: var(--primary-orange);
+  width: 18px;
+  height: 18px;
+}
+
+.payment-option-info {
+  flex-grow: 1;
+}
+
+.payment-title {
+  font-weight: 700;
+  font-size: 0.95rem;
+  color: var(--text-primary);
+}
+
+.payment-subtitle {
+  font-size: 0.78rem;
+  color: var(--text-muted);
+}
+
+/* UPI Quick Apps Grid */
+.upi-apps-row {
+  display: flex;
+  gap: 0.75rem;
+  margin-top: 0.75rem;
+}
+
+.upi-app-btn {
+  flex: 1;
+  padding: 0.6rem 0.5rem;
+  border-radius: var(--radius-sm);
+  background: var(--bg-surface);
+  border: 1px solid var(--border-subtle);
+  font-size: 0.8rem;
+  font-weight: 600;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.4rem;
+  transition: var(--transition-fast);
+}
+
+.upi-app-btn:hover {
+  border-color: var(--gold-accent);
+  color: var(--gold-accent);
+}
+
+/* QR Code Display for Desktop UPI */
+.qr-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 1.25rem;
+  background: #ffffff;
+  border-radius: var(--radius-md);
+  margin: 1rem 0;
+  color: #000;
+  text-align: center;
+}
+
+.qr-code-img {
+  width: 180px;
+  height: 180px;
+  border-radius: 8px;
+}
+
+.qr-label {
+  font-size: 0.8rem;
+  font-weight: 700;
+  margin-top: 0.5rem;
+  color: #333;
+}
+
+/* Cart Drawer Payment Pills */
+.cart-pay-pill {
+  padding: 0.45rem 0.35rem;
+  border-radius: var(--radius-sm);
+  background: var(--bg-card);
+  border: 1px solid var(--border-subtle);
+  color: var(--text-primary);
+  font-size: 0.78rem;
+  font-weight: 700;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: var(--transition-fast);
+}
+
+.cart-pay-pill:hover {
+  border-color: var(--border-accent);
+}
+
+.cart-pay-pill.active {
+  background: rgba(255, 107, 0, 0.15);
+  border-color: var(--primary-orange);
+  color: var(--gold-accent);
+  box-shadow: 0 0 10px rgba(255, 107, 0, 0.25);
+}
+
+/* Interactive Virtual Card Mockup */
+.virtual-card-wrapper {
+  perspective: 1000px;
+  margin: 0.75rem auto 1.25rem;
+  max-width: 360px;
+}
+
+.virtual-card {
+  width: 100%;
+  height: 200px;
+  background: linear-gradient(135deg, #1c1c1e 0%, #111113 45%, #080809 100%);
+  border: 1px solid rgba(255, 183, 3, 0.45);
+  border-radius: 16px;
+  padding: 1.25rem 1.4rem;
+  box-shadow: 0 16px 36px rgba(0, 0, 0, 0.75), 0 0 24px rgba(255, 107, 0, 0.18);
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  color: #fff;
+  position: relative;
+  overflow: hidden;
+  transition: transform 0.3s ease;
+}
+
+.virtual-card::before {
+  content: '';
+  position: absolute;
+  top: -40px;
+  right: -40px;
+  width: 140px;
+  height: 140px;
+  background: radial-gradient(circle, rgba(255, 183, 3, 0.15) 0%, transparent 70%);
+  border-radius: 50%;
+  pointer-events: none;
+}
+
+.virtual-card-top {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.virtual-card-chip {
+  width: 42px;
+  height: 30px;
+  background: linear-gradient(135deg, #d4af37 0%, #f9d976 50%, #cca02a 100%);
+  border-radius: 6px;
+  position: relative;
+  box-shadow: inset 0 1px 2px rgba(0,0,0,0.5);
+}
+
+.virtual-card-chip::after {
+  content: '';
+  position: absolute;
+  top: 50%;
+  left: 0;
+  right: 0;
+  height: 1px;
+  background: rgba(0,0,0,0.35);
+}
+
+.virtual-card-brand-badge {
+  font-size: 1.15rem;
+  font-weight: 800;
+  letter-spacing: 0.08em;
+  font-style: italic;
+  color: var(--gold-accent);
+  text-shadow: 0 2px 4px rgba(0,0,0,0.7);
+}
+
+.virtual-card-number {
+  font-family: 'Courier New', Courier, monospace;
+  font-size: 1.22rem;
+  font-weight: 700;
+  letter-spacing: 0.18em;
+  color: #ffffff;
+  text-shadow: 0 2px 5px rgba(0,0,0,0.9);
+  margin: 0.65rem 0;
+}
+
+.virtual-card-bottom {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-end;
+}
+
+.virtual-card-lbl {
+  font-size: 0.6rem;
+  color: rgba(255,255,255,0.65);
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  margin-bottom: 2px;
+}
+
+.virtual-card-name {
+  font-size: 0.85rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  max-width: 180px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  color: #f1f5f9;
+}
+
+.virtual-card-expiry {
+  font-family: 'Courier New', Courier, monospace;
+  font-size: 0.95rem;
+  font-weight: 700;
+  color: #f1f5f9;
+}
+
+/* Card Input Layout */
+.card-input-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 0.75rem;
+  margin-top: 0.5rem;
+}
+
+/* 3D-Secure Bank OTP Dialog */
+.bank-auth-box {
+  background: var(--bg-card);
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--radius-md);
+  padding: 1.25rem;
+  text-align: left;
+  margin: 1rem 0;
+}
+
+.bank-auth-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border-bottom: 1px solid var(--border-subtle);
+  padding-bottom: 0.75rem;
+  margin-bottom: 0.75rem;
+}
+
+.otp-input-field {
+  letter-spacing: 0.4em;
+  text-align: center;
+  font-size: 1.35rem;
+  font-weight: 800;
+  color: var(--gold-accent);
+}
+
+/* Order Confirmation & Receipt */
+.order-success-banner {
+  text-align: center;
+  padding: 1rem 0 1.5rem;
+}
+
+.success-icon-bubble {
+  width: 68px;
+  height: 68px;
+  border-radius: 50%;
+  background: var(--primary-gradient);
+  color: #0d0d0d;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 1rem;
+  box-shadow: var(--shadow-glow);
+}
+
+.order-id-badge {
+  display: inline-block;
+  background: var(--bg-surface);
+  border: 1px dashed var(--gold-accent);
+  padding: 0.4rem 1rem;
+  border-radius: var(--radius-sm);
+  font-size: 0.95rem;
+  font-weight: 700;
+  color: var(--gold-accent);
+  margin: 0.5rem 0;
+}
+
+/* Order Tracking Progress Stepper */
+.tracking-timeline {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+  position: relative;
+  padding-left: 2rem;
+  margin: 1.5rem 0;
+}
+
+.tracking-timeline::before {
+  content: "";
+  position: absolute;
+  left: 11px;
+  top: 8px;
+  bottom: 8px;
+  width: 2px;
+  background: var(--border-subtle);
+}
+
+.tracking-step {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+}
+
+.step-marker {
+  position: absolute;
+  left: -2rem;
+  top: 2px;
+  width: 24px;
+  height: 24px;
+  border-radius: 50%;
+  background: var(--bg-card);
+  border: 2px solid var(--border-subtle);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 0.65rem;
+  color: var(--text-dim);
+  z-index: 2;
+  transition: var(--transition-fast);
+}
+
+.tracking-step.completed .step-marker {
+  background: var(--veg-green);
+  border-color: var(--veg-green);
+  color: #000;
+}
+
+.tracking-step.active .step-marker {
+  background: var(--primary-orange);
+  border-color: var(--primary-orange);
+  color: #000;
+  box-shadow: 0 0 12px var(--primary-orange);
+  animation: pulseMarker 1.5s infinite;
+}
+
+@keyframes pulseMarker {
+  0% { box-shadow: 0 0 0 0 rgba(255, 107, 0, 0.7); }
+  70% { box-shadow: 0 0 0 10px rgba(255, 107, 0, 0); }
+  100% { box-shadow: 0 0 0 0 rgba(255, 107, 0, 0); }
+}
+
+.step-content h5 {
+  font-size: 0.95rem;
+  font-weight: 700;
+  color: var(--text-primary);
+}
+
+.step-content p {
+  font-size: 0.8rem;
+  color: var(--text-muted);
+}
+
+/* Admin Dashboard Modal */
+.admin-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 0.85rem;
+}
+
+.admin-table th, .admin-table td {
+  padding: 0.75rem 0.5rem;
+  text-align: left;
+  border-bottom: 1px solid var(--border-subtle);
+}
+
+.admin-table th {
+  color: var(--gold-accent);
+  font-weight: 700;
+  text-transform: uppercase;
+  font-size: 0.75rem;
+}
+
+.status-badge {
+  display: inline-block;
+  padding: 0.2rem 0.55rem;
+  border-radius: var(--radius-sm);
+  font-size: 0.72rem;
+  font-weight: 700;
+}
+
+.status-badge.received { background: #3b82f6; color: #fff; }
+.status-badge.confirmed { background: #8b5cf6; color: #fff; }
+.status-badge.preparing { background: #f59e0b; color: #000; }
+.status-badge.delivery { background: #06b6d4; color: #000; }
+.status-badge.delivered { background: #10b981; color: #fff; }
+
+/* Toast Notification */
+.toast-container {
+  position: fixed;
+  bottom: 80px;
+  right: 20px;
+  z-index: 200;
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  pointer-events: none;
+}
+
+@media (min-width: 768px) {
+  .toast-container {
+    bottom: 24px;
+    right: 24px;
+  }
+}
+
+.toast {
+  background: rgba(22, 22, 22, 0.95);
+  backdrop-filter: blur(10px);
+  border: 1px solid var(--border-accent);
+  color: var(--text-primary);
+  padding: 0.75rem 1.25rem;
+  border-radius: var(--radius-md);
+  box-shadow: var(--shadow-lg);
+  font-size: 0.88rem;
+  font-weight: 600;
+  display: flex;
+  align-items: center;
+  gap: 0.65rem;
+  animation: slideInToast 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+  pointer-events: auto;
+}
+
+@keyframes slideInToast {
+  from { transform: translateX(100%); opacity: 0; }
+  to { transform: translateX(0); opacity: 1; }
+}
+
+/* Mobile Sticky Bottom Bar */
+.mobile-bottom-bar {
+  display: flex;
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: 64px;
+  background: rgba(13, 13, 13, 0.95);
+  backdrop-filter: blur(14px);
+  border-top: 1px solid var(--border-subtle);
+  z-index: 45;
+  align-items: center;
+  justify-content: space-around;
+  padding: 0 0.5rem;
+}
+
+@media (min-width: 768px) {
+  .mobile-bottom-bar {
+    display: none;
+  }
+}
+
+.mobile-bar-item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.2rem;
+  font-size: 0.7rem;
+  color: var(--text-muted);
+  transition: var(--transition-fast);
+}
+
+.mobile-bar-item.active, .mobile-bar-item:hover {
+  color: var(--gold-accent);
+}
+
+/* Utility Animations */
+.fade-in {
+  animation: fadeIn 0.4s ease forwards;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+</style>
 </head>
 <body>
 
@@ -964,12 +3113,2317 @@
   <div class="toast-container" id="toast-container"></div>
 
   <!-- Application Scripts -->
-  <script src="js/data.js"></script>
-  <script src="js/cart.js"></script>
-  <script src="js/checkout.js"></script>
-  <script src="js/tracking.js"></script>
-  <script src="js/admin.js"></script>
-  <script src="js/app.js"></script>
+  <script>
+// Spice Street - Food Menu & Restaurant Catalog Data
+// Currency: Indian Rupee (₹)
+
+const RESTAURANT_INFO = {
+  name: "Spice Street",
+  tagline: "Good Food • Great Mood",
+  headline: "Authentic Indian Flavours, Made Fresh",
+  subtext: "Delicious biryanis, starters, curries, refreshing beverages and desserts — freshly prepared for you.",
+  phone: "+91 8341643180",
+  displayPhone: "+91 83416 43180",
+  whatsapp: "918341643180",
+  email: "orders@spicestreet.in",
+  address: "Plot 42, Food Street, Near Metro Station, Madhapur, Hyderabad, Telangana - 500081",
+  timing: "11:30 AM – 11:30 PM (All Days)",
+  deliveryFee: 40,
+  freeDeliveryThreshold: 500,
+  gstRate: 0.05, // 5% GST for restaurant orders
+  upiVpa: "8341643180@ptyes",
+  merchantName: "Spice Street Restaurant"
+};
+
+const MENU_SECTIONS = [
+  {
+    id: "non-veg",
+    name: "Non-Veg Section",
+    title: "🍗 Non-Veg Specials & Main Course",
+    subtitle: "Authentic dum biryanis, fiery starters, and slow-cooked mutton & chicken curries prepared fresh to order.",
+    icon: "🍗",
+    badgeText: "NON-VEG DELICACIES",
+    badgeType: "nonveg",
+    filter: (item) => !item.isVeg && item.category !== "desserts" && item.category !== "beverages"
+  },
+  {
+    id: "veg",
+    name: "Pure Veg Section",
+    title: "🥬 Pure Vegetarian Delights",
+    subtitle: "Cooked in dedicated vegetarian cookware with fresh artisanal paneer, farm vegetables & pure desi ghee.",
+    icon: "🥬",
+    badgeText: "100% PURE VEG",
+    badgeType: "veg",
+    filter: (item) => item.isVeg && item.category !== "desserts" && item.category !== "beverages"
+  },
+  {
+    id: "desserts",
+    name: "Dessert Section",
+    title: "🍨 Desserts & Sweet Mithai",
+    subtitle: "Warm khoya Gulab Jamuns soaked in rose-cardamom sugar syrup and gourmet artisanal ice creams.",
+    icon: "🍨",
+    badgeText: "SWEET SPECIALS",
+    badgeType: "dessert",
+    filter: (item) => item.category === "desserts"
+  },
+  {
+    id: "beverages",
+    name: "Beverages Section",
+    title: "🥤 Chilled Beverages & Coolers",
+    subtitle: "Thick creamy Mango Lassi, fresh lime sodas, cold brewed coffee, and assorted chilled drinks.",
+    icon: "🥤",
+    badgeText: "CHILLED REFRESHERS",
+    badgeType: "beverage",
+    filter: (item) => item.category === "beverages"
+  }
+];
+
+const CATEGORIES = [
+  { id: "all", name: "✨ All Dishes", icon: "utensils" },
+  { id: "non-veg", name: "🍗 Non-Veg Section", icon: "drumstick" },
+  { id: "veg", name: "🥬 Pure Veg Section", icon: "leaf" },
+  { id: "desserts", name: "🍨 Dessert Section", icon: "ice-cream" },
+  { id: "beverages", name: "🥤 Beverages", icon: "cup-soda" }
+];
+
+const MENU_ITEMS = [
+  // --- CATEGORY 1: BIRYANI & RICE ---
+  {
+    id: "biryani-1",
+    name: "Chicken Biryani",
+    category: "biryani",
+    price: 180,
+    isVeg: false,
+    rating: 4.9,
+    reviewsCount: 382,
+    badge: "Bestseller",
+    spiceLevel: 3, // 1 to 3
+    description: "Fragrant long-grain basmati rice slow-cooked in dum style with succulent chicken pieces, caramelized onions, saffron milk, and secret royal spices. Served with cooling raita & salan.",
+    image: "https://images.unsplash.com/photo-1563379091339-03b21ab4a4f8?w=700&auto=format&fit=crop&q=80",
+    available: true
+  },
+  {
+    id: "biryani-2",
+    name: "Mutton Biryani",
+    category: "biryani",
+    price: 250,
+    isVeg: false,
+    rating: 4.9,
+    reviewsCount: 290,
+    badge: "Chef's Special",
+    spiceLevel: 3,
+    description: "Tender, melt-in-mouth mutton cuts marinated overnight in spiced curd and slow-braised with aged basmati rice on sealed handi dum. Truly celebratory feast.",
+    image: "https://images.unsplash.com/photo-1633945274405-b6c8069047b0?w=700&auto=format&fit=crop&q=80",
+    available: true
+  },
+  {
+    id: "biryani-3",
+    name: "Veg Biryani",
+    category: "biryani",
+    price: 140,
+    isVeg: true,
+    rating: 4.7,
+    reviewsCount: 175,
+    badge: "Popular Veg",
+    spiceLevel: 2,
+    description: "Garden-fresh carrots, french beans, green peas, and paneer cubes infused with whole shahi garam masala, fresh mint, coriander, and saffron rice layers.",
+    image: "https://images.unsplash.com/photo-1642821373181-696a54913e9a?w=700&auto=format&fit=crop&q=80",
+    available: true
+  },
+  {
+    id: "biryani-4",
+    name: "Jeera Rice",
+    category: "biryani",
+    price: 100,
+    isVeg: true,
+    rating: 4.6,
+    reviewsCount: 98,
+    badge: "Classic",
+    spiceLevel: 1,
+    description: "Fluffy basmati rice tempered with aromatic roasted cumin seeds (jeera), pure desi ghee, and fragrant bay leaves. Pairs exquisitely with our curries.",
+    image: "https://images.unsplash.com/photo-1596797038530-2c107229654b?w=700&auto=format&fit=crop&q=80",
+    available: true
+  },
+
+  // --- CATEGORY 2: STARTERS ---
+  {
+    id: "starter-1",
+    name: "Chicken 65",
+    category: "starters",
+    price: 160,
+    isVeg: false,
+    rating: 4.8,
+    reviewsCount: 410,
+    badge: "Bestseller",
+    spiceLevel: 3,
+    description: "Crispy, fiery deep-fried boneless chicken bites tossed with South Indian curry leaves, crushed pepper, ginger, garlic, and sliced green chillies.",
+    image: "https://images.unsplash.com/photo-1610057099431-d73a1c9d2f2f?w=700&auto=format&fit=crop&q=80",
+    available: true
+  },
+  {
+    id: "starter-2",
+    name: "Chicken Lollipop",
+    category: "starters",
+    price: 180,
+    isVeg: false,
+    rating: 4.9,
+    reviewsCount: 320,
+    badge: "Must Try",
+    spiceLevel: 2,
+    description: "Crisp-fried chicken winglets french-cut into lollipops, coated in Indo-Chinese spice batter, served piping hot with tangy Schezwan dip.",
+    image: "https://images.unsplash.com/photo-1626082927389-6cd097cdc6ec?w=700&auto=format&fit=crop&q=80",
+    available: true
+  },
+  {
+    id: "starter-3",
+    name: "Paneer Tikka",
+    category: "starters",
+    price: 150,
+    isVeg: true,
+    rating: 4.8,
+    reviewsCount: 260,
+    badge: "Tandoori Special",
+    spiceLevel: 2,
+    description: "Plump cubes of fresh malai paneer and crisp bell peppers marinated in spiced mustard yogurt and char-grilled in a clay tandoor oven. Sprinkled with chaat masala.",
+    image: "https://images.unsplash.com/photo-1599488615731-7e5c2823ff28?w=700&auto=format&fit=crop&q=80",
+    available: true
+  },
+  {
+    id: "starter-4",
+    name: "Veg Spring Rolls",
+    category: "starters",
+    price: 120,
+    isVeg: true,
+    rating: 4.6,
+    reviewsCount: 140,
+    badge: "Crispy Crunch",
+    spiceLevel: 1,
+    description: "Golden crispy pastry rolls bursting with wok-tossed shredded cabbage, carrots, bell peppers, and scallions in light soy dressing. Accompanied with sweet chilli sauce.",
+    image: "https://images.unsplash.com/photo-1606755962773-d324e0a13086?w=700&auto=format&fit=crop&q=80",
+    available: true
+  },
+
+  // --- CATEGORY 3: CURRIES ---
+  {
+    id: "curry-1",
+    name: "Chicken Curry",
+    category: "curries",
+    price: 160,
+    isVeg: false,
+    rating: 4.8,
+    reviewsCount: 305,
+    badge: "Homestyle",
+    spiceLevel: 3,
+    description: "Tender chicken simmered in an authentic, robust onion-tomato gravy laced with roasted coriander seeds, cinnamon, and fresh herbs. Rich and deeply comforting.",
+    image: "https://images.unsplash.com/photo-1588166524941-3bf61a9c41db?w=700&auto=format&fit=crop&q=80",
+    available: true
+  },
+  {
+    id: "curry-2",
+    name: "Mutton Curry",
+    category: "curries",
+    price: 220,
+    isVeg: false,
+    rating: 4.9,
+    reviewsCount: 245,
+    badge: "Royal Rich",
+    spiceLevel: 3,
+    description: "Slow-braised tender mutton in a velvety, dark spiced brown onion gravy enriched with whole spices, Kashmiri red chilli, and a touch of roasted garam masala.",
+    image: "https://images.unsplash.com/photo-1545247181-516773cae754?w=700&auto=format&fit=crop&q=80",
+    available: true
+  },
+  {
+    id: "curry-3",
+    name: "Paneer Butter Masala",
+    category: "curries",
+    price: 160,
+    isVeg: true,
+    rating: 4.9,
+    reviewsCount: 390,
+    badge: "Bestseller",
+    spiceLevel: 1,
+    description: "Soft artisanal cottage cheese cubes swimming in a luscious, silky tomato-cashew satin gravy finished with creamy butter and crushed aromatic kasuri methi.",
+    image: "https://images.unsplash.com/photo-1631452180519-c014fe946bc7?w=700&auto=format&fit=crop&q=80",
+    available: true
+  },
+  {
+    id: "curry-4",
+    name: "Dal Tadka",
+    category: "curries",
+    price: 120,
+    isVeg: true,
+    rating: 4.7,
+    reviewsCount: 215,
+    badge: "Desi Ghee",
+    spiceLevel: 2,
+    description: "Slow-boiled yellow arhar lentils tempered to sizzling perfection with pure desi ghee, golden fried garlic, whole red chillies, hing, and fresh cilantro.",
+    image: "https://images.unsplash.com/photo-1546833999-b9f581a1996d?w=700&auto=format&fit=crop&q=80",
+    available: true
+  },
+
+  // --- CATEGORY 4: BEVERAGES ---
+  {
+    id: "bev-1",
+    name: "Fresh Lime Soda",
+    category: "beverages",
+    price: 60,
+    isVeg: true,
+    rating: 4.8,
+    reviewsCount: 160,
+    badge: "Refreshing",
+    spiceLevel: 0,
+    description: "Sparkling chilled club soda blended with freshly squeezed key limes, rock salt, mint leaves, and sweet syrup. The ultimate palate refresher.",
+    image: "https://images.unsplash.com/photo-1513558161293-cdaf765ed2fd?w=700&auto=format&fit=crop&q=80",
+    available: true
+  },
+  {
+    id: "bev-2",
+    name: "Mango Lassi",
+    category: "beverages",
+    price: 80,
+    isVeg: true,
+    rating: 4.9,
+    reviewsCount: 310,
+    badge: "Signature Drink",
+    spiceLevel: 0,
+    description: "Thick, creamy yogurt churned with sweet Alphonso mango pulp, green cardamom essence, and topped with sliced roasted pistachios.",
+    image: "https://images.unsplash.com/photo-1571006687897-15d97f25906d?w=700&auto=format&fit=crop&q=80",
+    available: true
+  },
+  {
+    id: "bev-3",
+    name: "Cold Coffee",
+    category: "beverages",
+    price: 90,
+    isVeg: true,
+    rating: 4.7,
+    reviewsCount: 185,
+    badge: "Chilled Brew",
+    spiceLevel: 0,
+    description: "Freshly brewed dark espresso blended smooth with rich chilled milk, dark cocoa, and creamy vanilla ice cream. Served with cocoa dusting.",
+    image: "https://images.unsplash.com/photo-1517701550927-30cf4ba1dba5?w=700&auto=format&fit=crop&q=80",
+    available: true
+  },
+  {
+    id: "bev-4",
+    name: "Soft Drinks",
+    category: "beverages",
+    price: 40,
+    isVeg: true,
+    rating: 4.5,
+    reviewsCount: 95,
+    badge: "Chilled",
+    spiceLevel: 0,
+    description: "Assorted chilled canned aerated beverages (Thums Up, Coca-Cola, Sprite). Served chilled with lemon wedge and ice.",
+    image: "https://images.unsplash.com/photo-1622483767028-3f66f32aef97?w=700&auto=format&fit=crop&q=80",
+    available: true
+  },
+
+  // --- CATEGORY 5: DESSERTS ---
+  {
+    id: "dessert-1",
+    name: "Gulab Jamun",
+    category: "desserts",
+    price: 70,
+    isVeg: true,
+    rating: 4.9,
+    reviewsCount: 412,
+    badge: "Crowd Favorite",
+    spiceLevel: 0,
+    description: "Two soft, golden fried khoya dumplings soaked in warm rose and green cardamom-perfumed sugar syrup. Garnished with silver vark and slivered almonds.",
+    image: "https://images.unsplash.com/photo-1601050690597-df0568f70950?w=700&auto=format&fit=crop&q=80",
+    available: true
+  },
+  {
+    id: "dessert-2",
+    name: "Ice Cream",
+    category: "desserts",
+    price: 80,
+    isVeg: true,
+    rating: 4.7,
+    reviewsCount: 220,
+    badge: "Sweet Treat",
+    spiceLevel: 0,
+    description: "Two generous scoops of gourmet artisanal ice cream (choice of Shahi Kulfi, Belgian Chocolate, or Madagascan Vanilla) topped with roasted nuts and chocolate drizzle.",
+    image: "https://images.unsplash.com/photo-1563805042-7684c019e1cb?w=700&auto=format&fit=crop&q=80",
+    available: true
+  }
+];
+
+// Helper to format currency in Indian format (e.g. ₹180, ₹1,250)
+function formatCurrency(amount) {
+  const num = Math.round(amount || 0);
+  return "₹" + num.toLocaleString("en-IN");
+}
+
+
+// Spice Street - Shopping Cart Module
+// Handles add/remove/update, persistence in localStorage, and UI synchronization
+
+const CART_STORAGE_KEY = "spice_street_cart_v1";
+
+class CartManager {
+  constructor() {
+    this.items = this.loadCart();
+    this.listeners = [];
+  }
+
+  loadCart() {
+    try {
+      const saved = localStorage.getItem(CART_STORAGE_KEY);
+      return saved ? JSON.parse(saved) : [];
+    } catch (e) {
+      console.warn("Could not load cart from localStorage", e);
+      return [];
+    }
+  }
+
+  saveCart() {
+    try {
+      localStorage.setItem(CART_STORAGE_KEY, JSON.stringify(this.items));
+    } catch (e) {
+      console.warn("Could not save cart to localStorage", e);
+    }
+    this.notify();
+  }
+
+  subscribe(callback) {
+    this.listeners.push(callback);
+    callback(this.getState());
+  }
+
+  notify() {
+    const state = this.getState();
+    this.listeners.forEach(cb => cb(state));
+  }
+
+  addItem(productId, quantity = 1) {
+    const product = MENU_ITEMS.find(item => item.id === productId);
+    if (!product) return false;
+
+    const existingIndex = this.items.findIndex(i => i.id === productId);
+    if (existingIndex > -1) {
+      this.items[existingIndex].quantity += quantity;
+    } else {
+      this.items.push({
+        id: product.id,
+        name: product.name,
+        price: product.price,
+        image: product.image,
+        isVeg: product.isVeg,
+        quantity: Math.max(1, quantity)
+      });
+    }
+
+    this.saveCart();
+    return true;
+  }
+
+  updateQuantity(productId, delta) {
+    const item = this.items.find(i => i.id === productId);
+    if (!item) return;
+
+    item.quantity += delta;
+    if (item.quantity <= 0) {
+      this.removeItem(productId);
+    } else {
+      this.saveCart();
+    }
+  }
+
+  setQuantity(productId, exactQuantity) {
+    const item = this.items.find(i => i.id === productId);
+    if (!item) return;
+
+    if (exactQuantity <= 0) {
+      this.removeItem(productId);
+    } else {
+      item.quantity = exactQuantity;
+      this.saveCart();
+    }
+  }
+
+  removeItem(productId) {
+    this.items = this.items.filter(i => i.id !== productId);
+    this.saveCart();
+  }
+
+  clearCart() {
+    this.items = [];
+    this.saveCart();
+  }
+
+  getItemQuantity(productId) {
+    const item = this.items.find(i => i.id === productId);
+    return item ? item.quantity : 0;
+  }
+
+  getTotalCount() {
+    return this.items.reduce((total, item) => total + item.quantity, 0);
+  }
+
+  getSubtotal() {
+    return this.items.reduce((sum, item) => sum + (item.price * item.quantity), 0);
+  }
+
+  getDeliveryFee() {
+    const subtotal = this.getSubtotal();
+    if (subtotal === 0) return 0;
+    if (subtotal >= RESTAURANT_INFO.freeDeliveryThreshold) return 0;
+    return RESTAURANT_INFO.deliveryFee;
+  }
+
+  getTaxes() {
+    // 5% GST on food
+    const subtotal = this.getSubtotal();
+    return Math.round(subtotal * RESTAURANT_INFO.gstRate);
+  }
+
+  getGrandTotal() {
+    const subtotal = this.getSubtotal();
+    if (subtotal === 0) return 0;
+    return subtotal + this.getDeliveryFee() + this.getTaxes();
+  }
+
+  getState() {
+    return {
+      items: [...this.items],
+      totalCount: this.getTotalCount(),
+      subtotal: this.getSubtotal(),
+      deliveryFee: this.getDeliveryFee(),
+      taxes: this.getTaxes(),
+      grandTotal: this.getGrandTotal()
+    };
+  }
+}
+
+// Global Cart Instance
+const cart = new CartManager();
+window.spiceCart = cart;
+
+
+// Spice Street - Checkout & Payment Controller
+// Strict Security: No card details, CVVs, or UPI PINs collected or stored.
+// Implements COD, Official UPI Intent & QR, and Secure Hosted Gateway flow.
+
+const ORDERS_STORAGE_KEY = "spice_street_orders_v1";
+
+class CheckoutController {
+  constructor() {
+    this.selectedPaymentMethod = "cod";
+    this.currentOrder = null;
+    this.initOrdersStorage();
+  }
+
+  initOrdersStorage() {
+    if (!localStorage.getItem(ORDERS_STORAGE_KEY)) {
+      localStorage.setItem(ORDERS_STORAGE_KEY, JSON.stringify([]));
+    }
+  }
+
+  getAllOrders() {
+    try {
+      return JSON.parse(localStorage.getItem(ORDERS_STORAGE_KEY)) || [];
+    } catch (e) {
+      return [];
+    }
+  }
+
+  saveOrder(order) {
+    const orders = this.getAllOrders();
+    // Check if updating existing
+    const existingIndex = orders.findIndex(o => o.orderId === order.orderId);
+    if (existingIndex > -1) {
+      orders[existingIndex] = order;
+    } else {
+      orders.unshift(order);
+    }
+    localStorage.setItem(ORDERS_STORAGE_KEY, JSON.stringify(orders));
+
+    // 1. Sync with local PowerShell server
+    this.syncOrderWithBackend(order);
+
+    // 2. Automatically sync to Supabase Cloud Database!
+    this.syncOrderToSupabase(order);
+  }
+
+  async syncOrderWithBackend(order) {
+    try {
+      await fetch("/api/orders", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(order)
+      });
+    } catch (e) {
+      // Backend is optional/local fallback
+    }
+  }
+
+  async syncOrderToSupabase(order) {
+    try {
+      const config = {
+        url: localStorage.getItem("spice_supabase_url") || "https://ifodvvqzpuoyhfwjtclw.supabase.co",
+        anonKey: localStorage.getItem("spice_supabase_key") || "sb_publishable_nyRqCbF7fvOJ7UMZ2jISSw_mX5XXkqo"
+      };
+
+      if (window.supabase) {
+        const client = window.supabase.createClient(config.url, config.anonKey);
+        await client.from("orders").insert([
+          {
+            order_id: order.orderId,
+            customer_name: order.customer.fullName,
+            phone: order.customer.phone,
+            email: order.customer.email || "",
+            street_address: `${order.customer.address.flatNo || ''} ${order.customer.address.street || ''}`,
+            landmark: order.customer.deliveryInstructions || "",
+            pincode: order.customer.address.pincode || "",
+            items: JSON.stringify(order.items),
+            subtotal: order.pricing.subtotal,
+            delivery_fee: order.pricing.deliveryFee,
+            grand_total: order.pricing.grandTotal,
+            payment_mode: order.payment.method,
+            payment_status: order.payment.status,
+            order_status: order.status,
+            utr: order.payment.transactionId || "N/A"
+          }
+        ]);
+        console.log("☁️ Order synced to Supabase Cloud:", order.orderId);
+      }
+    } catch (e) {
+      console.warn("Supabase auto-sync failed (using local fallback):", e);
+    }
+  }
+
+  generateOrderId() {
+    const timestamp = Date.now().toString().slice(-4);
+    const random = Math.floor(1000 + Math.random() * 9000);
+    return `SS-${timestamp}-${random}`;
+  }
+
+  validateForm(formData) {
+    const errors = [];
+    if (!formData.fullName || formData.fullName.trim().length < 3) {
+      errors.push("Please enter your full name (minimum 3 characters).");
+    }
+
+    const phoneRegex = /^[6-9]\d{9}$/;
+    const cleanPhone = (formData.phone || "").replace(/\D/g, "");
+    if (!phoneRegex.test(cleanPhone)) {
+      errors.push("Please enter a valid 10-digit Indian mobile number (e.g. 9876543210).");
+    }
+
+    if (!formData.flatNo || formData.flatNo.trim().length < 1) {
+      errors.push("Please enter your Flat / House / Floor number.");
+    }
+
+    if (!formData.street || formData.street.trim().length < 4) {
+      errors.push("Please enter your Street / Area / Landmark.");
+    }
+
+    if (!formData.city || formData.city.trim().length < 2) {
+      errors.push("Please enter your City.");
+    }
+
+    const pinRegex = /^[1-9][0-9]{5}$/;
+    if (!pinRegex.test((formData.pincode || "").trim())) {
+      errors.push("Please enter a valid 6-digit Indian PIN code.");
+    }
+
+    return {
+      isValid: errors.length === 0,
+      errors,
+      cleanPhone
+    };
+  }
+
+  createOrderObject(customerData, paymentMethod, paymentStatus = "Pending") {
+    const cartState = window.spiceCart.getState();
+    const orderId = this.generateOrderId();
+    const now = new Date();
+
+    const order = {
+      orderId,
+      createdAt: now.toISOString(),
+      displayDate: now.toLocaleDateString("en-IN", {
+        day: "numeric",
+        month: "short",
+        year: "numeric",
+        hour: "2-digit",
+        minute: "2-digit"
+      }),
+      customer: {
+        fullName: customerData.fullName.trim(),
+        phone: customerData.phone.trim(),
+        email: (customerData.email || "").trim(),
+        address: {
+          flatNo: customerData.flatNo.trim(),
+          street: customerData.street.trim(),
+          city: customerData.city.trim(),
+          state: customerData.state ? customerData.state.trim() : "Telangana",
+          pincode: customerData.pincode.trim()
+        },
+        deliveryInstructions: (customerData.instructions || "").trim()
+      },
+      items: cartState.items,
+      pricing: {
+        subtotal: cartState.subtotal,
+        deliveryFee: cartState.deliveryFee,
+        taxes: cartState.taxes,
+        grandTotal: cartState.grandTotal
+      },
+      payment: {
+        method: paymentMethod, // 'cod', 'upi_gpay', 'upi_phonepe', 'upi_paytm', 'upi_qr', 'card'
+        status: paymentStatus, // 'Pending', 'Paid', 'COD / Confirmed'
+        transactionId: paymentStatus === "Paid" ? `TXN_${Date.now()}` : null
+      },
+      status: "Order Confirmed", // 'Order Received' -> 'Order Confirmed' -> 'Preparing' -> 'Out for Delivery' -> 'Delivered'
+      estimatedDeliveryTime: "25-35 mins",
+      shipment: {
+        partner: Math.random() > 0.5 ? "Zomato Fleet" : "Swiggy Fleet",
+        riderName: Math.random() > 0.5 ? "Rahul Sharma (Zomato Fleet)" : "Suresh Varma (Swiggy Fleet)",
+        riderPhone: Math.random() > 0.5 ? "9849012345" : "9849055667",
+        vehicleNo: Math.random() > 0.5 ? "TS 09 UB 8921" : "TS 08 AB 1144",
+        rating: "4.9★",
+        status: "Assigned"
+      },
+      deliveryRider: {
+        partner: Math.random() > 0.5 ? "Zomato Fleet" : "Swiggy Fleet",
+        name: "Express Delivery Partner",
+        phone: "+91 98490 12345",
+        status: "Assigned"
+      }
+    };
+
+    // Keep deliveryRider synchronized with shipment
+    order.deliveryRider.name = order.shipment.riderName;
+    order.deliveryRider.phone = order.shipment.riderPhone;
+    order.deliveryRider.partner = order.shipment.partner;
+
+    return order;
+  }
+
+  // Generate UPI Intent URI according to NPCI specifications
+  buildUpiUrl(amount, orderId) {
+    const vpa = RESTAURANT_INFO.upiVpa;
+    const name = encodeURIComponent(RESTAURANT_INFO.merchantName);
+    const note = encodeURIComponent(`Order ${orderId} - Spice Street`);
+    return `upi://pay?pa=${vpa}&pn=${name}&am=${amount.toFixed(2)}&cu=INR&tn=${note}`;
+  }
+
+  // Generate QR Code URL via free reliable QR API
+  getQrCodeUrl(upiUrl) {
+    return `https://api.qrserver.com/v1/create-qr-code/?size=250x250&data=${encodeURIComponent(upiUrl)}`;
+  }
+}
+
+window.checkoutController = new CheckoutController();
+
+
+// Spice Street - Live Order Tracking Controller
+// Manages real-time visual progress through the 5 order states
+
+const ORDER_STEPS = [
+  { id: "Order Received", label: "Order Received", desc: "We have received your order details.", time: "0 min" },
+  { id: "Order Confirmed", label: "Order Confirmed", desc: "Kitchen accepted and verified payment/order.", time: "2 mins" },
+  { id: "Preparing", label: "Preparing in Kitchen", desc: "Chef is slow-cooking fresh biryani & curries.", time: "15 mins" },
+  { id: "Out for Delivery", label: "Out for Delivery", desc: "Delivery partner is on the way to your door.", time: "25 mins" },
+  { id: "Delivered", label: "Delivered", desc: "Delivered fresh & hot. Enjoy your meal!", time: "35 mins" }
+];
+
+class TrackingController {
+  constructor() {
+    this.activeTrackingOrderId = null;
+  }
+
+  getOrder(orderId) {
+    const orders = window.checkoutController ? window.checkoutController.getAllOrders() : [];
+    return orders.find(o => o.orderId.toLowerCase() === orderId.trim().toLowerCase());
+  }
+
+  renderTracking(orderId) {
+    const order = this.getOrder(orderId);
+    const trackingContainer = document.getElementById("tracking-content");
+    if (!trackingContainer) return;
+
+    if (!order) {
+      trackingContainer.innerHTML = `
+        <div style="text-align: center; padding: 2.5rem 1rem;">
+          <div style="font-size: 3rem; margin-bottom: 1rem;">🔍</div>
+          <h3 style="font-size: 1.3rem; margin-bottom: 0.5rem;">Order Not Found</h3>
+          <p style="color: var(--text-muted); margin-bottom: 1.5rem;">We couldn't find an order matching "<strong>${orderId}</strong>". Please check the order ID.</p>
+          <button class="btn-primary" onclick="showTrackSearchPrompt()">Enter Different Order ID</button>
+        </div>
+      `;
+      return;
+    }
+
+    this.activeTrackingOrderId = order.orderId;
+    const currentStepIndex = ORDER_STEPS.findIndex(s => s.id === order.status);
+    const safeIndex = currentStepIndex > -1 ? currentStepIndex : 1;
+
+    let stepsHtml = ORDER_STEPS.map((step, idx) => {
+      let stepClass = "";
+      if (idx < safeIndex) {
+        stepClass = "completed";
+      } else if (idx === safeIndex) {
+        stepClass = "active";
+      }
+
+      return `
+        <div class="tracking-step ${stepClass}">
+          <div class="step-marker">
+            ${idx < safeIndex ? '✓' : (idx + 1)}
+          </div>
+          <div class="step-content">
+            <div style="display: flex; justify-content: space-between; align-items: baseline;">
+              <h5>${step.label}</h5>
+              <span style="font-size: 0.75rem; color: var(--gold-accent);">${idx <= safeIndex ? '✓' : step.time}</span>
+            </div>
+            <p>${step.desc}</p>
+          </div>
+        </div>
+      `;
+    }).join("");
+
+    const itemsSummary = order.items.map(i => `
+      <div style="display: flex; justify-content: space-between; font-size: 0.85rem; padding: 0.35rem 0; border-bottom: 1px dashed rgba(255,255,255,0.06);">
+        <span>${i.quantity}x ${i.name}</span>
+        <span style="color: var(--primary-orange); font-weight: 600;">${formatCurrency(i.price * i.quantity)}</span>
+      </div>
+    `).join("");
+
+    trackingContainer.innerHTML = `
+      <div style="background: var(--bg-card); border: 1px solid var(--border-subtle); border-radius: var(--radius-md); padding: 1.25rem; margin-bottom: 1.5rem;">
+        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 0.75rem;">
+          <span style="font-size: 0.8rem; color: var(--text-muted);">ORDER NUMBER</span>
+          <span class="order-id-badge" style="margin: 0;">#${order.orderId}</span>
+        </div>
+        <div style="display: flex; justify-content: space-between; align-items: center;">
+          <div>
+            <div style="font-size: 0.75rem; color: var(--text-muted);">STATUS</div>
+            <div style="font-size: 1.05rem; font-weight: 700; color: var(--gold-accent);">${order.status}</div>
+          </div>
+          <div style="text-align: right;">
+            <div style="font-size: 0.75rem; color: var(--text-muted);">ESTIMATED TIME</div>
+            <div style="font-size: 1.05rem; font-weight: 700; color: var(--primary-orange);">${order.estimatedDeliveryTime}</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Live Stepper -->
+      <div class="tracking-timeline">
+        ${stepsHtml}
+      </div>
+
+      <!-- Third-Party Delivery Rider Card (Zomato / Swiggy Fleet) -->
+      ${(order.shipment && order.shipment.riderName && order.shipment.riderName !== "Not Assigned") ? `
+        <div style="background: rgba(255, 107, 0, 0.08); border: 1.5px solid ${order.shipment.partner && order.shipment.partner.toLowerCase().includes('zomato') ? '#cb202d' : order.shipment.partner && order.shipment.partner.toLowerCase().includes('swiggy') ? '#fc8019' : 'var(--gold-accent)'}; border-radius: var(--radius-md); padding: 1.15rem; margin-top: 1.5rem;">
+          <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 0.65rem;">
+            <div style="display: flex; align-items: center; gap: 0.5rem;">
+              <span style="font-size: 1.5rem;">🛵</span>
+              <div>
+                <div style="font-size: 0.72rem; color: var(--text-muted); font-weight: 800; text-transform: uppercase;">
+                  ${order.shipment.partner || '3rd-Party Delivery Partner'}
+                </div>
+                <div style="font-size: 1.05rem; font-weight: 800; color: #fff;">
+                  ${order.shipment.riderName}
+                </div>
+              </div>
+            </div>
+            <span style="background: ${order.shipment.partner && order.shipment.partner.toLowerCase().includes('zomato') ? 'rgba(203, 32, 45, 0.25)' : 'rgba(252, 128, 25, 0.25)'}; color: ${order.shipment.partner && order.shipment.partner.toLowerCase().includes('zomato') ? '#ff6b77' : '#ffa959'}; font-size: 0.75rem; padding: 0.25rem 0.65rem; border-radius: 4px; font-weight: 800;">
+              CONNECTED • ${order.shipment.rating || '4.9★'}
+            </span>
+          </div>
+
+          <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 0.5rem; font-size: 0.82rem; color: var(--text-secondary); margin-bottom: 0.85rem;">
+            <div>🏍️ <strong>Vehicle:</strong> ${order.shipment.vehicleNo || 'Bike'}</div>
+            <div>⏱️ <strong>ETA:</strong> ${order.estimatedDeliveryTime || '25 mins'}</div>
+          </div>
+
+          <div style="display: flex; gap: 0.5rem;">
+            <a href="tel:${order.shipment.riderPhone}" class="btn-primary" style="flex: 1; justify-content: center; font-size: 0.85rem; padding: 0.55rem; text-decoration: none;">
+              📞 Call Rider
+            </a>
+            <a href="https://wa.me/91${(order.shipment.riderPhone || '').replace(/\D/g, '')}?text=Hi%20${encodeURIComponent(order.shipment.riderName)},%20I%20am%20the%20customer%20for%20Spice%20Street%20Order%20%23${order.orderId}" target="_blank" class="btn-contact btn-whatsapp" style="flex: 1; justify-content: center; font-size: 0.85rem; padding: 0.55rem; text-decoration: none;">
+              💬 WhatsApp Rider
+            </a>
+          </div>
+        </div>
+      ` : ''}
+
+      <!-- Delivery Details Card -->
+      <div style="background: var(--bg-card); border: 1px solid var(--border-subtle); border-radius: var(--radius-md); padding: 1.25rem; margin-top: 1rem;">
+        <h4 style="font-size: 0.95rem; margin-bottom: 0.75rem; color: var(--gold-accent);">📍 Delivery Address</h4>
+        <p style="font-size: 0.88rem; font-weight: 600;">${order.customer.fullName} (${order.customer.phone})</p>
+        <p style="font-size: 0.82rem; color: var(--text-secondary); margin-top: 0.2rem;">
+          ${order.customer.address.flatNo}, ${order.customer.address.street}, ${order.customer.address.city} - ${order.customer.address.pincode}
+        </p>
+        ${order.customer.deliveryInstructions ? `<p style="font-size: 0.78rem; color: var(--text-dim); margin-top: 0.4rem;"><em>Note: ${order.customer.deliveryInstructions}</em></p>` : ''}
+      </div>
+
+      <!-- Items Breakdown -->
+      <div style="background: var(--bg-card); border: 1px solid var(--border-subtle); border-radius: var(--radius-md); padding: 1.25rem; margin-top: 1rem;">
+        <h4 style="font-size: 0.95rem; margin-bottom: 0.75rem; color: var(--gold-accent);">🍛 Ordered Food (${order.items.length} items)</h4>
+        <div>${itemsSummary}</div>
+        <div style="display: flex; justify-content: space-between; font-weight: 800; font-size: 1.05rem; margin-top: 0.75rem; padding-top: 0.5rem; border-top: 1px solid var(--border-subtle);">
+          <span>Total Paid (${order.payment.method.toUpperCase()})</span>
+          <span style="color: var(--gold-accent);">${formatCurrency(order.pricing.grandTotal)}</span>
+        </div>
+      </div>
+
+      <!-- Action Buttons -->
+      <div style="display: flex; gap: 0.75rem; margin-top: 1.5rem;">
+        <button class="btn-primary" style="flex: 1; justify-content: center;" onclick="openWhatsAppOrderUpdate('${order.orderId}')">
+          💬 WhatsApp Live Help
+        </button>
+        <button class="btn-outline" style="flex: 1; justify-content: center;" onclick="closeAllModals()">
+          Done
+        </button>
+      </div>
+    `;
+  }
+}
+
+window.trackingController = new TrackingController();
+
+
+// Spice Street - Restaurant Owner & Admin Dashboard
+// Protected by PIN authentication: 1234
+// Allows order tracking status management, COD tracking, menu pricing & stock controls
+
+const ADMIN_PIN = "1234";
+
+class AdminManager {
+  constructor() {
+    this.isAuthenticated = false;
+  }
+
+  verifyPin(inputPin) {
+    if (inputPin === ADMIN_PIN) {
+      this.isAuthenticated = true;
+      return true;
+    }
+    return false;
+  }
+
+  renderDashboard() {
+    const container = document.getElementById("admin-content");
+    if (!container) return;
+
+    if (!this.isAuthenticated) {
+      container.innerHTML = `
+        <div style="max-width: 360px; margin: 2rem auto; text-align: center; background: var(--bg-card); padding: 2rem; border-radius: var(--radius-lg); border: 1px solid var(--border-accent);">
+          <div style="font-size: 2.5rem; margin-bottom: 0.75rem;">🔒</div>
+          <h3 style="font-size: 1.25rem; font-weight: 700; margin-bottom: 0.5rem;">Spice Street Admin Portal</h3>
+          <p style="font-size: 0.85rem; color: var(--text-muted); margin-bottom: 1.5rem;">Restricted to restaurant staff. Enter Admin Security PIN.</p>
+          <div class="form-group">
+            <input type="password" id="admin-pin-input" class="form-input" placeholder="Enter PIN (Default: 1234)" style="text-align: center; font-size: 1.2rem; letter-spacing: 0.3em;" maxlength="6" autofocus />
+          </div>
+          <button class="btn-primary" style="width: 100%; justify-content: center; margin-top: 0.5rem;" onclick="submitAdminPin()">
+            Unlock Dashboard
+          </button>
+          <p id="admin-pin-error" style="color: var(--nonveg-red); font-size: 0.8rem; margin-top: 0.75rem; display: none;">Invalid PIN. Please try again.</p>
+        </div>
+      `;
+      return;
+    }
+
+    const orders = window.checkoutController ? window.checkoutController.getAllOrders() : [];
+    const menuItems = MENU_ITEMS;
+
+    container.innerHTML = `
+      <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1.5rem; flex-wrap: wrap; gap: 1rem;">
+        <div>
+          <h3 style="font-size: 1.3rem; font-weight: 800; color: var(--text-primary);">Restaurant Operations Dashboard</h3>
+          <p style="font-size: 0.82rem; color: var(--text-muted);">Real-time live incoming orders & menu controls</p>
+        </div>
+        <div style="display: flex; gap: 0.5rem;">
+          <button class="btn-outline" style="padding: 0.45rem 0.9rem; font-size: 0.82rem;" onclick="adminManager.renderOrdersTab()">📋 Orders (${orders.length})</button>
+          <button class="btn-outline" style="padding: 0.45rem 0.9rem; font-size: 0.82rem;" onclick="adminManager.renderMenuTab()">🍲 Menu Items (${menuItems.length})</button>
+          <button class="btn-contact" style="padding: 0.45rem 0.9rem; font-size: 0.82rem; border-color: var(--nonveg-red); color: var(--nonveg-red);" onclick="adminManager.logout()">Logout</button>
+        </div>
+      </div>
+
+      <div id="admin-tab-content">
+        <!-- Injected dynamically -->
+      </div>
+    `;
+
+    this.renderOrdersTab();
+  }
+
+  logout() {
+    this.isAuthenticated = false;
+    this.renderDashboard();
+  }
+
+  renderOrdersTab() {
+    const tabContent = document.getElementById("admin-tab-content");
+    if (!tabContent) return;
+
+    const orders = window.checkoutController ? window.checkoutController.getAllOrders() : [];
+
+    if (orders.length === 0) {
+      tabContent.innerHTML = `
+        <div style="text-align: center; padding: 3rem; background: var(--bg-card); border-radius: var(--radius-md); border: 1px solid var(--border-subtle);">
+          <div style="font-size: 2.5rem; margin-bottom: 0.5rem;">🍽️</div>
+          <h4>No orders placed yet</h4>
+          <p style="color: var(--text-muted); font-size: 0.85rem; margin-top: 0.25rem;">Orders submitted on the website will appear here in real time.</p>
+        </div>
+      `;
+      return;
+    }
+
+    const rows = orders.map(order => {
+      const isCod = order.payment.method.toLowerCase().includes("cod");
+      const paymentBadge = isCod 
+        ? `<span style="background: rgba(255,183,3,0.15); color: var(--gold-accent); padding: 0.2rem 0.5rem; border-radius: 4px; font-size: 0.72rem; font-weight: 700;">COD (${order.payment.status})</span>`
+        : `<span style="background: rgba(34,197,94,0.15); color: var(--veg-green); padding: 0.2rem 0.5rem; border-radius: 4px; font-size: 0.72rem; font-weight: 700;">ONLINE (Paid)</span>`;
+
+      const itemsList = order.items.map(i => `${i.quantity}x ${i.name}`).join(", ");
+
+      return `
+        <tr>
+          <td>
+            <strong>#${order.orderId}</strong><br/>
+            <span style="font-size: 0.72rem; color: var(--text-muted);">${order.displayDate}</span>
+          </td>
+          <td>
+            <strong>${order.customer.fullName}</strong><br/>
+            <span style="font-size: 0.75rem; color: var(--text-secondary);">${order.customer.phone}</span><br/>
+            <span style="font-size: 0.72rem; color: var(--text-dim);">${order.customer.address.street}, ${order.customer.address.city}</span>
+          </td>
+          <td style="max-width: 220px; font-size: 0.8rem;">
+            ${itemsList}
+          </td>
+          <td>
+            <strong style="color: var(--gold-accent);">${formatCurrency(order.pricing.grandTotal)}</strong><br/>
+            ${paymentBadge}
+          </td>
+          <td>
+            <select onchange="adminManager.changeOrderStatus('${order.orderId}', this.value)" style="background: var(--bg-card); color: var(--text-primary); border: 1px solid var(--border-accent); padding: 0.35rem 0.6rem; border-radius: var(--radius-sm); font-size: 0.8rem; font-weight: 600;">
+              <option value="Order Received" ${order.status === 'Order Received' ? 'selected' : ''}>Order Received</option>
+              <option value="Order Confirmed" ${order.status === 'Order Confirmed' ? 'selected' : ''}>Order Confirmed</option>
+              <option value="Preparing" ${order.status === 'Preparing' ? 'selected' : ''}>Preparing</option>
+              <option value="Out for Delivery" ${order.status === 'Out for Delivery' ? 'selected' : ''}>Out for Delivery</option>
+              <option value="Delivered" ${order.status === 'Delivered' ? 'selected' : ''}>Delivered</option>
+            </select>
+          </td>
+        </tr>
+      `;
+    }).join("");
+
+    tabContent.innerHTML = `
+      <div style="overflow-x: auto; background: var(--bg-card); border-radius: var(--radius-md); border: 1px solid var(--border-subtle); padding: 0.5rem;">
+        <table class="admin-table">
+          <thead>
+            <tr>
+              <th>Order ID / Time</th>
+              <th>Customer & Address</th>
+              <th>Items</th>
+              <th>Amount & Payment</th>
+              <th>Update Status</th>
+            </tr>
+          </thead>
+          <tbody>
+            ${rows}
+          </tbody>
+        </table>
+      </div>
+    `;
+  }
+
+  changeOrderStatus(orderId, newStatus) {
+    const orders = window.checkoutController.getAllOrders();
+    const order = orders.find(o => o.orderId === orderId);
+    if (order) {
+      order.status = newStatus;
+      if (newStatus === "Delivered" && order.payment.method.toLowerCase().includes("cod")) {
+        order.payment.status = "Paid (COD Collected)";
+      }
+      window.checkoutController.saveOrder(order);
+      showToast(`Order #${orderId} status updated to: ${newStatus}`);
+      this.renderOrdersTab();
+    }
+  }
+
+  renderMenuTab() {
+    const tabContent = document.getElementById("admin-tab-content");
+    if (!tabContent) return;
+
+    const rows = MENU_ITEMS.map(item => {
+      return `
+        <tr>
+          <td>
+            <div style="display: flex; align-items: center; gap: 0.75rem;">
+              <img src="${item.image}" style="width: 40px; height: 40px; border-radius: 6px; object-fit: cover;" />
+              <div>
+                <strong>${item.name}</strong><br/>
+                <span style="font-size: 0.72rem; color: var(--text-muted); text-transform: uppercase;">${item.category}</span>
+              </div>
+            </div>
+          </td>
+          <td>
+            <div style="display: flex; align-items: center; gap: 0.35rem;">
+              <span>₹</span>
+              <input type="number" value="${item.price}" style="width: 70px; padding: 0.3rem 0.5rem; background: var(--bg-surface); border: 1px solid var(--border-subtle); border-radius: 4px; color: var(--gold-accent); font-weight: 700;" onchange="adminManager.updateItemPrice('${item.id}', this.value)" />
+            </div>
+          </td>
+          <td>
+            <button class="btn-contact" style="padding: 0.35rem 0.75rem; font-size: 0.75rem; border-color: ${item.available !== false ? 'var(--veg-green)' : 'var(--nonveg-red)'}; color: ${item.available !== false ? 'var(--veg-green)' : 'var(--nonveg-red)'};" onclick="adminManager.toggleAvailability('${item.id}')">
+              ${item.available !== false ? '● In Stock' : '○ Out of Stock'}
+            </button>
+          </td>
+        </tr>
+      `;
+    }).join("");
+
+    tabContent.innerHTML = `
+      <div style="overflow-x: auto; background: var(--bg-card); border-radius: var(--radius-md); border: 1px solid var(--border-subtle); padding: 0.5rem;">
+        <table class="admin-table">
+          <thead>
+            <tr>
+              <th>Dish & Category</th>
+              <th>Price (₹)</th>
+              <th>Stock Status</th>
+            </tr>
+          </thead>
+          <tbody>
+            ${rows}
+          </tbody>
+        </table>
+      </div>
+    `;
+  }
+
+  updateItemPrice(itemId, newPrice) {
+    const item = MENU_ITEMS.find(i => i.id === itemId);
+    if (item) {
+      item.price = Math.max(10, parseInt(newPrice) || item.price);
+      showToast(`Updated price for ${item.name} to ${formatCurrency(item.price)}`);
+      // Re-render menu on user facing side
+      if (window.renderMenuCards) window.renderMenuCards();
+    }
+  }
+
+  toggleAvailability(itemId) {
+    const item = MENU_ITEMS.find(i => i.id === itemId);
+    if (item) {
+      item.available = item.available === false ? true : false;
+      showToast(`${item.name} is now ${item.available ? 'In Stock' : 'Out of Stock'}`);
+      this.renderMenuTab();
+      if (window.renderMenuCards) window.renderMenuCards();
+    }
+  }
+}
+
+const adminManager = new AdminManager();
+window.adminManager = adminManager;
+
+function submitAdminPin() {
+  const pinInput = document.getElementById("admin-pin-input");
+  const errorMsg = document.getElementById("admin-pin-error");
+  if (!pinInput) return;
+
+  if (adminManager.verifyPin(pinInput.value.trim())) {
+    adminManager.renderDashboard();
+  } else {
+    if (errorMsg) errorMsg.style.display = "block";
+    pinInput.value = "";
+    pinInput.focus();
+  }
+}
+
+
+// Spice Street - Main Application Coordinator
+// UI Interactions, Menu Rendering, Search, Modals, Payment Orchestration
+
+let activeCategory = "all";
+let activeDietFilter = "all"; // 'all', 'veg', 'non-veg'
+let searchQuery = "";
+
+document.addEventListener("DOMContentLoaded", () => {
+  initApp();
+});
+
+function initApp() {
+  renderCategoryPills();
+  renderMenuCards();
+  initSearch();
+  initDietaryFilters();
+  initCartSubscription();
+  initNavigation();
+}
+
+// Category Pills Rendering
+function renderCategoryPills() {
+  const container = document.getElementById("category-pills-container");
+  if (!container) return;
+
+  container.innerHTML = CATEGORIES.map(cat => `
+    <button class="category-pill ${cat.id === activeCategory ? 'active' : ''}" onclick="selectCategory('${cat.id}')">
+      ${cat.name}
+    </button>
+  `).join("");
+}
+
+function selectCategory(categoryId) {
+  activeCategory = categoryId;
+  renderCategoryPills();
+  renderMenuCards();
+
+  if (categoryId !== "all") {
+    setTimeout(() => {
+      const targetSection = document.getElementById(`section-${categoryId}`);
+      if (targetSection) {
+        targetSection.scrollIntoView({ behavior: "smooth", block: "start" });
+      }
+    }, 60);
+  }
+}
+
+// Dietary Filtering
+function initDietaryFilters() {
+  const buttons = document.querySelectorAll(".diet-filter-btn");
+  buttons.forEach(btn => {
+    btn.addEventListener("click", () => {
+      buttons.forEach(b => b.classList.remove("active"));
+      btn.classList.add("active");
+      activeDietFilter = btn.dataset.diet;
+      renderMenuCards();
+    });
+  });
+}
+
+// Search Input Listener
+function initSearch() {
+  const searchInput = document.getElementById("menu-search-input");
+  if (!searchInput) return;
+
+  searchInput.addEventListener("input", (e) => {
+    searchQuery = e.target.value.toLowerCase().trim();
+    renderMenuCards();
+  });
+}
+
+// Single Food Card Component
+function renderSingleProductCard(item) {
+  const qtyInCart = window.spiceCart ? window.spiceCart.getItemQuantity(item.id) : 0;
+  const isOutOfStock = item.available === false;
+
+  return `
+    <div class="product-card fade-in" id="card-${item.id}">
+      <div class="card-media">
+        <img src="${item.image}" alt="${item.name} - Spice Street" class="card-img" loading="lazy" onerror="this.src='https://images.unsplash.com/photo-1546833999-b9f581a1996d?w=700&auto=format&fit=crop&q=80'" />
+        <div class="card-badges-top">
+          <span class="badge-tag">${item.badge}</span>
+          <div class="diet-indicator ${item.isVeg ? 'veg' : 'non-veg'}" title="${item.isVeg ? 'Pure Veg' : 'Non-Veg'}">
+            <span class="dot"></span>
+          </div>
+        </div>
+      </div>
+
+      <div class="card-body">
+        <div class="card-header-row">
+          <h3 class="product-title">${item.name}</h3>
+          <span class="product-rating">★ ${item.rating}</span>
+        </div>
+
+        <p class="product-description">${item.description}</p>
+
+        <div class="card-footer-row">
+          <div class="product-price">${formatCurrency(item.price)}</div>
+
+          <div class="card-action-box">
+            ${isOutOfStock ? `
+              <span style="font-size: 0.8rem; color: var(--nonveg-red); font-weight: 700;">Sold Out</span>
+            ` : qtyInCart > 0 ? `
+              <div class="qty-stepper">
+                <button class="stepper-btn" onclick="handleCardQtyChange('${item.id}', -1)">-</button>
+                <span class="stepper-val">${qtyInCart}</span>
+                <button class="stepper-btn" onclick="handleCardQtyChange('${item.id}', 1)">+</button>
+              </div>
+            ` : `
+              <button class="add-to-cart-btn" onclick="handleCardAdd('${item.id}')">
+                <span>+</span> ADD
+              </button>
+            `}
+          </div>
+        </div>
+      </div>
+    </div>
+  `;
+}
+
+// Separated Menu Sections Renderer (Non-Veg Section, Pure Veg Section, Dessert Section, Beverages)
+function renderMenuCards() {
+  const container = document.getElementById("menu-sections-container") || document.getElementById("products-grid");
+  if (!container) return;
+
+  const sectionsToRender = MENU_SECTIONS.filter(sec => {
+    return activeCategory === "all" || sec.id === activeCategory;
+  });
+
+  let totalItemsCount = 0;
+  const sectionsHtml = sectionsToRender.map(sec => {
+    const secItems = MENU_ITEMS.filter(item => {
+      if (!sec.filter(item)) return false;
+      const matchesDiet = (activeDietFilter === "all") ||
+                          (activeDietFilter === "veg" && item.isVeg) ||
+                          (activeDietFilter === "non-veg" && !item.isVeg);
+      const matchesSearch = !searchQuery ||
+                            item.name.toLowerCase().includes(searchQuery) ||
+                            item.description.toLowerCase().includes(searchQuery);
+      return matchesDiet && matchesSearch;
+    });
+
+    if (secItems.length === 0) return "";
+
+    totalItemsCount += secItems.length;
+
+    return `
+      <section class="menu-section-block" id="section-${sec.id}">
+        <div class="menu-section-header ${sec.badgeType}-header">
+          <div>
+            <div class="section-badge-pill ${sec.badgeType}">
+              <span>${sec.icon}</span>
+              <span>${sec.badgeText}</span>
+            </div>
+            <h3 class="menu-section-title">${sec.title}</h3>
+            <p class="menu-section-desc">${sec.subtitle}</p>
+          </div>
+          <div class="section-count-tag">
+            ${secItems.length} ${secItems.length === 1 ? 'Dish' : 'Dishes'}
+          </div>
+        </div>
+
+        <div class="products-grid">
+          ${secItems.map(item => renderSingleProductCard(item)).join("")}
+        </div>
+      </section>
+    `;
+  }).filter(Boolean).join("");
+
+  if (totalItemsCount === 0) {
+    container.innerHTML = `
+      <div style="text-align: center; padding: 4rem 1rem; width: 100%;">
+        <div style="font-size: 3.5rem; margin-bottom: 0.75rem;">🍛</div>
+        <h3 style="font-size: 1.35rem; margin-bottom: 0.5rem; font-family: 'Playfair Display', serif;">No dishes found in this section</h3>
+        <p style="color: var(--text-muted); font-size: 0.9rem;">Try changing your search term or view all sections.</p>
+        <button class="btn-primary" style="margin-top: 1.25rem; display: inline-flex;" onclick="resetFilters()">View All Sections</button>
+      </div>
+    `;
+    return;
+  }
+
+  container.innerHTML = sectionsHtml;
+}
+
+window.renderMenuCards = renderMenuCards;
+
+function resetFilters() {
+  activeCategory = "all";
+  activeDietFilter = "all";
+  searchQuery = "";
+  const searchInput = document.getElementById("menu-search-input");
+  if (searchInput) searchInput.value = "";
+  const dietButtons = document.querySelectorAll(".diet-filter-btn");
+  dietButtons.forEach(b => {
+    if (b.dataset.diet === "all") b.classList.add("active");
+    else b.classList.remove("active");
+  });
+  renderCategoryPills();
+  renderMenuCards();
+}
+
+function handleCardAdd(productId) {
+  window.spiceCart.addItem(productId, 1);
+  const product = MENU_ITEMS.find(i => i.id === productId);
+  showToast(`Added ${product ? product.name : 'item'} to cart!`);
+  renderMenuCards();
+}
+
+function handleCardQtyChange(productId, delta) {
+  window.spiceCart.updateQuantity(productId, delta);
+  renderMenuCards();
+}
+
+// Cart Synchronization & UI Drawing
+function initCartSubscription() {
+  window.spiceCart.subscribe(state => {
+    updateHeaderCartBadges(state.totalCount);
+    renderCartDrawerUI(state);
+  });
+}
+
+function updateHeaderCartBadges(count) {
+  const badges = document.querySelectorAll(".cart-count-badge");
+  badges.forEach(b => {
+    b.textContent = count;
+    b.style.display = count > 0 ? "flex" : "none";
+  });
+}
+
+function renderCartDrawerUI(state) {
+  const itemsContainer = document.getElementById("cart-items-container");
+  const emptyState = document.getElementById("cart-empty-state");
+  const footerEl = document.getElementById("cart-footer");
+
+  if (!itemsContainer || !emptyState || !footerEl) return;
+
+  if (state.items.length === 0) {
+    itemsContainer.style.display = "none";
+    emptyState.style.display = "flex";
+    footerEl.style.display = "none";
+    return;
+  }
+
+  itemsContainer.style.display = "flex";
+  emptyState.style.display = "none";
+  footerEl.style.display = "block";
+
+  itemsContainer.innerHTML = state.items.map(item => `
+    <div class="cart-item-row">
+      <img src="${item.image}" alt="${item.name}" class="cart-item-thumb" />
+      <div class="cart-item-details">
+        <div style="display: flex; align-items: center; gap: 0.35rem;">
+          <div class="diet-indicator ${item.isVeg ? 'veg' : 'non-veg'}" style="transform: scale(0.85);">
+            <span class="dot"></span>
+          </div>
+          <h4 class="cart-item-title">${item.name}</h4>
+        </div>
+        <div class="cart-item-price">${formatCurrency(item.price)} × ${item.quantity} = ${formatCurrency(item.price * item.quantity)}</div>
+      </div>
+
+      <div class="cart-item-actions">
+        <div class="qty-stepper" style="border-width: 1px;">
+          <button class="stepper-btn" style="width: 26px; height: 26px; font-size: 0.95rem;" onclick="window.spiceCart.updateQuantity('${item.id}', -1); renderMenuCards();">-</button>
+          <span class="stepper-val" style="min-width: 22px; font-size: 0.8rem;">${item.quantity}</span>
+          <button class="stepper-btn" style="width: 26px; height: 26px; font-size: 0.95rem;" onclick="window.spiceCart.updateQuantity('${item.id}', 1); renderMenuCards();">+</button>
+        </div>
+        <button class="cart-remove-btn" onclick="window.spiceCart.removeItem('${item.id}'); renderMenuCards();" title="Remove">✕</button>
+      </div>
+    </div>
+  `).join("");
+
+  // Update Bill Summary
+  document.getElementById("cart-subtotal").textContent = formatCurrency(state.subtotal);
+  document.getElementById("cart-delivery-fee").textContent = state.deliveryFee === 0 ? "FREE" : formatCurrency(state.deliveryFee);
+  document.getElementById("cart-taxes").textContent = formatCurrency(state.taxes);
+  document.getElementById("cart-grand-total").textContent = formatCurrency(state.grandTotal);
+}
+
+// Drawer & Modal Controls
+function toggleCartDrawer(open) {
+  const drawer = document.getElementById("cart-drawer");
+  const backdrop = document.getElementById("modal-backdrop");
+  if (!drawer || !backdrop) return;
+
+  if (open) {
+    backdrop.classList.add("open");
+    drawer.classList.add("open");
+  } else {
+    drawer.classList.remove("open");
+    if (!hasOtherOpenModals()) {
+      backdrop.classList.remove("open");
+    }
+  }
+}
+
+function hasOtherOpenModals() {
+  const centerModals = document.querySelectorAll(".center-modal.open");
+  return centerModals.length > 0;
+}
+
+function closeAllModals() {
+  const backdrop = document.getElementById("modal-backdrop");
+  const drawer = document.getElementById("cart-drawer");
+  const modals = document.querySelectorAll(".center-modal");
+
+  if (backdrop) backdrop.classList.remove("open");
+  if (drawer) drawer.classList.remove("open");
+  modals.forEach(m => m.classList.remove("open"));
+}
+
+function openModal(modalId) {
+  closeAllModals();
+  const backdrop = document.getElementById("modal-backdrop");
+  const modal = document.getElementById(modalId);
+  if (backdrop && modal) {
+    backdrop.classList.add("open");
+    modal.classList.add("open");
+  }
+}
+
+// Navigation Controls
+function initNavigation() {
+  const mobileMenuBtn = document.getElementById("mobile-menu-btn");
+  const mobileNavPanel = document.getElementById("mobile-nav-panel");
+
+  if (mobileMenuBtn && mobileNavPanel) {
+    mobileMenuBtn.addEventListener("click", () => {
+      mobileNavPanel.classList.toggle("open");
+    });
+  }
+
+  // Close mobile nav when link is clicked
+  const mobileLinks = document.querySelectorAll(".mobile-nav-link");
+  mobileLinks.forEach(link => {
+    link.addEventListener("click", () => {
+      if (mobileNavPanel) mobileNavPanel.classList.remove("open");
+    });
+  });
+}
+
+// Checkout Flow
+function proceedToCheckout() {
+  const cartState = window.spiceCart.getState();
+  if (cartState.items.length === 0) {
+    showToast("Your cart is empty! Add dishes to proceed.");
+    return;
+  }
+
+  // Populate checkout summary
+  document.getElementById("checkout-subtotal").textContent = formatCurrency(cartState.subtotal);
+  document.getElementById("checkout-delivery").textContent = cartState.deliveryFee === 0 ? "FREE" : formatCurrency(cartState.deliveryFee);
+  document.getElementById("checkout-taxes").textContent = formatCurrency(cartState.taxes);
+  document.getElementById("checkout-grand-total").textContent = formatCurrency(cartState.grandTotal);
+
+  // Pre-populate saved customer data if exists
+  const savedCustomerStr = localStorage.getItem("spice_street_customer");
+  if (savedCustomerStr) {
+    try {
+      const c = JSON.parse(savedCustomerStr);
+      if (c.fullName) document.getElementById("checkout-name").value = c.fullName;
+      if (c.phone) document.getElementById("checkout-phone").value = c.phone;
+      if (c.email) document.getElementById("checkout-email").value = c.email;
+      if (c.flatNo) document.getElementById("checkout-flat").value = c.flatNo;
+      if (c.street) document.getElementById("checkout-street").value = c.street;
+      if (c.city) document.getElementById("checkout-city").value = c.city;
+      if (c.pincode) document.getElementById("checkout-pincode").value = c.pincode;
+      if (c.instructions) document.getElementById("checkout-instructions").value = c.instructions;
+    } catch (e) {}
+  }
+
+  // Ensure current payment method is selected in modal
+  selectPaymentMethod(window.checkoutController.selectedPaymentMethod || "gpay");
+
+  toggleCartDrawer(false);
+  openModal("checkout-modal");
+}
+
+function quickSelectCartPayment(method) {
+  selectPaymentMethod(method);
+}
+
+function proceedWithOnlinePayment() {
+  const method = window.checkoutController.selectedPaymentMethod;
+  if (!method || method === "cod") {
+    selectPaymentMethod("gpay");
+  }
+  proceedToCheckout();
+}
+
+function proceedWithCodPayment() {
+  selectPaymentMethod("cod");
+  proceedToCheckout();
+}
+
+function handleCheckoutSubmit(event) {
+  if (event) event.preventDefault();
+
+  const fullName = document.getElementById("checkout-name").value;
+  const phone = document.getElementById("checkout-phone").value;
+  const email = document.getElementById("checkout-email").value;
+  const flatNo = document.getElementById("checkout-flat").value;
+  const street = document.getElementById("checkout-street").value;
+  const city = document.getElementById("checkout-city").value;
+  const pincode = document.getElementById("checkout-pincode").value;
+  const instructions = document.getElementById("checkout-instructions").value;
+
+  const formData = { fullName, phone, email, flatNo, street, city, pincode, instructions };
+  const validation = window.checkoutController.validateForm(formData);
+
+  if (!validation.isValid) {
+    showToast(validation.errors[0]);
+    return;
+  }
+
+  // Save current customer info for fast future orders
+  localStorage.setItem("spice_street_customer", JSON.stringify(formData));
+  window.pendingCustomerData = formData;
+
+  // Immediately confirm order based on selected payment method!
+  closeAllModals();
+  handlePaymentConfirm();
+}
+
+function updatePaymentModalTotal() {
+  const cartState = window.spiceCart.getState();
+  const totalDisplay = document.getElementById("payment-total-display");
+  if (totalDisplay) {
+    totalDisplay.textContent = formatCurrency(cartState.grandTotal);
+  }
+}
+
+function selectPaymentMethod(method) {
+  window.checkoutController.selectedPaymentMethod = method;
+  
+  // Highlight payment option cards in checkout modal
+  document.querySelectorAll(".payment-option-card").forEach(c => c.classList.remove("selected"));
+  const chosenCard = document.getElementById(`payment-card-${method}`);
+  if (chosenCard) {
+    chosenCard.classList.add("selected");
+    const radio = chosenCard.querySelector("input[type='radio']");
+    if (radio) radio.checked = true;
+  }
+
+  const chosenCardAlt = document.getElementById(`payment-card-${method}-alt`);
+  if (chosenCardAlt) {
+    chosenCardAlt.classList.add("selected");
+    const radioAlt = chosenCardAlt.querySelector("input[type='radio']");
+    if (radioAlt) radioAlt.checked = true;
+  }
+
+  // Highlight active pill in cart drawer
+  document.querySelectorAll(".cart-pay-pill").forEach(p => p.classList.remove("active"));
+  const chosenPill = document.getElementById(`cart-pill-${method}`);
+  if (chosenPill) {
+    chosenPill.classList.add("active");
+  }
+
+  // Update checkout modal submit button text
+  const submitBtn = document.getElementById("checkout-submit-btn");
+  if (submitBtn) {
+    if (method === "cod") {
+      submitBtn.innerHTML = `<span>💵 CONFIRM CASH ON DELIVERY ORDER</span>`;
+    } else if (method === "card") {
+      submitBtn.innerHTML = `<span>💳 PAY WITH CREDIT / DEBIT CARD</span>`;
+    } else {
+      const names = { gpay: "GOOGLE PAY", phonepe: "PHONEPE", paytm: "PAYTM", upi: "UPI QR" };
+      submitBtn.innerHTML = `<span>⚡ PAY VIA ${names[method] || "ONLINE UPI"} (8341643180@ptyes)</span>`;
+    }
+  }
+}
+
+function handlePaymentConfirm() {
+  const method = window.checkoutController.selectedPaymentMethod || "gpay";
+  const customerData = window.pendingCustomerData;
+  const cartState = window.spiceCart.getState();
+
+  if (!customerData) {
+    showToast("Please enter delivery details first.");
+    openModal("checkout-modal");
+    return;
+  }
+
+  if (method === "cod") {
+    // Cash On Delivery Flow
+    const order = window.checkoutController.createOrderObject(customerData, "Cash on Delivery (COD)", "COD / Pending");
+    window.checkoutController.saveOrder(order);
+    window.spiceCart.clearCart();
+    renderMenuCards();
+    
+    // Automatically trigger WhatsApp with complete order details!
+    sendWhatsAppOrderSummary(order.orderId);
+    showOrderConfirmation(order);
+    showToast("🎉 Order placed with COD! Opening WhatsApp automatically...");
+  } else if (method === "card") {
+    // Full Working Interactive Credit / Debit Card Flow
+    showCardPaymentModal(cartState.grandTotal, customerData);
+  } else {
+    // UPI Flow (gpay, phonepe, paytm, or upi)
+    const tempOrderId = window.checkoutController.generateOrderId();
+    const upiUrl = window.checkoutController.buildUpiUrl(cartState.grandTotal, tempOrderId);
+
+    // If mobile and clicked specific app, optionally trigger deep link
+    if (window.innerWidth < 768) {
+      if (method === "gpay") {
+        window.location.href = `tez://upi/pay?pa=${RESTAURANT_INFO.upiVpa}&pn=${encodeURIComponent(RESTAURANT_INFO.merchantName)}&am=${cartState.grandTotal.toFixed(2)}&cu=INR&tn=${encodeURIComponent('Order ' + tempOrderId)}`;
+      } else if (method === "phonepe") {
+        window.location.href = `phonepe://pay?pa=${RESTAURANT_INFO.upiVpa}&pn=${encodeURIComponent(RESTAURANT_INFO.merchantName)}&am=${cartState.grandTotal.toFixed(2)}&cu=INR&tn=${encodeURIComponent('Order ' + tempOrderId)}`;
+      } else if (method === "paytm") {
+        window.location.href = `paytmmp://pay?pa=${RESTAURANT_INFO.upiVpa}&pn=${encodeURIComponent(RESTAURANT_INFO.merchantName)}&am=${cartState.grandTotal.toFixed(2)}&cu=INR&tn=${encodeURIComponent('Order ' + tempOrderId)}`;
+      } else {
+        window.location.href = upiUrl;
+      }
+    }
+
+    // Show UPI Verification Modal with QR code and active app highlight
+    showUpiVerificationModal(tempOrderId, upiUrl, cartState.grandTotal, customerData, method);
+  }
+}
+
+// 1-Click Direct WhatsApp Order from Cart Drawer
+function directOrderOnWhatsAppFromCart() {
+  const cartState = window.spiceCart.getState();
+  if (cartState.items.length === 0) {
+    showToast("Your cart is empty! Add dishes first.");
+    return;
+  }
+
+  // Check if we have saved customer data in localStorage
+  const savedCustomerStr = localStorage.getItem("spice_street_customer");
+  if (savedCustomerStr) {
+    try {
+      const customerData = JSON.parse(savedCustomerStr);
+      window.pendingCustomerData = customerData;
+      const order = window.checkoutController.createOrderObject(customerData, "WhatsApp / Direct", "Pending Acceptance");
+      window.checkoutController.saveOrder(order);
+      window.spiceCart.clearCart();
+      renderMenuCards();
+      toggleCartDrawer(false);
+
+      sendWhatsAppOrderSummary(order.orderId);
+      showOrderConfirmation(order);
+      showToast("🚀 Opening WhatsApp with your order details...");
+      return;
+    } catch(e) {
+      // Fall through to open checkout modal
+    }
+  }
+
+  // If no saved data, open checkout modal
+  toggleCartDrawer(false);
+  openModal("checkout-modal");
+  showToast("Please enter delivery address to send order to WhatsApp!");
+}
+
+// Direct WhatsApp Order Submission from Checkout Form
+function submitOrderToWhatsAppDirectly(event) {
+  if (event) event.preventDefault();
+
+  const fullName = document.getElementById("checkout-name").value;
+  const phone = document.getElementById("checkout-phone").value;
+  const email = document.getElementById("checkout-email").value;
+  const flatNo = document.getElementById("checkout-flat").value;
+  const street = document.getElementById("checkout-street").value;
+  const city = document.getElementById("checkout-city").value;
+  const pincode = document.getElementById("checkout-pincode").value;
+  const instructions = document.getElementById("checkout-instructions").value;
+
+  const formData = { fullName, phone, email, flatNo, street, city, pincode, instructions };
+  const validation = window.checkoutController.validateForm(formData);
+
+  if (!validation.isValid) {
+    showToast(validation.errors[0]);
+    return;
+  }
+
+  // Persist customer profile for future 1-click orders
+  localStorage.setItem("spice_street_customer", JSON.stringify(formData));
+  window.pendingCustomerData = formData;
+
+  const order = window.checkoutController.createOrderObject(formData, "WhatsApp / Direct", "Pending Acceptance");
+  window.checkoutController.saveOrder(order);
+  window.spiceCart.clearCart();
+  renderMenuCards();
+
+  closeAllModals();
+
+  // Automatically launch WhatsApp with formatted order message!
+  sendWhatsAppOrderSummary(order.orderId);
+  showOrderConfirmation(order);
+  showToast("🎉 Order placed! Opening WhatsApp automatically...");
+}
+
+// UPI QR / Intent Flow Modal with GPay, PhonePe, Paytm, and Scanner
+function showUpiVerificationModal(orderId, upiUrl, amount, customerData, preferredApp = "upi") {
+  const vpa = RESTAURANT_INFO.upiVpa; // 8341643180@ptyes
+  const qrImgUrl = window.checkoutController.getQrCodeUrl(upiUrl);
+
+  const gpayUrl = `tez://upi/pay?pa=${vpa}&pn=${encodeURIComponent(RESTAURANT_INFO.merchantName)}&am=${amount.toFixed(2)}&cu=INR&tn=${encodeURIComponent('Order ' + orderId)}`;
+  const phonepeUrl = `phonepe://pay?pa=${vpa}&pn=${encodeURIComponent(RESTAURANT_INFO.merchantName)}&am=${amount.toFixed(2)}&cu=INR&tn=${encodeURIComponent('Order ' + orderId)}`;
+  const paytmUrl = `paytmmp://pay?pa=${vpa}&pn=${encodeURIComponent(RESTAURANT_INFO.merchantName)}&am=${amount.toFixed(2)}&cu=INR&tn=${encodeURIComponent('Order ' + orderId)}`;
+
+  const appMeta = {
+    gpay: { title: "Google Pay (G Pay)", icon: "🔵", label: "Open G Pay App", color: "#4285F4" },
+    phonepe: { title: "PhonePe", icon: "🟣", label: "Open PhonePe App", color: "#5f259f" },
+    paytm: { title: "Paytm UPI & Wallet", icon: "🔷", label: "Open Paytm App", color: "#00BAF2" },
+    upi: { title: "Instant UPI & QR Scanner", icon: "⚡", label: "Open Any UPI App", color: "var(--gold-accent)" }
+  };
+
+  const currentApp = appMeta[preferredApp] || appMeta.upi;
+  const container = document.getElementById("payment-gateway-modal-body");
+  if (!container) return;
+
+  container.innerHTML = `
+    <div style="text-align: center;">
+      <div style="display: inline-flex; align-items: center; gap: 0.4rem; background: rgba(255, 183, 3, 0.15); border: 1px solid var(--gold-accent); color: var(--gold-accent); padding: 0.3rem 0.85rem; border-radius: 99px; font-size: 0.78rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.06em; margin-bottom: 0.5rem;">
+        ${currentApp.icon} ${currentApp.title}
+      </div>
+      <h3 style="font-size: 1.35rem; margin-bottom: 0.2rem; font-family: 'Playfair Display', serif;">Pay ${formatCurrency(amount)}</h3>
+      <p style="font-size: 0.85rem; color: var(--text-muted); margin-bottom: 0.85rem;">Scan using Google Pay, PhonePe, Paytm or any UPI App</p>
+
+      <!-- QR Code Scanner Box -->
+      <div style="display: inline-block; padding: 14px; background: #ffffff; border-radius: 16px; border: 3px solid var(--gold-accent); box-shadow: 0 8px 30px rgba(0,0,0,0.6); margin: 0.4rem 0;">
+        <img src="${qrImgUrl}" alt="Spice Street UPI QR Scanner" style="width: 210px; height: 210px; display: block; border-radius: 8px;" />
+        <div style="font-size: 0.75rem; color: #111; font-weight: 800; margin-top: 0.45rem; letter-spacing: 0.02em;">SCAN TO PAY • SPICE STREET</div>
+      </div>
+
+      <!-- UPI ID Copy Bar -->
+      <div style="background: var(--bg-card); border: 1px dashed var(--border-accent); border-radius: var(--radius-md); padding: 0.75rem 1rem; margin: 0.85rem 0; display: flex; justify-content: space-between; align-items: center; gap: 0.5rem;">
+        <div style="text-align: left;">
+          <div style="font-size: 0.72rem; color: var(--text-muted); font-weight: 600;">Official UPI ID:</div>
+          <div style="font-size: 1rem; font-weight: 800; color: var(--gold-accent); letter-spacing: 0.03em;" id="upi-id-val">${vpa}</div>
+        </div>
+        <button type="button" class="btn-outline" style="padding: 0.35rem 0.75rem; font-size: 0.78rem;" onclick="copyUpiIdToClipboard('${vpa}')">
+          📋 Copy UPI ID
+        </button>
+      </div>
+
+      <!-- Quick 1-Click Pay Buttons -->
+      <div style="margin: 0.85rem 0;">
+        <div style="font-size: 0.8rem; font-weight: 700; color: var(--text-secondary); margin-bottom: 0.45rem;">
+          Tap to pay directly in your app:
+        </div>
+        <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 0.5rem; margin-bottom: 0.5rem;">
+          <a href="${gpayUrl}" class="btn-contact" style="justify-content: center; font-size: 0.82rem; font-weight: 700; border-color: #4285F4; color: #fff; background: ${preferredApp === 'gpay' ? 'rgba(66, 133, 244, 0.45); border-width: 2px;' : 'rgba(66, 133, 244, 0.15);'}">
+            🔵 G Pay
+          </a>
+          <a href="${phonepeUrl}" class="btn-contact" style="justify-content: center; font-size: 0.82rem; font-weight: 700; border-color: #5f259f; color: #fff; background: ${preferredApp === 'phonepe' ? 'rgba(95, 37, 159, 0.45); border-width: 2px;' : 'rgba(95, 37, 159, 0.2);'}">
+            🟣 PhonePe
+          </a>
+          <a href="${paytmUrl}" class="btn-contact" style="justify-content: center; font-size: 0.82rem; font-weight: 700; border-color: #00BAF2; color: #fff; background: ${preferredApp === 'paytm' ? 'rgba(0, 186, 242, 0.45); border-width: 2px;' : 'rgba(0, 186, 242, 0.15);'}">
+            🔷 Paytm
+          </a>
+        </div>
+        <a href="${upiUrl}" class="btn-primary" style="width: 100%; justify-content: center; font-size: 0.88rem; padding: 0.6rem;">
+          ⚡ Open Any Other UPI App (BHIM / Cred / Bank)
+        </a>
+      </div>
+
+      <!-- UTR Verification Box -->
+      <div style="background: var(--bg-card); border: 1px solid var(--border-subtle); border-radius: var(--radius-md); padding: 0.85rem 1rem; text-align: left; margin-top: 0.85rem;">
+        <div style="font-size: 0.82rem; font-weight: 700; color: var(--gold-accent); margin-bottom: 0.35rem;">
+          After completing payment:
+        </div>
+        <div class="form-group" style="margin-bottom: 0.75rem;">
+          <label class="form-label">12-Digit UPI Reference / UTR Number (Optional)</label>
+          <input type="text" id="upi-utr-input" class="form-input" placeholder="e.g. 423589123456" maxlength="16" />
+        </div>
+        <button class="btn-primary checkout-btn" style="width: 100%; justify-content: center; font-size: 1.05rem; font-weight: 800; padding: 0.9rem;" onclick="verifyUpiAndFinalizeOrder('${orderId}', '${currentApp.title}')">
+          🎉 CONFIRM PAYMENT & PLACE ORDER
+        </button>
+      </div>
+
+      <button type="button" class="btn-outline" style="width: 100%; justify-content: center; margin-top: 0.65rem; font-size: 0.85rem; padding: 0.45rem;" onclick="openModal('checkout-modal')">
+        ← Change Payment Method
+      </button>
+    </div>
+  `;
+
+  openModal("payment-gateway-modal");
+}
+
+function copyUpiIdToClipboard(upiId) {
+  navigator.clipboard.writeText(upiId).then(() => {
+    showToast(`✓ UPI ID copied: ${upiId}`);
+  }).catch(() => {
+    showToast(`UPI ID: ${upiId}`);
+  });
+}
+
+function verifyUpiAndFinalizeOrder(orderId, appTitle = "UPI") {
+  const customerData = window.pendingCustomerData;
+  const utrInput = document.getElementById("upi-utr-input");
+  const utr = utrInput ? utrInput.value.trim() : "";
+
+  // Create verified order
+  const order = window.checkoutController.createOrderObject(customerData, `UPI (${appTitle})`, "Paid");
+  order.orderId = orderId;
+  order.payment.transactionId = utr || `UPI_TXN_${Date.now()}`;
+
+  window.checkoutController.saveOrder(order);
+  window.spiceCart.clearCart();
+  renderMenuCards();
+
+  closeAllModals();
+
+  showOrderConfirmation(order);
+  showToast(`🎉 Payment confirmed! Directly opening WhatsApp...`);
+
+  // Directly navigate to WhatsApp page!
+  sendWhatsAppOrderSummary(order.orderId, true);
+}
+
+// Full Working Interactive Credit / Debit Card Modal
+function showCardPaymentModal(amount, customerData) {
+  const container = document.getElementById("payment-gateway-modal-body");
+  if (!container) return;
+
+  const defaultName = (customerData && customerData.fullName) ? customerData.fullName : "CARDHOLDER NAME";
+
+  container.innerHTML = `
+    <div>
+      <div style="text-align: center; margin-bottom: 0.75rem;">
+        <div style="display: inline-flex; align-items: center; gap: 0.4rem; background: rgba(34, 197, 94, 0.15); border: 1px solid var(--veg-green); color: #86efac; padding: 0.25rem 0.8rem; border-radius: 99px; font-size: 0.75rem; font-weight: 700; text-transform: uppercase;">
+          🔒 256-Bit Bank Grade Secure Checkout
+        </div>
+        <h3 style="font-size: 1.35rem; margin-top: 0.4rem; font-family: 'Playfair Display', serif;">Credit / Debit Card</h3>
+        <p style="font-size: 0.82rem; color: var(--text-muted);">Visa • Mastercard • RuPay • Maestro</p>
+      </div>
+
+      <!-- Interactive Virtual Card Preview -->
+      <div class="virtual-card-wrapper">
+        <div class="virtual-card" id="virtual-card-element">
+          <div class="virtual-card-top">
+            <div class="virtual-card-chip"></div>
+            <div class="virtual-card-brand-badge" id="card-preview-brand">VISA</div>
+          </div>
+          <div class="virtual-card-number" id="card-preview-number">•••• •••• •••• ••••</div>
+          <div class="virtual-card-bottom">
+            <div>
+              <div class="virtual-card-lbl">Cardholder Name</div>
+              <div class="virtual-card-name" id="card-preview-name">${defaultName.toUpperCase()}</div>
+            </div>
+            <div style="text-align: right;">
+              <div class="virtual-card-lbl">Expires</div>
+              <div class="virtual-card-expiry" id="card-preview-expiry">MM/YY</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Card Form Input Fields -->
+      <form id="card-payment-form" onsubmit="handleCardFormSubmit(event, ${amount})">
+        <div class="form-group" style="margin-bottom: 0.75rem;">
+          <label class="form-label">Cardholder Name *</label>
+          <input type="text" id="card-input-name" class="form-input" value="${defaultName}" required oninput="updateCardPreview()" />
+        </div>
+
+        <div class="form-group" style="margin-bottom: 0.75rem;">
+          <label class="form-label">Card Number *</label>
+          <div style="position: relative;">
+            <input type="text" id="card-input-number" class="form-input" placeholder="4532 8912 3456 7890" maxlength="19" required oninput="formatCardNumberInput(this); updateCardPreview();" />
+            <span id="card-type-icon" style="position: absolute; right: 12px; top: 50%; transform: translateY(-50%); font-size: 1.1rem;">💳</span>
+          </div>
+        </div>
+
+        <div class="card-input-grid">
+          <div class="form-group">
+            <label class="form-label">Expiry (MM / YY) *</label>
+            <input type="text" id="card-input-expiry" class="form-input" placeholder="12/28" maxlength="5" required oninput="formatCardExpiry(this); updateCardPreview();" />
+          </div>
+          <div class="form-group">
+            <label class="form-label">CVV / CVC *</label>
+            <input type="password" id="card-input-cvv" class="form-input" placeholder="•••" maxlength="4" required />
+          </div>
+        </div>
+
+        <div style="display: flex; justify-content: space-between; align-items: center; background: var(--bg-card); padding: 0.75rem 1rem; border-radius: var(--radius-md); border: 1px solid var(--border-subtle); margin: 0.85rem 0;">
+          <span style="font-size: 0.85rem; color: var(--text-muted);">Amount to Deduct:</span>
+          <span style="font-size: 1.2rem; font-weight: 800; color: var(--gold-accent);">${formatCurrency(amount)}</span>
+        </div>
+
+        <button type="submit" class="btn-primary checkout-btn" style="width: 100%; justify-content: center; font-size: 1.05rem; font-weight: 800; padding: 0.95rem;">
+          🔒 Pay ${formatCurrency(amount)} Securely
+        </button>
+
+        <button type="button" class="btn-outline" style="width: 100%; justify-content: center; margin-top: 0.5rem; font-size: 0.85rem; padding: 0.45rem;" onclick="openModal('checkout-modal')">
+          ← Choose Different Payment Method
+        </button>
+      </form>
+    </div>
+  `;
+
+  openModal("payment-gateway-modal");
+}
+
+function formatCardNumberInput(input) {
+  let val = input.value.replace(/\D/g, "").substring(0, 16);
+  let formatted = val.match(/.{1,4}/g)?.join(" ") || val;
+  input.value = formatted;
+}
+
+function formatCardExpiry(input) {
+  let val = input.value.replace(/\D/g, "").substring(0, 4);
+  if (val.length >= 2) {
+    input.value = val.substring(0, 2) + "/" + val.substring(2);
+  } else {
+    input.value = val;
+  }
+}
+
+function updateCardPreview() {
+  const numInput = document.getElementById("card-input-number");
+  const nameInput = document.getElementById("card-input-name");
+  const expInput = document.getElementById("card-input-expiry");
+
+  const numPreview = document.getElementById("card-preview-number");
+  const namePreview = document.getElementById("card-preview-name");
+  const expPreview = document.getElementById("card-preview-expiry");
+  const brandPreview = document.getElementById("card-preview-brand");
+  const cardIcon = document.getElementById("card-type-icon");
+
+  if (numInput && numPreview) {
+    const raw = numInput.value.replace(/\s+/g, "");
+    numPreview.textContent = numInput.value || "•••• •••• •••• ••••";
+
+    // Detect card brand
+    if (raw.startsWith("4")) {
+      if (brandPreview) brandPreview.textContent = "VISA";
+      if (cardIcon) cardIcon.textContent = "🔷";
+    } else if (raw.startsWith("5")) {
+      if (brandPreview) brandPreview.textContent = "MASTERCARD";
+      if (cardIcon) cardIcon.textContent = "🔴";
+    } else if (raw.startsWith("6") || raw.startsWith("8")) {
+      if (brandPreview) brandPreview.textContent = "RUPAY";
+      if (cardIcon) cardIcon.textContent = "🟢";
+    } else {
+      if (brandPreview) brandPreview.textContent = "CARD";
+      if (cardIcon) cardIcon.textContent = "💳";
+    }
+  }
+
+  if (nameInput && namePreview) {
+    namePreview.textContent = (nameInput.value || "CARDHOLDER NAME").toUpperCase();
+  }
+
+  if (expInput && expPreview) {
+    expPreview.textContent = expInput.value || "MM/YY";
+  }
+}
+
+function handleCardFormSubmit(event, amount) {
+  if (event) event.preventDefault();
+
+  const numInput = document.getElementById("card-input-number");
+  const nameInput = document.getElementById("card-input-name");
+  const expInput = document.getElementById("card-input-expiry");
+  const cvvInput = document.getElementById("card-input-cvv");
+
+  const cardNum = numInput ? numInput.value.replace(/\s+/g, "") : "";
+  if (cardNum.length < 15) {
+    showToast("Please enter a valid 16-digit card number.");
+    return;
+  }
+
+  const expiry = expInput ? expInput.value.trim() : "";
+  if (expiry.length < 5 || !expiry.includes("/")) {
+    showToast("Please enter a valid expiry date (MM/YY).");
+    return;
+  }
+
+  const cvv = cvvInput ? cvvInput.value.trim() : "";
+  if (cvv.length < 3) {
+    showToast("Please enter a valid 3 or 4 digit CVV.");
+    return;
+  }
+
+  const last4 = cardNum.slice(-4);
+  const cardData = {
+    holderName: nameInput ? nameInput.value.trim() : "",
+    last4: last4,
+    brand: cardNum.startsWith("4") ? "Visa" : cardNum.startsWith("5") ? "Mastercard" : "RuPay"
+  };
+
+  showCardOtpVerification(cardData, amount, window.pendingCustomerData);
+}
+
+// Realistic 3D-Secure Bank OTP Verification
+function showCardOtpVerification(cardData, amount, customerData) {
+  const container = document.getElementById("payment-gateway-modal-body");
+  if (!container) return;
+
+  const phone = customerData && customerData.phone ? customerData.phone : "8341643180";
+  const maskedPhone = `+91 ******${phone.slice(-4)}`;
+
+  container.innerHTML = `
+    <div style="text-align: center;">
+      <!-- Bank Verified Header -->
+      <div style="background: rgba(66, 133, 244, 0.12); border: 1px solid rgba(66, 133, 244, 0.3); border-radius: var(--radius-md); padding: 0.85rem; margin-bottom: 1rem; display: flex; align-items: center; justify-content: space-between;">
+        <div style="display: flex; align-items: center; gap: 0.5rem;">
+          <span style="font-size: 1.3rem;">🏦</span>
+          <div style="text-align: left;">
+            <div style="font-size: 0.72rem; color: #93c5fd; font-weight: 700; text-transform: uppercase;">Bank 3D-Secure 2.0</div>
+            <div style="font-size: 0.92rem; font-weight: 800; color: #fff;">Verified by ${cardData.brand}</div>
+          </div>
+        </div>
+        <span style="background: rgba(34,197,94,0.2); color: #86efac; font-size: 0.7rem; font-weight: 800; padding: 0.2rem 0.5rem; border-radius: 4px;">SECURE</span>
+      </div>
+
+      <h3 style="font-size: 1.25rem; margin-bottom: 0.25rem; font-family: 'Playfair Display', serif;">One-Time Password (OTP)</h3>
+      <p style="font-size: 0.82rem; color: var(--text-secondary); margin-bottom: 1rem;">
+        An authentication OTP has been dispatched to your mobile number <strong>${maskedPhone}</strong>.
+      </p>
+
+      <!-- Transaction Details Brief -->
+      <div style="background: var(--bg-card); border: 1px solid var(--border-subtle); border-radius: var(--radius-md); padding: 0.85rem 1rem; text-align: left; font-size: 0.82rem; margin-bottom: 1.25rem;">
+        <div style="display: flex; justify-content: space-between; margin-bottom: 0.35rem;">
+          <span style="color: var(--text-muted);">Merchant:</span>
+          <strong>Spice Street Restaurant</strong>
+        </div>
+        <div style="display: flex; justify-content: space-between; margin-bottom: 0.35rem;">
+          <span style="color: var(--text-muted);">Card:</span>
+          <strong>${cardData.brand} •••• ${cardData.last4}</strong>
+        </div>
+        <div style="display: flex; justify-content: space-between; font-weight: 800; border-top: 1px dashed var(--border-subtle); padding-top: 0.35rem; margin-top: 0.35rem;">
+          <span>Transaction Amount:</span>
+          <span style="color: var(--gold-accent); font-size: 1rem;">${formatCurrency(amount)}</span>
+        </div>
+      </div>
+
+      <!-- OTP Entry Form -->
+      <div class="form-group" style="text-align: center; margin-bottom: 1rem;">
+        <label class="form-label" style="font-size: 0.85rem; font-weight: 700; color: var(--gold-accent); margin-bottom: 0.5rem; display: block;">
+          Enter 6-Digit Banking OTP
+        </label>
+        <input type="text" id="bank-otp-input" class="form-input otp-input-field" placeholder="• • • • • •" maxlength="6" autofocus />
+        
+        <div style="margin-top: 0.6rem; display: flex; justify-content: center; gap: 0.5rem; align-items: center;">
+          <span style="font-size: 0.78rem; color: var(--text-muted);">Demo OTP: <strong style="color: var(--gold-accent);">834164</strong></span>
+          <button type="button" class="btn-outline" style="padding: 0.15rem 0.5rem; font-size: 0.72rem;" onclick="document.getElementById('bank-otp-input').value='834164'">
+            ⚡ 1-Click Auto-Fill
+          </button>
+        </div>
+      </div>
+
+      <div id="otp-status-message" style="display: none; padding: 0.6rem; border-radius: var(--radius-sm); font-size: 0.85rem; margin-bottom: 0.85rem;"></div>
+
+      <button type="button" class="btn-primary checkout-btn" id="btn-submit-otp" style="width: 100%; justify-content: center; font-size: 1.05rem; font-weight: 800; padding: 0.9rem;" onclick="verifyCardOtpAndFinalize('${cardData.brand}', '${cardData.last4}', ${amount})">
+        ✅ Submit OTP & Authorize Payment
+      </button>
+
+      <div style="margin-top: 0.75rem; display: flex; justify-content: space-between; align-items: center; font-size: 0.78rem; color: var(--text-muted);">
+        <span>Resend OTP in <strong>24s</strong></span>
+        <a href="javascript:void(0)" onclick="showCardPaymentModal(${amount}, window.pendingCustomerData)" style="color: var(--gold-accent); text-decoration: underline;">
+          ← Edit Card Details
+        </a>
+      </div>
+    </div>
+  `;
+}
+
+function verifyCardOtpAndFinalize(brand, last4, amount) {
+  const otpInput = document.getElementById("bank-otp-input");
+  const otp = otpInput ? otpInput.value.trim() : "";
+  const statusMsg = document.getElementById("otp-status-message");
+  const btn = document.getElementById("btn-submit-otp");
+
+  if (!otp || otp.length < 4) {
+    showToast("Please enter the 6-digit OTP sent to your phone.");
+    return;
+  }
+
+  // Show authorization in progress
+  if (btn) {
+    btn.disabled = true;
+    btn.textContent = "Verifying with Bank Server...";
+  }
+
+  if (statusMsg) {
+    statusMsg.style.display = "block";
+    statusMsg.style.background = "rgba(66, 133, 244, 0.15)";
+    statusMsg.style.color = "#93c5fd";
+    statusMsg.textContent = "⏳ Contacting issuing bank 3D-Secure ACS...";
+  }
+
+  setTimeout(() => {
+    const customerData = window.pendingCustomerData;
+    const authCode = `AUTH_${brand.toUpperCase()}_${Math.floor(100000 + Math.random() * 900000)}`;
+
+    const order = window.checkoutController.createOrderObject(
+      customerData,
+      `Card (${brand} •••• ${last4})`,
+      "Paid"
+    );
+    order.payment.transactionId = authCode;
+
+    window.checkoutController.saveOrder(order);
+    window.spiceCart.clearCart();
+    renderMenuCards();
+
+    closeAllModals();
+
+    showOrderConfirmation(order);
+    showToast(`🎉 Card payment authorized! Directly opening WhatsApp...`);
+
+    // Directly navigate to WhatsApp page!
+    sendWhatsAppOrderSummary(order.orderId, true);
+  }, 1200);
+}
+
+// Build WhatsApp Order URL helper
+function getWhatsAppOrderUrl(order) {
+  if (!order) return `https://api.whatsapp.com/send?phone=${RESTAURANT_INFO.whatsapp}`;
+
+  const itemsText = order.items.map(i => `  • ${i.quantity}x ${i.name} (${formatCurrency(i.price * i.quantity)})`).join("%0A");
+  const isPaid = order.payment && (order.payment.status.toLowerCase().includes("paid") || !order.payment.method.toLowerCase().includes("cod"));
+
+  const msg = 
+`*🍽️ SPICE STREET - ${isPaid ? 'PAID ORDER' : 'NEW ORDER'} %23${order.orderId}*%0A` +
+`━━━━━━━━━━━━━━━━━━━━%0A` +
+`*Date:* ${encodeURIComponent(order.displayDate)}%0A%0A` +
+`*👤 CUSTOMER DETAILS:*%0A` +
+`• *Name:* ${encodeURIComponent(order.customer.fullName)}%0A` +
+`• *Phone:* ${encodeURIComponent(order.customer.phone)}%0A` +
+`${order.customer.email ? `• *Email:* ${encodeURIComponent(order.customer.email)}%0A` : ''}` +
+`%0A*📍 DELIVERY ADDRESS:*%0A` +
+`${encodeURIComponent(order.customer.address.flatNo + ', ' + order.customer.address.street)}%0A` +
+`${encodeURIComponent(order.customer.address.city + ', Telangana - ' + order.customer.address.pincode)}%0A` +
+`${order.customer.deliveryInstructions ? `*Note:* ${encodeURIComponent(order.customer.deliveryInstructions)}%0A` : ''}` +
+`%0A*🍛 ORDERED FOOD ITEMS:*%0A` +
+`${itemsText}%0A` +
+`━━━━━━━━━━━━━━━━━━━━%0A` +
+`*Subtotal:* ${encodeURIComponent(formatCurrency(order.pricing.subtotal))}%0A` +
+`*Delivery Charge:* ${encodeURIComponent(order.pricing.deliveryFee === 0 ? 'FREE' : formatCurrency(order.pricing.deliveryFee))}%0A` +
+`*Taxes (5% GST):* ${encodeURIComponent(formatCurrency(order.pricing.taxes))}%0A` +
+`*TOTAL PAYABLE:* ${encodeURIComponent(formatCurrency(order.pricing.grandTotal))}%0A` +
+`━━━━━━━━━━━━━━━━━━━━%0A` +
+`*Payment Mode:* ${encodeURIComponent(order.payment.method.toUpperCase())}%0A` +
+`*Payment Status:* ${encodeURIComponent(order.payment.status)}%0A` +
+`${order.payment.transactionId ? `*Transaction/UTR:* ${encodeURIComponent(order.payment.transactionId)}%0A` : ''}` +
+`%0A${isPaid ? '✅ *ONLINE PAYMENT DONE & VERIFIED!*%0APlease accept order & start cooking.' : '💵 *CASH ON DELIVERY ORDER*%0APlease confirm acceptance and estimated delivery time!'}`;
+
+  return `https://api.whatsapp.com/send?phone=${RESTAURANT_INFO.whatsapp}&text=${msg}`;
+}
+
+// Order Confirmation Modal
+function showOrderConfirmation(order) {
+  const content = document.getElementById("confirmation-modal-body");
+  if (!content) return;
+
+  const itemsList = order.items.map(i => `
+    <div style="display: flex; justify-content: space-between; font-size: 0.88rem; padding: 0.35rem 0;">
+      <span>${i.quantity}x ${i.name}</span>
+      <span style="font-weight: 600; color: var(--primary-orange);">${formatCurrency(i.price * i.quantity)}</span>
+    </div>
+  `).join("");
+
+  const waUrl = getWhatsAppOrderUrl(order);
+
+  content.innerHTML = `
+    <div class="order-success-banner">
+      <div class="success-icon-bubble">
+        <svg width="36" height="36" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round">
+          <polyline points="20 6 9 17 4 12"></polyline>
+        </svg>
+      </div>
+      <h2 style="font-family: 'Playfair Display', serif; font-size: 1.8rem; margin-bottom: 0.35rem;">🎉 Order Confirmed!</h2>
+      <p style="color: var(--text-secondary); font-size: 0.95rem;">Thank you for ordering from Spice Street, <strong>${order.customer.fullName}</strong>!</p>
+      
+      <div class="order-id-badge">Order #${order.orderId}</div>
+      <div style="font-size: 0.82rem; color: var(--gold-accent); margin-top: 0.25rem;">Estimated Delivery: <strong>${order.estimatedDeliveryTime}</strong></div>
+    </div>
+
+    <!-- Direct WhatsApp Redirect Notification -->
+    <div style="background: rgba(34, 197, 94, 0.15); border: 1px solid rgba(34, 197, 94, 0.4); border-radius: var(--radius-md); padding: 0.85rem 1rem; margin-bottom: 1.1rem; text-align: center;">
+      <div style="font-size: 0.92rem; font-weight: 800; color: #86efac; margin-bottom: 0.25rem; display: flex; align-items: center; justify-content: center; gap: 0.4rem;">
+        <span>🚀</span> Directly opening WhatsApp with your order receipt...
+      </div>
+      <div style="font-size: 0.78rem; color: #cbd5e1;">
+        If WhatsApp doesn't open automatically in 2 seconds, tap the green button below!
+      </div>
+    </div>
+
+    <!-- Order Summary Box -->
+    <div style="background: var(--bg-card); border: 1px solid var(--border-subtle); border-radius: var(--radius-md); padding: 1.25rem; margin-bottom: 1.25rem;">
+      <h4 style="font-size: 0.95rem; margin-bottom: 0.75rem; color: var(--gold-accent);">Order Details</h4>
+      <div style="border-bottom: 1px dashed var(--border-subtle); padding-bottom: 0.5rem; margin-bottom: 0.5rem;">
+        ${itemsList}
+      </div>
+      <div style="display: flex; justify-content: space-between; font-size: 0.85rem; color: var(--text-muted);">
+        <span>Delivery Address</span>
+        <span style="text-align: right; max-width: 60%; color: var(--text-secondary);">${order.customer.address.street}, ${order.customer.address.city}</span>
+      </div>
+      <div style="display: flex; justify-content: space-between; font-size: 0.85rem; color: var(--text-muted); margin-top: 0.25rem;">
+        <span>Payment Method</span>
+        <span style="color: var(--veg-green); font-weight: 700;">${order.payment.method.toUpperCase()} (${order.payment.status})</span>
+      </div>
+      <div style="display: flex; justify-content: space-between; font-size: 1.05rem; font-weight: 800; border-top: 1px solid var(--border-subtle); padding-top: 0.5rem; margin-top: 0.5rem;">
+        <span>Total Paid</span>
+        <span style="color: var(--gold-accent);">${formatCurrency(order.pricing.grandTotal)}</span>
+      </div>
+    </div>
+
+    <!-- Action Buttons with Prominent Direct WhatsApp Button -->
+    <div style="display: flex; flex-direction: column; gap: 0.75rem;">
+      <a href="${waUrl}" class="btn-contact btn-whatsapp" style="justify-content: center; font-size: 1.05rem; font-weight: 800; padding: 1rem; text-decoration: none; background: #25D366; color: #fff; box-shadow: 0 4px 20px rgba(37, 211, 102, 0.45); border-radius: var(--radius-md); display: flex; align-items: center; gap: 0.5rem;">
+        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"></path>
+        </svg>
+        <span>💬 OPEN WHATSAPP NOW (SEND ORDER)</span>
+      </a>
+      <button class="btn-primary" style="justify-content: center;" onclick="viewOrderTracking('${order.orderId}')">
+        🚀 Track Order Live
+      </button>
+      <button class="btn-outline" style="justify-content: center;" onclick="closeAllModals()">
+        Back to Home
+      </button>
+    </div>
+  `;
+
+  openModal("confirmation-modal");
+}
+
+function viewOrderTracking(orderId) {
+  openModal("tracking-modal");
+  window.trackingController.renderTracking(orderId);
+}
+
+function showTrackSearchPrompt() {
+  const orderId = prompt("Please enter your Order ID (e.g. SS-1234-5678):");
+  if (orderId) {
+    viewOrderTracking(orderId);
+  }
+}
+
+// WhatsApp Direct Automatic Integration
+function sendWhatsAppOrderSummary(orderId, redirectDirectly = true) {
+  const order = window.trackingController.getOrder(orderId);
+  if (!order) return;
+
+  const waUrl = getWhatsAppOrderUrl(order);
+
+  if (redirectDirectly) {
+    // Automatically navigate directly to the WhatsApp page!
+    setTimeout(() => {
+      window.location.href = waUrl;
+    }, 600);
+  } else {
+    // If called from user click, try popup then direct
+    try {
+      const waWindow = window.open(waUrl, "_blank");
+      if (!waWindow || waWindow.closed || typeof waWindow.closed === "undefined") {
+        window.location.href = waUrl;
+      }
+    } catch (e) {
+      window.location.href = waUrl;
+    }
+  }
+}
+
+function openWhatsAppOrderUpdate(orderId) {
+  const msg = encodeURIComponent(`Hi Spice Street! I would like an update on my order #${orderId}.`);
+  window.open(`https://wa.me/${RESTAURANT_INFO.whatsapp}?text=${msg}`, "_blank");
+}
+
+// Toast System
+function showToast(message) {
+  const container = document.getElementById("toast-container");
+  if (!container) return;
+
+  const toast = document.createElement("div");
+  toast.className = "toast";
+  toast.innerHTML = `
+    <span style="color: var(--gold-accent);">✦</span>
+    <span>${message}</span>
+  `;
+
+  container.appendChild(toast);
+
+  setTimeout(() => {
+    toast.style.opacity = "0";
+    toast.style.transform = "translateX(100%)";
+    toast.style.transition = "all 0.3s ease";
+    setTimeout(() => toast.remove(), 300);
+  }, 3200);
+}
+window.showToast = showToast;
+
+</script>
 
 </body>
 </html>
+

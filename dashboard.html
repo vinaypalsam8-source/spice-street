@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
@@ -15,7 +15,800 @@
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 
   <!-- Dashboard Styles -->
-  <link rel="stylesheet" href="css/dashboard.css" />
+  <style>
+/* ==========================================================================
+   SPICE STREET - KITCHEN & ORDER MANAGEMENT DASHBOARD STYLESHEET
+   Palette: #0D0D0D (Obsidian), #161616 (Card), #FF6B00 (Saffron), #FFB703 (Gold)
+   ========================================================================== */
+
+:root {
+  --bg-main: #0a0a0a;
+  --bg-card: #141414;
+  --bg-card-hover: #1c1c1c;
+  --border-subtle: #262626;
+  --border-accent: rgba(255, 107, 0, 0.4);
+  --border-gold: rgba(255, 183, 3, 0.4);
+
+  --primary-orange: #ff6b00;
+  --gold-accent: #ffb703;
+  --primary-gradient: linear-gradient(135deg, #ff6b00 0%, #ff8c00 50%, #ffb703 100%);
+
+  --text-primary: #ffffff;
+  --text-secondary: #d1d5db;
+  --text-muted: #9ca3af;
+  --text-dim: #6b7280;
+
+  --status-pending: #f59e0b;
+  --status-confirmed: #8b5cf6;
+  --status-preparing: #ff6b00;
+  --status-out-for-delivery: #06b6d4;
+  --status-delivered: #10b981;
+  --status-cancelled: #ef4444;
+
+  --radius-sm: 8px;
+  --radius-md: 14px;
+  --radius-lg: 20px;
+  --radius-full: 9999px;
+  --shadow-lg: 0 16px 40px rgba(0, 0, 0, 0.8);
+}
+
+*, *::before, *::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  font-family: 'Outfit', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  background-color: var(--bg-main);
+  color: var(--text-primary);
+  min-height: 100vh;
+  line-height: 1.5;
+}
+
+/* Header */
+.dashboard-header {
+  position: sticky;
+  top: 0;
+  z-index: 50;
+  background: rgba(13, 13, 13, 0.95);
+  backdrop-filter: blur(14px);
+  border-bottom: 1px solid var(--border-subtle);
+  padding: 0.85rem 1.5rem;
+}
+
+.header-inner {
+  max-width: 1440px;
+  margin: 0 auto;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 1rem;
+}
+
+.brand-section {
+  display: flex;
+  align-items: center;
+  gap: 0.85rem;
+}
+
+.brand-logo-icon {
+  width: 44px;
+  height: 44px;
+  border-radius: var(--radius-md);
+  background: var(--primary-gradient);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #000;
+  font-weight: 800;
+  font-size: 1.3rem;
+  box-shadow: 0 0 20px rgba(255, 107, 0, 0.35);
+}
+
+.brand-title {
+  font-family: 'Playfair Display', serif;
+  font-size: 1.3rem;
+  font-weight: 800;
+  line-height: 1.1;
+}
+
+.brand-sub {
+  font-size: 0.72rem;
+  color: var(--gold-accent);
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  font-weight: 600;
+}
+
+.header-status-pills {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  flex-wrap: wrap;
+}
+
+.status-indicator-pill {
+  padding: 0.4rem 0.85rem;
+  border-radius: var(--radius-full);
+  font-size: 0.78rem;
+  font-weight: 700;
+  display: flex;
+  align-items: center;
+  gap: 0.45rem;
+  border: 1px solid var(--border-subtle);
+  background: var(--bg-card);
+}
+
+.status-indicator-pill.connected {
+  border-color: rgba(34, 197, 94, 0.4);
+  background: rgba(34, 197, 94, 0.1);
+  color: #22c55e;
+}
+
+.status-indicator-pill.disconnected {
+  border-color: rgba(239, 68, 68, 0.4);
+  background: rgba(239, 68, 68, 0.1);
+  color: #ef4444;
+}
+
+.status-indicator-pill.sound-active {
+  border-color: rgba(255, 183, 3, 0.4);
+  background: rgba(255, 183, 3, 0.1);
+  color: var(--gold-accent);
+  cursor: pointer;
+}
+
+.status-dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: currentColor;
+  animation: pulseDot 1.5s infinite;
+}
+
+@keyframes pulseDot {
+  0% { transform: scale(0.9); opacity: 0.7; }
+  50% { transform: scale(1.3); opacity: 1; }
+  100% { transform: scale(0.9); opacity: 0.7; }
+}
+
+.header-action-btns {
+  display: flex;
+  align-items: center;
+  gap: 0.65rem;
+}
+
+.btn-header {
+  padding: 0.5rem 1rem;
+  border-radius: var(--radius-full);
+  font-size: 0.85rem;
+  font-weight: 600;
+  border: 1px solid var(--border-subtle);
+  background: var(--bg-card);
+  color: var(--text-primary);
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.btn-header:hover {
+  border-color: var(--primary-orange);
+  color: var(--primary-orange);
+}
+
+.btn-header.primary {
+  background: var(--primary-gradient);
+  color: #000;
+  border: none;
+  font-weight: 700;
+}
+
+/* Alert Banner for New Orders */
+.new-order-alert-banner {
+  background: linear-gradient(90deg, #ff6b00, #ffb703, #ff6b00);
+  background-size: 200% auto;
+  animation: alertShimmer 2s linear infinite;
+  color: #000;
+  padding: 0.85rem 1.5rem;
+  font-weight: 800;
+  font-size: 1rem;
+  display: none;
+  align-items: center;
+  justify-content: space-between;
+  box-shadow: 0 4px 20px rgba(255, 107, 0, 0.5);
+  cursor: pointer;
+}
+
+@keyframes alertShimmer {
+  0% { background-position: 0% 50%; }
+  100% { background-position: 200% 50%; }
+}
+
+/* Dashboard Container */
+.dashboard-container {
+  max-width: 1440px;
+  margin: 0 auto;
+  padding: 1.5rem;
+}
+
+/* Metrics Cards Grid */
+.metrics-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(210px, 1fr));
+  gap: 1rem;
+  margin-bottom: 2rem;
+}
+
+.metric-card {
+  background: var(--bg-card);
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--radius-md);
+  padding: 1.25rem;
+  display: flex;
+  flex-direction: column;
+  transition: all 0.2s ease;
+  position: relative;
+  overflow: hidden;
+}
+
+.metric-card:hover {
+  border-color: var(--border-accent);
+  transform: translateY(-2px);
+}
+
+.metric-card::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 3px;
+  background: var(--primary-gradient);
+  opacity: 0;
+  transition: opacity 0.2s;
+}
+
+.metric-card:hover::before {
+  opacity: 1;
+}
+
+.metric-title {
+  font-size: 0.8rem;
+  color: var(--text-muted);
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  font-weight: 600;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.metric-value {
+  font-family: 'Playfair Display', serif;
+  font-size: 2rem;
+  font-weight: 800;
+  color: var(--text-primary);
+  margin-top: 0.4rem;
+}
+
+.metric-value.highlight {
+  color: var(--gold-accent);
+}
+
+/* Filters & Search Toolbar */
+.toolbar-section {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 1rem;
+  background: var(--bg-card);
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--radius-md);
+  padding: 1rem 1.25rem;
+  margin-bottom: 1.75rem;
+}
+
+.status-filter-pills {
+  display: flex;
+  gap: 0.5rem;
+  overflow-x: auto;
+  scrollbar-width: none;
+}
+
+.status-filter-pills::-webkit-scrollbar {
+  display: none;
+}
+
+.filter-pill {
+  padding: 0.45rem 1rem;
+  border-radius: var(--radius-full);
+  font-size: 0.82rem;
+  font-weight: 600;
+  background: var(--bg-main);
+  border: 1px solid var(--border-subtle);
+  color: var(--text-secondary);
+  cursor: pointer;
+  white-space: nowrap;
+  transition: all 0.2s ease;
+}
+
+.filter-pill:hover, .filter-pill.active {
+  background: var(--primary-gradient);
+  color: #000;
+  border-color: transparent;
+}
+
+.search-and-tools {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+}
+
+.search-box {
+  position: relative;
+}
+
+.search-box input {
+  padding: 0.55rem 1rem 0.55rem 2.4rem;
+  background: var(--bg-main);
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--radius-full);
+  color: #fff;
+  font-size: 0.85rem;
+  width: 240px;
+}
+
+.search-box input:focus {
+  outline: none;
+  border-color: var(--primary-orange);
+}
+
+.search-box span {
+  position: absolute;
+  left: 0.85rem;
+  top: 50%;
+  transform: translateY(-50%);
+  color: var(--text-muted);
+  font-size: 0.9rem;
+}
+
+/* Orders Cards Stream */
+.orders-stream {
+  display: flex;
+  flex-direction: column;
+  gap: 1.25rem;
+}
+
+.order-ticket {
+  background: var(--bg-card);
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--radius-md);
+  padding: 1.5rem;
+  transition: all 0.25s ease;
+  position: relative;
+}
+
+.order-ticket:hover {
+  border-color: var(--border-accent);
+  box-shadow: 0 8px 30px rgba(0, 0, 0, 0.6);
+}
+
+.order-ticket.new-arrival {
+  border-color: var(--gold-accent);
+  box-shadow: 0 0 25px rgba(255, 183, 3, 0.35);
+  animation: pulseCard 2s infinite alternate;
+}
+
+@keyframes pulseCard {
+  0% { transform: scale(1); }
+  100% { transform: scale(1.008); }
+}
+
+.ticket-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  flex-wrap: wrap;
+  gap: 0.75rem;
+  border-bottom: 1px solid var(--border-subtle);
+  padding-bottom: 1rem;
+  margin-bottom: 1.2rem;
+}
+
+.order-id-group {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+}
+
+.order-num-badge {
+  font-family: 'Playfair Display', serif;
+  font-size: 1.25rem;
+  font-weight: 800;
+  color: var(--gold-accent);
+}
+
+.time-stamp {
+  font-size: 0.78rem;
+  color: var(--text-muted);
+}
+
+.ticket-badges-group {
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+}
+
+.order-status-badge {
+  padding: 0.35rem 0.85rem;
+  border-radius: var(--radius-full);
+  font-size: 0.78rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+}
+
+.order-status-badge.received { background: rgba(59, 130, 246, 0.2); color: #60a5fa; border: 1px solid #3b82f6; }
+.order-status-badge.confirmed { background: rgba(139, 92, 246, 0.2); color: #c084fc; border: 1px solid #8b5cf6; }
+.order-status-badge.preparing { background: rgba(255, 107, 0, 0.2); color: #ff8c00; border: 1px solid #ff6b00; }
+.order-status-badge.out-for-delivery { background: rgba(6, 182, 212, 0.2); color: #22d3ee; border: 1px solid #06b6d4; }
+.order-status-badge.delivered { background: rgba(16, 185, 129, 0.2); color: #34d399; border: 1px solid #10b981; }
+
+.ticket-body-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 1.5rem;
+}
+
+@media (min-width: 900px) {
+  .ticket-body-grid {
+    grid-template-columns: 1.4fr 1fr 1fr;
+  }
+}
+
+.customer-info-box h4, .items-box h4, .shipment-box h4 {
+  font-size: 0.82rem;
+  color: var(--gold-accent);
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  margin-bottom: 0.5rem;
+  font-weight: 700;
+}
+
+.customer-name {
+  font-size: 1.05rem;
+  font-weight: 700;
+  color: var(--text-primary);
+}
+
+.customer-contact {
+  font-size: 0.85rem;
+  color: var(--text-secondary);
+  margin-top: 0.15rem;
+  display: flex;
+  gap: 0.75rem;
+}
+
+.customer-address {
+  font-size: 0.82rem;
+  color: var(--text-muted);
+  margin-top: 0.4rem;
+  line-height: 1.45;
+}
+
+/* Items List in Ticket */
+.ticket-items-list {
+  display: flex;
+  flex-direction: column;
+  gap: 0.4rem;
+}
+
+.ticket-item-row {
+  display: flex;
+  justify-content: space-between;
+  font-size: 0.85rem;
+  padding: 0.25rem 0;
+  border-bottom: 1px dashed rgba(255, 255, 255, 0.05);
+}
+
+.item-qty-name {
+  font-weight: 600;
+  color: var(--text-primary);
+}
+
+.item-price {
+  color: var(--primary-orange);
+  font-weight: 700;
+}
+
+.bill-total-row {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 0.6rem;
+  padding-top: 0.5rem;
+  font-weight: 800;
+  font-size: 1rem;
+  border-top: 1px solid var(--border-subtle);
+}
+
+/* Shipment & Delivery Boy Box */
+.shipment-box {
+  background: var(--bg-main);
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--radius-sm);
+  padding: 1rem;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+.shipment-details {
+  font-size: 0.82rem;
+  color: var(--text-secondary);
+}
+
+.rider-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  font-weight: 700;
+  color: var(--gold-accent);
+  margin-bottom: 0.25rem;
+}
+
+/* Ticket Actions Footer */
+.ticket-footer {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 0.75rem;
+  border-top: 1px solid var(--border-subtle);
+  padding-top: 1rem;
+  margin-top: 1.25rem;
+}
+
+.status-change-group {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.status-select {
+  background: var(--bg-main);
+  border: 1px solid var(--border-accent);
+  color: #fff;
+  padding: 0.45rem 0.85rem;
+  border-radius: var(--radius-sm);
+  font-size: 0.85rem;
+  font-weight: 600;
+}
+
+.action-buttons-group {
+  display: flex;
+  gap: 0.5rem;
+  flex-wrap: wrap;
+}
+
+.btn-action {
+  padding: 0.45rem 0.95rem;
+  border-radius: var(--radius-sm);
+  font-size: 0.82rem;
+  font-weight: 600;
+  cursor: pointer;
+  border: 1px solid var(--border-subtle);
+  background: var(--bg-card);
+  color: var(--text-primary);
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  transition: all 0.2s ease;
+}
+
+.btn-action:hover {
+  border-color: var(--gold-accent);
+  color: var(--gold-accent);
+}
+
+.btn-action.shipment {
+  background: rgba(6, 182, 212, 0.15);
+  border-color: #06b6d4;
+  color: #22d3ee;
+}
+
+.btn-action.shipment:hover {
+  background: #06b6d4;
+  color: #000;
+}
+
+.btn-action.whatsapp {
+  background: rgba(37, 211, 102, 0.15);
+  border-color: #25d366;
+  color: #25d366;
+}
+
+.btn-action.whatsapp:hover {
+  background: #25d366;
+  color: #000;
+}
+
+.btn-action.zomato {
+  background: rgba(203, 32, 45, 0.18);
+  border-color: #cb202d;
+  color: #ff6b77;
+}
+
+.btn-action.zomato:hover {
+  background: #cb202d;
+  color: #fff;
+  box-shadow: 0 0 15px rgba(203, 32, 45, 0.5);
+}
+
+.btn-action.swiggy {
+  background: rgba(252, 128, 25, 0.18);
+  border-color: #fc8019;
+  color: #ffa959;
+}
+
+.btn-action.swiggy:hover {
+  background: #fc8019;
+  color: #fff;
+  box-shadow: 0 0 15px rgba(252, 128, 25, 0.5);
+}
+
+.btn-action.auto-connect {
+  background: linear-gradient(135deg, #FF6B00 0%, #FFB703 100%);
+  color: #000 !important;
+  font-weight: 800;
+  border: none;
+  box-shadow: 0 2px 10px rgba(255, 107, 0, 0.35);
+}
+
+.btn-action.auto-connect:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 4px 15px rgba(255, 107, 0, 0.55);
+}
+
+.partner-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+  font-size: 0.72rem;
+  font-weight: 800;
+  padding: 0.2rem 0.55rem;
+  border-radius: 4px;
+  text-transform: uppercase;
+  letter-spacing: 0.03em;
+}
+
+.partner-badge.zomato {
+  background: rgba(203, 32, 45, 0.2);
+  color: #ff6b77;
+  border: 1px solid rgba(203, 32, 45, 0.4);
+}
+
+.partner-badge.swiggy {
+  background: rgba(252, 128, 25, 0.2);
+  color: #ffa959;
+  border: 1px solid rgba(252, 128, 25, 0.4);
+}
+
+.partner-badge.inhouse {
+  background: rgba(34, 197, 94, 0.2);
+  color: #86efac;
+  border: 1px solid rgba(34, 197, 94, 0.4);
+}
+
+/* Modal Styling */
+.modal-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.85);
+  backdrop-filter: blur(8px);
+  z-index: 100;
+  display: none;
+  align-items: center;
+  justify-content: center;
+  padding: 1.25rem;
+}
+
+.modal-overlay.open {
+  display: flex;
+}
+
+.dashboard-modal {
+  background: var(--bg-card);
+  border: 1px solid var(--border-accent);
+  border-radius: var(--radius-lg);
+  max-width: 520px;
+  width: 100%;
+  max-height: 90vh;
+  overflow-y: auto;
+  box-shadow: var(--shadow-lg);
+}
+
+.modal-head {
+  padding: 1.25rem 1.5rem;
+  border-bottom: 1px solid var(--border-subtle);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.modal-content {
+  padding: 1.5rem;
+}
+
+.form-field {
+  margin-bottom: 1.1rem;
+}
+
+.field-label {
+  display: block;
+  font-size: 0.82rem;
+  font-weight: 600;
+  color: var(--text-secondary);
+  margin-bottom: 0.35rem;
+}
+
+.field-input {
+  width: 100%;
+  padding: 0.7rem 0.9rem;
+  background: var(--bg-main);
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--radius-sm);
+  color: #fff;
+  font-size: 0.88rem;
+}
+
+.field-input:focus {
+  outline: none;
+  border-color: var(--primary-orange);
+}
+
+/* Empty State */
+.empty-stream-box {
+  text-align: center;
+  padding: 4rem 1.5rem;
+  background: var(--bg-card);
+  border-radius: var(--radius-lg);
+  border: 1px dashed var(--border-subtle);
+}
+
+.empty-icon {
+  font-size: 3.5rem;
+  margin-bottom: 1rem;
+}
+
+/* Toast */
+.dash-toast {
+  position: fixed;
+  bottom: 24px;
+  right: 24px;
+  z-index: 150;
+  background: #1a1a1a;
+  border: 1px solid var(--border-accent);
+  color: #fff;
+  padding: 0.85rem 1.4rem;
+  border-radius: var(--radius-md);
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.7);
+  display: none;
+  font-weight: 600;
+  font-size: 0.9rem;
+  animation: slideToast 0.3s ease;
+}
+
+@keyframes slideToast {
+  from { transform: translateX(100%); opacity: 0; }
+  to { transform: translateX(0); opacity: 1; }
+}
+
+</style>
 </head>
 <body>
 
@@ -251,6 +1044,1032 @@
   <div id="dashboard-toast" class="dash-toast"></div>
 
   <!-- Dashboard Logic -->
-  <script src="js/dashboard.js"></script>
+  <script>
+// ==========================================================================
+// SPICE STREET - RESTAURANT OWNER DASHBOARD ENGINE
+// Supabase Auto-Connect, Kitchen Audio Buzzer, Live Orders Stream, Shipment
+// ==========================================================================
+
+const DEFAULT_SUPABASE_CONFIG = {
+  url: "https://ifodvvqzpuoyhfwjtclw.supabase.co",
+  anonKey: "sb_publishable_nyRqCbF7fvOJ7UMZ2jISSw_mX5XXkqo"
+};
+
+let supabaseClient = null;
+let realtimeChannel = null;
+let soundEnabled = true;
+let knownOrderIds = new Set();
+let allOrders = [];
+let currentFilter = "all";
+let searchKeyword = "";
+let currentShipmentOrderId = null;
+
+// Initialize Dashboard
+document.addEventListener("DOMContentLoaded", () => {
+  initSupabaseConnection();
+  loadInitialOrders();
+  setupLocalStorageListener();
+  initAudioContext();
+  updateAutoDispatchPill();
+  setupPollingFallback();
+});
+
+// 1. SUPABASE AUTO-CONNECT
+function getSupabaseConfig() {
+  return {
+    url: localStorage.getItem("spice_supabase_url") || DEFAULT_SUPABASE_CONFIG.url,
+    anonKey: localStorage.getItem("spice_supabase_key") || DEFAULT_SUPABASE_CONFIG.anonKey
+  };
+}
+
+function initSupabaseConnection() {
+  const config = getSupabaseConfig();
+  if (window.supabase && config.url && config.anonKey) {
+    try {
+      supabaseClient = window.supabase.createClient(config.url, config.anonKey);
+      updateConnectionStatus(true, "Supabase Cloud Connected (Live)");
+      subscribeToSupabaseRealtime();
+      fetchSupabaseOrders();
+    } catch (e) {
+      console.warn("Supabase init error:", e);
+      updateConnectionStatus(false, "Offline / Local Mode");
+    }
+  } else {
+    updateConnectionStatus(false, "Offline / Local Mode");
+  }
+}
+
+function updateConnectionStatus(connected, label) {
+  const pill = document.getElementById("supabase-status-pill");
+  const text = document.getElementById("supabase-status-text");
+  if (!pill || !text) return;
+
+  if (connected) {
+    pill.className = "status-indicator-pill connected";
+    text.textContent = label || "Supabase Connected";
+  } else {
+    pill.className = "status-indicator-pill disconnected";
+    text.textContent = label || "Local Database Mode";
+  }
+}
+
+// Supabase Realtime Subscription (Instant Live Push)
+function subscribeToSupabaseRealtime() {
+  if (!supabaseClient) return;
+
+  try {
+    realtimeChannel = supabaseClient
+      .channel("spice_orders_realtime")
+      .on(
+        "postgres_changes",
+        { event: "*", schema: "public", table: "orders" },
+        (payload) => {
+          handleRealtimeEvent(payload);
+        }
+      )
+      .subscribe((status) => {
+        if (status === "SUBSCRIBED") {
+          console.log("⚡ Supabase Realtime channel subscribed successfully!");
+        }
+      });
+  } catch (e) {
+    console.warn("Supabase realtime subscription failed:", e);
+  }
+}
+
+function handleRealtimeEvent(payload) {
+  if (payload.eventType === "INSERT") {
+    const raw = payload.new;
+    const order = transformSupabaseOrder(raw);
+    handleNewIncomingOrder(order);
+  } else if (payload.eventType === "UPDATE") {
+    const raw = payload.new;
+    const updated = transformSupabaseOrder(raw);
+    updateOrderInState(updated);
+  }
+}
+
+function transformSupabaseOrder(raw) {
+  return {
+    orderId: raw.order_id || raw.orderId,
+    displayDate: raw.timestamp ? new Date(raw.timestamp).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }) : new Date().toLocaleTimeString(),
+    customer: {
+      fullName: raw.customer_name || "Customer",
+      phone: raw.phone || "",
+      email: raw.email || "",
+      address: {
+        flatNo: "",
+        street: raw.street_address || "",
+        city: "Hyderabad",
+        pincode: raw.pincode || ""
+      },
+      deliveryInstructions: raw.landmark || ""
+    },
+    items: typeof raw.items === "string" ? JSON.parse(raw.items) : (raw.items || []),
+    pricing: {
+      subtotal: parseFloat(raw.subtotal || raw.grand_total || 0),
+      deliveryFee: parseFloat(raw.delivery_fee || 0),
+      taxes: 0,
+      grandTotal: parseFloat(raw.grand_total || raw.subtotal || 0)
+    },
+    payment: {
+      method: raw.payment_mode || "COD",
+      status: raw.payment_status || "Pending",
+      transactionId: raw.utr || "N/A"
+    },
+    status: raw.order_status || "Order Received",
+    estimatedDeliveryTime: "30 mins",
+    shipment: raw.shipment || {
+      riderName: "Not Assigned",
+      riderPhone: "",
+      vehicleNo: "",
+      status: "Pending"
+    }
+  };
+}
+
+async function fetchSupabaseOrders() {
+  if (!supabaseClient) return;
+  try {
+    const { data, error } = await supabaseClient
+      .from("orders")
+      .select("*")
+      .order("id", { ascending: false })
+      .limit(50);
+
+    if (data && data.length > 0) {
+      const orders = data.map(transformSupabaseOrder);
+      mergeOrdersIntoState(orders);
+    }
+  } catch (e) {
+    console.warn("Could not fetch orders from Supabase:", e);
+  }
+}
+
+// 2. KITCHEN AUDIO BUZZER ("BUZZ THE SOND")
+let audioCtx = null;
+
+function initAudioContext() {
+  // Unlocks audio context on first user click anywhere
+  const unlockAudio = () => {
+    if (!audioCtx) {
+      audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+    }
+    if (audioCtx && audioCtx.state === "suspended") {
+      audioCtx.resume();
+    }
+    document.removeEventListener("click", unlockAudio);
+    document.removeEventListener("touchstart", unlockAudio);
+  };
+  document.addEventListener("click", unlockAudio);
+  document.addEventListener("touchstart", unlockAudio);
+}
+
+function playKitchenBuzzerSound() {
+  if (!soundEnabled) return;
+
+  try {
+    if (!audioCtx) {
+      audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+    }
+    if (audioCtx.state === "suspended") {
+      audioCtx.resume();
+    }
+
+    const now = audioCtx.currentTime;
+
+    const createBeep = (freq, startOffset, duration, type = "triangle") => {
+      const osc = audioCtx.createOscillator();
+      const gain = audioCtx.createGain();
+
+      osc.type = type;
+      osc.frequency.setValueAtTime(freq, now + startOffset);
+
+      gain.gain.setValueAtTime(0, now + startOffset);
+      gain.gain.linearRampToValueAtTime(0.6, now + startOffset + 0.04);
+      gain.gain.exponentialRampToValueAtTime(0.001, now + startOffset + duration);
+
+      osc.connect(gain);
+      gain.connect(audioCtx.destination);
+
+      osc.start(now + startOffset);
+      osc.stop(now + startOffset + duration);
+    };
+
+    // Realistic Restaurant Kitchen Chime + Loud Double Buzzer:
+    // Tone 1: High Alert Bell
+    createBeep(880, 0.0, 0.25, "sine");
+    // Tone 2: Pitch Step Up
+    createBeep(1174, 0.2, 0.35, "sine");
+    // Tone 3: Climax Chime
+    createBeep(1760, 0.45, 0.45, "sine");
+
+    // Secondary Aggressive Kitchen Buzzer ("BUZZ-BUZZ!")
+    setTimeout(() => {
+      if (!audioCtx) return;
+      const t = audioCtx.currentTime;
+      const osc1 = audioCtx.createOscillator();
+      const gain1 = audioCtx.createGain();
+      osc1.type = "sawtooth";
+      osc1.frequency.setValueAtTime(520, t);
+      gain1.gain.setValueAtTime(0.5, t);
+      gain1.gain.exponentialRampToValueAtTime(0.01, t + 0.25);
+      osc1.connect(gain1);
+      gain1.connect(audioCtx.destination);
+      osc1.start(t);
+      osc1.stop(t + 0.25);
+
+      const osc2 = audioCtx.createOscillator();
+      const gain2 = audioCtx.createGain();
+      osc2.type = "sawtooth";
+      osc2.frequency.setValueAtTime(520, t + 0.3);
+      gain2.gain.setValueAtTime(0.5, t + 0.3);
+      gain2.gain.exponentialRampToValueAtTime(0.01, t + 0.55);
+      osc2.connect(gain2);
+      gain2.connect(audioCtx.destination);
+      osc2.start(t + 0.3);
+      osc2.stop(t + 0.55);
+    }, 700);
+
+  } catch (e) {
+    console.warn("Web Audio playback failed:", e);
+  }
+}
+
+function testBuzzerSound() {
+  playKitchenBuzzerSound();
+  showToast("🔔 Testing Kitchen Order Buzzer Sound!");
+}
+
+function toggleBuzzerSound() {
+  soundEnabled = !soundEnabled;
+  const pill = document.getElementById("buzzer-status-pill");
+  if (pill) {
+    if (soundEnabled) {
+      pill.innerHTML = `<span>🔔</span> <span id="buzzer-status-text">Buzzer: ON</span>`;
+      pill.classList.add("sound-active");
+      showToast("Kitchen Buzzer sound enabled (loud)");
+    } else {
+      pill.innerHTML = `<span>🔕</span> <span id="buzzer-status-text">Buzzer: MUTED</span>`;
+      pill.classList.remove("sound-active");
+      showToast("Kitchen Buzzer muted");
+    }
+  }
+}
+
+// 3. INCOMING ORDER NOTIFICATION
+function handleNewIncomingOrder(order) {
+  if (knownOrderIds.has(order.orderId)) {
+    return;
+  }
+
+  knownOrderIds.add(order.orderId);
+  allOrders.unshift(order);
+  saveOrdersToLocalCache();
+  renderDashboard();
+
+  // PLAY THE KITCHEN BUZZER SOUND!
+  playKitchenBuzzerSound();
+
+  // Flash the Alert Banner
+  showNewOrderBanner(order);
+  showToast(`🚨 NEW ORDER ARRIVED: #${order.orderId} (₹${order.pricing.grandTotal})`);
+
+  // Automatically connect 3rd-party delivery rider (Zomato / Swiggy Fleet)
+  if (autoDispatchEnabled) {
+    const hasRider = order.shipment && order.shipment.riderName && order.shipment.riderName !== "Not Assigned";
+    if (!hasRider) {
+      setTimeout(() => {
+        autoConnectThirdPartyRider("fastest", order.orderId);
+      }, 1500);
+    }
+  }
+}
+
+function showNewOrderBanner(order) {
+  const banner = document.getElementById("new-order-alert-banner");
+  if (!banner) return;
+
+  banner.innerHTML = `
+    <div style="display: flex; align-items: center; gap: 0.75rem;">
+      <span style="font-size: 1.4rem;">🔔</span>
+      <span><strong>NEW ORDER RECEIVED!</strong> #${order.orderId} • ${order.customer.fullName} • <strong>₹${order.pricing.grandTotal}</strong></span>
+    </div>
+    <div style="display: flex; gap: 0.5rem;">
+      <button onclick="dismissAlertBanner()" style="background: #000; color: #fff; padding: 0.35rem 0.85rem; border-radius: 99px; font-size: 0.8rem; font-weight: 700;">View Order</button>
+    </div>
+  `;
+  banner.style.display = "flex";
+}
+
+function dismissAlertBanner() {
+  const banner = document.getElementById("new-order-alert-banner");
+  if (banner) banner.style.display = "none";
+}
+
+// 4. THIRD-PARTY FLEET & SHIPMENT MANAGEMENT (ZOMATO / SWIGGY AUTO-CONNECT)
+const THIRD_PARTY_RIDERS_POOL = [
+  {
+    partner: "Zomato Fleet",
+    brand: "zomato",
+    icon: "🔴",
+    name: "Rahul Sharma",
+    phone: "9849012345",
+    vehicleNo: "TS 09 UB 8921 (Activa)",
+    rating: "4.9★",
+    eta: "20-25 mins"
+  },
+  {
+    partner: "Zomato Fleet",
+    brand: "zomato",
+    icon: "🔴",
+    name: "Mohammed Rizwan",
+    phone: "9849067890",
+    vehicleNo: "TS 08 EF 4321 (Splendor)",
+    rating: "4.8★",
+    eta: "22-28 mins"
+  },
+  {
+    partner: "Swiggy Fleet",
+    brand: "swiggy",
+    icon: "🟠",
+    name: "Suresh Varma",
+    phone: "9849055667",
+    vehicleNo: "TS 08 AB 1144 (Jupiter)",
+    rating: "4.9★",
+    eta: "18-24 mins"
+  },
+  {
+    partner: "Swiggy Fleet",
+    brand: "swiggy",
+    icon: "🟠",
+    name: "Vikram Singh",
+    phone: "9849088990",
+    vehicleNo: "TS 07 CD 9081 (Pulsar)",
+    rating: "4.8★",
+    eta: "25-30 mins"
+  },
+  {
+    partner: "Zomato Fleet",
+    brand: "zomato",
+    icon: "🔴",
+    name: "Karthik Reddy",
+    phone: "9849033445",
+    vehicleNo: "TS 09 AB 6712 (Ather EV)",
+    rating: "5.0★",
+    eta: "15-20 mins"
+  },
+  {
+    partner: "Swiggy Fleet",
+    brand: "swiggy",
+    icon: "🟠",
+    name: "Anil Kumar",
+    phone: "9849022334",
+    vehicleNo: "TS 09 XY 5432 (Access 125)",
+    rating: "4.9★",
+    eta: "20-25 mins"
+  }
+];
+
+let autoDispatchEnabled = localStorage.getItem("spice_street_auto_dispatch") !== "false";
+
+function toggleAutoDispatch() {
+  autoDispatchEnabled = !autoDispatchEnabled;
+  localStorage.setItem("spice_street_auto_dispatch", autoDispatchEnabled ? "true" : "false");
+  updateAutoDispatchPill();
+  showToast(autoDispatchEnabled ? "⚡ 3rd-Party Auto-Dispatch (Zomato/Swiggy) Activated!" : "⏸️ Auto-Dispatch Paused.");
+}
+
+function updateAutoDispatchPill() {
+  const pill = document.getElementById("auto-dispatch-pill");
+  const text = document.getElementById("auto-dispatch-text");
+  if (!pill || !text) return;
+
+  if (autoDispatchEnabled) {
+    pill.className = "status-indicator-pill sound-active";
+    text.textContent = "3rd-Party Auto-Dispatch: ON";
+    pill.style.background = "rgba(255, 107, 0, 0.15)";
+    pill.style.borderColor = "var(--primary-orange)";
+  } else {
+    pill.className = "status-indicator-pill sound-muted";
+    text.textContent = "3rd-Party Auto-Dispatch: OFF";
+    pill.style.background = "rgba(255, 255, 255, 0.05)";
+    pill.style.borderColor = "var(--border-subtle)";
+  }
+}
+
+function autoConnectThirdPartyRider(provider = "fastest", targetOrderId = null) {
+  const orderId = targetOrderId || currentShipmentOrderId;
+  if (!orderId) return;
+
+  const order = allOrders.find(o => o.orderId === orderId);
+  if (!order) return;
+
+  // Filter pool by chosen provider
+  let pool = THIRD_PARTY_RIDERS_POOL;
+  if (provider === "zomato") {
+    pool = THIRD_PARTY_RIDERS_POOL.filter(r => r.brand === "zomato");
+  } else if (provider === "swiggy") {
+    pool = THIRD_PARTY_RIDERS_POOL.filter(r => r.brand === "swiggy");
+  }
+
+  // Pick matching rider
+  const rider = pool[Math.floor(Math.random() * pool.length)];
+
+  // Visual status in modal if currently open
+  const statusEl = document.getElementById("fleet-dispatch-status");
+  if (statusEl) {
+    statusEl.style.display = "block";
+    statusEl.innerHTML = `📡 Dispatching via <strong>${rider.partner}</strong> Logistics API...`;
+  }
+
+  setTimeout(() => {
+    order.shipment = {
+      partner: rider.partner,
+      riderName: `${rider.name} (${rider.partner})`,
+      riderPhone: rider.phone,
+      vehicleNo: rider.vehicleNo,
+      rating: rider.rating,
+      status: "Out for Delivery"
+    };
+    order.deliveryRider = {
+      name: rider.name,
+      phone: rider.phone,
+      partner: rider.partner,
+      vehicleNo: rider.vehicleNo,
+      status: "Assigned"
+    };
+    order.estimatedDeliveryTime = rider.eta;
+    
+    if (order.status === "Order Received" || order.status === "Order Confirmed" || order.status === "Preparing") {
+      order.status = "Out for Delivery";
+    }
+
+    saveOrdersToLocalCache();
+    syncOrderUpdateToSupabase(order);
+    playRiderConnectChime();
+
+    // If modal is open for this order, update fields
+    if (currentShipmentOrderId === orderId) {
+      const partnerSel = document.getElementById("rider-partner-select");
+      if (partnerSel) partnerSel.value = rider.partner;
+      document.getElementById("rider-name-input").value = order.shipment.riderName;
+      document.getElementById("rider-phone-input").value = rider.phone;
+      document.getElementById("rider-vehicle-input").value = rider.vehicleNo;
+      document.getElementById("shipment-eta-input").value = rider.eta;
+      document.getElementById("shipment-status-select").value = "Out for Delivery";
+
+      if (statusEl) {
+        statusEl.innerHTML = `✓ Connected <strong>${rider.partner}</strong>: ${rider.name} (${rider.rating}) • ${rider.vehicleNo}`;
+      }
+    }
+
+    renderDashboard();
+    showToast(`🎉 Auto-Connected ${rider.partner} Rider: ${rider.name} (${rider.vehicleNo})!`);
+  }, 350);
+}
+
+function playRiderConnectChime() {
+  if (!soundEnabled) return;
+  try {
+    const audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+    const osc = audioCtx.createOscillator();
+    const gain = audioCtx.createGain();
+    osc.type = "sine";
+    osc.frequency.setValueAtTime(523.25, audioCtx.currentTime); // C5
+    osc.frequency.exponentialRampToValueAtTime(783.99, audioCtx.currentTime + 0.12); // G5
+    gain.gain.setValueAtTime(0.25, audioCtx.currentTime);
+    gain.gain.exponentialRampToValueAtTime(0.01, audioCtx.currentTime + 0.3);
+    osc.connect(gain);
+    gain.connect(audioCtx.destination);
+    osc.start();
+    osc.stop(audioCtx.currentTime + 0.3);
+  } catch (e) {}
+}
+
+function handlePartnerSelectChange(partner) {
+  const matching = THIRD_PARTY_RIDERS_POOL.filter(r => r.partner === partner);
+  if (matching.length > 0) {
+    const rider = matching[Math.floor(Math.random() * matching.length)];
+    document.getElementById("rider-name-input").value = `${rider.name} (${partner})`;
+    document.getElementById("rider-phone-input").value = rider.phone;
+    document.getElementById("rider-vehicle-input").value = rider.vehicleNo;
+    document.getElementById("shipment-eta-input").value = rider.eta;
+  }
+}
+
+function openShipmentModal(orderId) {
+  const order = allOrders.find(o => o.orderId === orderId);
+  if (!order) return;
+
+  currentShipmentOrderId = orderId;
+  const shipment = order.shipment || {};
+
+  document.getElementById("shipment-order-id").textContent = `#${order.orderId}`;
+  document.getElementById("shipment-customer-name").textContent = `${order.customer.fullName} (${order.customer.phone})`;
+  document.getElementById("shipment-address").textContent = `${order.customer.address.street || ''} ${order.customer.address.city || ''}`;
+
+  const partnerSel = document.getElementById("rider-partner-select");
+  if (partnerSel) {
+    partnerSel.value = shipment.partner || "Zomato Fleet";
+  }
+
+  document.getElementById("rider-name-input").value = shipment.riderName !== "Not Assigned" ? (shipment.riderName || "") : "";
+  document.getElementById("rider-phone-input").value = shipment.riderPhone || "";
+  document.getElementById("rider-vehicle-input").value = shipment.vehicleNo || "";
+  document.getElementById("shipment-eta-input").value = order.estimatedDeliveryTime || "25-35 mins";
+  document.getElementById("shipment-status-select").value = shipment.status || "Assigned";
+
+  const statusEl = document.getElementById("fleet-dispatch-status");
+  if (statusEl) statusEl.style.display = "none";
+
+  const modal = document.getElementById("shipment-modal");
+  if (modal) modal.classList.add("open");
+}
+
+function closeShipmentModal() {
+  const modal = document.getElementById("shipment-modal");
+  if (modal) modal.classList.remove("open");
+  currentShipmentOrderId = null;
+}
+
+async function saveShipmentDetails() {
+  if (!currentShipmentOrderId) return;
+  const order = allOrders.find(o => o.orderId === currentShipmentOrderId);
+  if (!order) return;
+
+  const partner = document.getElementById("rider-partner-select") ? document.getElementById("rider-partner-select").value : "Zomato Fleet";
+  const riderName = document.getElementById("rider-name-input").value.trim() || "Express Delivery Partner";
+  const riderPhone = document.getElementById("rider-phone-input").value.trim();
+  const vehicleNo = document.getElementById("rider-vehicle-input").value.trim();
+  const eta = document.getElementById("shipment-eta-input").value.trim() || "30 mins";
+  const status = document.getElementById("shipment-status-select").value;
+
+  order.shipment = {
+    partner,
+    riderName,
+    riderPhone,
+    vehicleNo,
+    rating: (order.shipment && order.shipment.rating) || "4.9★",
+    status
+  };
+  order.deliveryRider = {
+    name: riderName,
+    phone: riderPhone,
+    partner,
+    vehicleNo,
+    status
+  };
+  order.estimatedDeliveryTime = eta;
+
+  if (status === "Out for Delivery" || status === "In Transit") {
+    order.status = "Out for Delivery";
+  } else if (status === "Delivered") {
+    order.status = "Delivered";
+  }
+
+  saveOrdersToLocalCache();
+  syncOrderUpdateToSupabase(order);
+  closeShipmentModal();
+  renderDashboard();
+
+  showToast(`🚚 Shipment updated for #${order.orderId}: Rider ${riderName}`);
+}
+
+function sendAddressToRiderWhatsApp() {
+  if (!currentShipmentOrderId) return;
+  quickSendAddressToRider(currentShipmentOrderId);
+}
+
+function quickSendAddressToRider(orderId) {
+  const order = allOrders.find(o => o.orderId === orderId);
+  if (!order || !order.shipment || !order.shipment.riderPhone) {
+    showToast("Please assign a rider phone first!");
+    return;
+  }
+
+  const riderPhone = order.shipment.riderPhone.replace(/\D/g, "");
+  const partnerName = (order.shipment.partner || "3rd-Party Fleet").toUpperCase();
+  const itemsList = order.items.map(i => `• ${i.quantity}x ${i.name}`).join("\n");
+  const msg = 
+`*🚚 SPICE STREET - ${partnerName} DISPATCH*
+*Order ID:* #${order.orderId}
+*Customer:* ${order.customer.fullName}
+*Customer Phone:* ${order.customer.phone}
+
+*📍 DELIVERY ADDRESS:*
+${order.customer.address.street || ''}
+${order.customer.address.city || 'Hyderabad'} - ${order.customer.address.pincode || ''}
+${order.customer.deliveryInstructions ? `Note: ${order.customer.deliveryInstructions}\n` : ''}
+*FOOD PACKAGE:*
+${itemsList}
+*Collect Amount:* ₹${order.pricing.grandTotal} (${order.payment.method.toUpperCase()})
+
+Please deliver hot and safely!`;
+
+  window.open(`https://wa.me/${riderPhone}?text=${encodeURIComponent(msg)}`, "_blank");
+}
+
+// 5. LOCAL STORAGE & REALTIME SYNC
+function loadInitialOrders() {
+  try {
+    const saved = localStorage.getItem("spice_street_orders_v1");
+    if (saved) {
+      const list = JSON.parse(saved);
+      mergeOrdersIntoState(list);
+    }
+  } catch (e) {
+    console.warn("Could not load local orders cache:", e);
+  }
+}
+
+function mergeOrdersIntoState(newOrders) {
+  newOrders.forEach(o => {
+    if (!knownOrderIds.has(o.orderId)) {
+      knownOrderIds.add(o.orderId);
+      allOrders.push(o);
+    }
+  });
+
+  // Sort latest first
+  allOrders.sort((a, b) => (new Date(b.createdAt || Date.now()) - new Date(a.createdAt || Date.now())));
+  renderDashboard();
+}
+
+function updateOrderInState(updated) {
+  const idx = allOrders.findIndex(o => o.orderId === updated.orderId);
+  if (idx > -1) {
+    allOrders[idx] = updated;
+  } else {
+    allOrders.unshift(updated);
+  }
+  saveOrdersToLocalCache();
+  renderDashboard();
+}
+
+function saveOrdersToLocalCache() {
+  try {
+    localStorage.setItem("spice_street_orders_v1", JSON.stringify(allOrders));
+  } catch (e) {}
+}
+
+function setupLocalStorageListener() {
+  window.addEventListener("storage", (e) => {
+    if (e.key === "spice_street_orders_v1" && e.newValue) {
+      try {
+        const freshOrders = JSON.parse(e.newValue);
+        if (Array.isArray(freshOrders)) {
+          // Check for new orders
+          freshOrders.forEach(order => {
+            if (!knownOrderIds.has(order.orderId)) {
+              handleNewIncomingOrder(order);
+            }
+          });
+        }
+      } catch (err) {}
+    }
+  });
+}
+
+function setupPollingFallback() {
+  // Poll every 4 seconds to catch orders from other browser windows or server
+  setInterval(async () => {
+    try {
+      const res = await fetch("/api/orders");
+      if (res.ok) {
+        const serverOrders = await res.json();
+        if (Array.isArray(serverOrders)) {
+          serverOrders.forEach(order => {
+            if (!knownOrderIds.has(order.orderId)) {
+              handleNewIncomingOrder(order);
+            }
+          });
+        }
+      }
+    } catch (e) {}
+  }, 4000);
+}
+
+// Update Order Status in Supabase & Local
+async function changeOrderStatus(orderId, newStatus) {
+  const order = allOrders.find(o => o.orderId === orderId);
+  if (!order) return;
+
+  order.status = newStatus;
+  if (newStatus === "Delivered" && order.payment.method.toLowerCase().includes("cod")) {
+    order.payment.status = "Paid (COD Collected)";
+  }
+
+  // If status is confirmed/preparing and no rider assigned yet, auto-connect 3rd-party rider!
+  const hasRider = order.shipment && order.shipment.riderName && order.shipment.riderName !== "Not Assigned";
+  if ((newStatus === "Order Confirmed" || newStatus === "Preparing") && !hasRider && autoDispatchEnabled) {
+    setTimeout(() => {
+      autoConnectThirdPartyRider("fastest", order.orderId);
+    }, 1200);
+  }
+
+  saveOrdersToLocalCache();
+  syncOrderUpdateToSupabase(order);
+  renderDashboard();
+
+  showToast(`Order #${orderId} status changed to: ${newStatus}`);
+}
+
+async function syncOrderUpdateToSupabase(order) {
+  if (!supabaseClient) return;
+  try {
+    await supabaseClient
+      .from("orders")
+      .update({
+        order_status: order.status,
+        payment_status: order.payment.status,
+        shipment: order.shipment
+      })
+      .eq("order_id", order.orderId);
+  } catch (e) {
+    console.warn("Supabase update sync failed:", e);
+  }
+}
+
+// 6. DASHBOARD RENDERING
+function renderDashboard() {
+  renderMetrics();
+  renderOrdersStream();
+}
+
+function renderMetrics() {
+  const totalCount = allOrders.length;
+  const totalRevenue = allOrders.reduce((sum, o) => sum + (o.pricing.grandTotal || 0), 0);
+  const preparingCount = allOrders.filter(o => o.status === "Preparing" || o.status === "Order Confirmed" || o.status === "Order Received").length;
+  const inTransitCount = allOrders.filter(o => o.status === "Out for Delivery").length;
+  const deliveredCount = allOrders.filter(o => o.status === "Delivered").length;
+
+  document.getElementById("metric-total-orders").textContent = totalCount;
+  document.getElementById("metric-total-revenue").textContent = "₹" + Math.round(totalRevenue).toLocaleString("en-IN");
+  document.getElementById("metric-kitchen-active").textContent = preparingCount;
+  document.getElementById("metric-shipments-active").textContent = inTransitCount;
+  document.getElementById("metric-delivered").textContent = deliveredCount;
+}
+
+function setStatusFilter(filter) {
+  currentFilter = filter;
+  document.querySelectorAll(".filter-pill").forEach(p => p.classList.remove("active"));
+  const activePill = document.getElementById(`filter-${filter}`);
+  if (activePill) activePill.classList.add("active");
+  renderOrdersStream();
+}
+
+function handleSearchInput(e) {
+  searchKeyword = e.target.value.toLowerCase().trim();
+  renderOrdersStream();
+}
+
+function renderOrdersStream() {
+  const container = document.getElementById("orders-stream-container");
+  if (!container) return;
+
+  const filtered = allOrders.filter(order => {
+    const matchesFilter = (currentFilter === "all") ||
+      (currentFilter === "received" && order.status === "Order Received") ||
+      (currentFilter === "preparing" && (order.status === "Preparing" || order.status === "Order Confirmed")) ||
+      (currentFilter === "transit" && order.status === "Out for Delivery") ||
+      (currentFilter === "delivered" && order.status === "Delivered");
+
+    const matchesSearch = !searchKeyword ||
+      order.orderId.toLowerCase().includes(searchKeyword) ||
+      order.customer.fullName.toLowerCase().includes(searchKeyword) ||
+      order.customer.phone.includes(searchKeyword);
+
+    return matchesFilter && matchesSearch;
+  });
+
+  if (filtered.length === 0) {
+    container.innerHTML = `
+      <div class="empty-stream-box">
+        <div class="empty-icon">🍽️</div>
+        <h3 style="font-size: 1.3rem; margin-bottom: 0.4rem;">No Orders in this View</h3>
+        <p style="color: var(--text-muted); font-size: 0.9rem;">Incoming online orders from Spice Street will appear here automatically with instant buzzer chime.</p>
+      </div>
+    `;
+    return;
+  }
+
+  container.innerHTML = filtered.map(order => {
+    const itemsHtml = order.items.map(item => `
+      <div class="ticket-item-row">
+        <span class="item-qty-name">${item.quantity} × ${item.name}</span>
+        <span class="item-price">₹${Math.round(item.price * item.quantity).toLocaleString("en-IN")}</span>
+      </div>
+    `).join("");
+
+    const isCod = order.payment.method.toLowerCase().includes("cod");
+    const paymentBadge = isCod
+      ? `<span style="background: rgba(255,183,3,0.15); color: var(--gold-accent); padding: 0.2rem 0.55rem; border-radius: 4px; font-size: 0.72rem; font-weight: 700;">COD (${order.payment.status})</span>`
+      : `<span style="background: rgba(34,197,94,0.15); color: #22c55e; padding: 0.2rem 0.55rem; border-radius: 4px; font-size: 0.72rem; font-weight: 700;">PAID (${order.payment.method.toUpperCase()})</span>`;
+
+    const statusClass = order.status.toLowerCase().replace(/\s+/g, '-');
+    const shipment = order.shipment || {};
+    const hasRider = shipment.riderName && shipment.riderName !== "Not Assigned";
+
+    return `
+      <div class="order-ticket fade-in" id="ticket-${order.orderId}">
+        <div class="ticket-header">
+          <div class="order-id-group">
+            <span class="order-num-badge">#${order.orderId}</span>
+            <span class="time-stamp">🕒 ${order.displayDate || 'Just now'}</span>
+          </div>
+          <div class="ticket-badges-group">
+            ${paymentBadge}
+            <span class="order-status-badge ${statusClass}">${order.status}</span>
+          </div>
+        </div>
+
+        <div class="ticket-body-grid">
+          <!-- Col 1: Customer & Address -->
+          <div class="customer-info-box">
+            <h4>👤 Customer & Delivery Address</h4>
+            <div class="customer-name">${order.customer.fullName}</div>
+            <div class="customer-contact">
+              <span>📞 <a href="tel:${order.customer.phone}" style="color: var(--primary-orange); font-weight: 700;">${order.customer.phone}</a></span>
+              ${order.customer.email ? `<span>✉️ ${order.customer.email}</span>` : ''}
+            </div>
+            <div class="customer-address">
+              ${order.customer.address.street || ''}, ${order.customer.address.city || 'Hyderabad'}
+              ${order.customer.address.pincode ? ` - ${order.customer.address.pincode}` : ''}
+              ${order.customer.deliveryInstructions ? `<br/><em style="color: var(--gold-accent);">Note: "${order.customer.deliveryInstructions}"</em>` : ''}
+            </div>
+          </div>
+
+          <!-- Col 2: Food Items & Bill -->
+          <div class="items-box">
+            <h4>🍛 Ordered Items (${order.items.length})</h4>
+            <div class="ticket-items-list">
+              ${itemsHtml}
+            </div>
+            <div class="bill-total-row">
+              <span>Total Payable:</span>
+              <span style="color: var(--gold-accent);">₹${Math.round(order.pricing.grandTotal).toLocaleString("en-IN")}</span>
+            </div>
+          </div>
+
+          <!-- Col 3: Shipment & Delivery Partner -->
+          <div class="shipment-box">
+            <div>
+              <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 0.45rem;">
+                <h4 style="margin: 0;">🚚 Delivery Fleet</h4>
+                ${hasRider && shipment.partner ? `
+                  <span class="partner-badge ${shipment.partner.toLowerCase().includes('zomato') ? 'zomato' : shipment.partner.toLowerCase().includes('swiggy') ? 'swiggy' : 'inhouse'}">
+                    ${shipment.partner}
+                  </span>
+                ` : `
+                  <span style="font-size: 0.68rem; color: #ffb703; background: rgba(255,183,3,0.1); padding: 0.1rem 0.4rem; border-radius: 4px; font-weight: 700;">
+                    FLEET READY
+                  </span>
+                `}
+              </div>
+
+              <div class="shipment-details">
+                <div class="rider-badge" style="font-size: 0.88rem;">
+                  <span>🛵</span>
+                  <span>${hasRider ? shipment.riderName : 'No Rider Connected'}</span>
+                </div>
+                ${hasRider && shipment.rating ? `<div style="color: var(--gold-accent); font-weight: 700; margin-bottom: 0.2rem;">⭐ Rating: ${shipment.rating}</div>` : ''}
+                ${hasRider && shipment.riderPhone ? `<div style="margin-bottom: 0.2rem;">📞 Rider: <strong>${shipment.riderPhone}</strong></div>` : ''}
+                ${hasRider && shipment.vehicleNo ? `<div style="margin-bottom: 0.2rem;">🏍️ Vehicle: ${shipment.vehicleNo}</div>` : ''}
+                <div>ETA: <strong>${order.estimatedDeliveryTime || '25-35 mins'}</strong></div>
+              </div>
+            </div>
+
+            ${hasRider ? `
+              <div style="display: flex; flex-direction: column; gap: 0.4rem; margin-top: 0.75rem;">
+                <button class="btn-action whatsapp" style="width: 100%; justify-content: center; font-size: 0.8rem; padding: 0.45rem;" onclick="quickSendAddressToRider('${order.orderId}')">
+                  📲 WhatsApp Address to Rider
+                </button>
+                <button class="btn-action shipment" style="width: 100%; justify-content: center; font-size: 0.75rem; padding: 0.35rem;" onclick="openShipmentModal('${order.orderId}')">
+                  ✏️ Switch Fleet / Rider
+                </button>
+              </div>
+            ` : `
+              <div style="display: flex; flex-direction: column; gap: 0.4rem; margin-top: 0.75rem;">
+                <button class="btn-action auto-connect" style="width: 100%; justify-content: center; padding: 0.55rem; font-size: 0.82rem;" onclick="autoConnectThirdPartyRider('fastest', '${order.orderId}')">
+                  ⚡ Auto-Connect Rider
+                </button>
+                <div style="display: grid; grid-template-columns: 1fr 1fr 34px; gap: 0.35rem;">
+                  <button class="btn-action zomato" style="justify-content: center; font-size: 0.72rem; padding: 0.4rem 0.2rem; font-weight: 700;" onclick="autoConnectThirdPartyRider('zomato', '${order.orderId}')" title="Auto-connect Zomato Fleet Rider">
+                    🔴 Zomato
+                  </button>
+                  <button class="btn-action swiggy" style="justify-content: center; font-size: 0.72rem; padding: 0.4rem 0.2rem; font-weight: 700;" onclick="autoConnectThirdPartyRider('swiggy', '${order.orderId}')" title="Auto-connect Swiggy Fleet Rider">
+                    🟠 Swiggy
+                  </button>
+                  <button class="btn-action shipment" style="padding: 0.4rem; justify-content: center; font-size: 0.75rem;" onclick="openShipmentModal('${order.orderId}')" title="Custom Rider Entry">
+                    ✏️
+                  </button>
+                </div>
+              </div>
+            `}
+          </div>
+        </div>
+
+        <!-- Ticket Footer Controls -->
+        <div class="ticket-footer">
+          <div class="status-change-group">
+            <span style="font-size: 0.8rem; font-weight: 600; color: var(--text-muted);">Change Status:</span>
+            <select class="status-select" onchange="changeOrderStatus('${order.orderId}', this.value)">
+              <option value="Order Received" ${order.status === 'Order Received' ? 'selected' : ''}>Order Received</option>
+              <option value="Order Confirmed" ${order.status === 'Order Confirmed' ? 'selected' : ''}>Order Confirmed</option>
+              <option value="Preparing" ${order.status === 'Preparing' ? 'selected' : ''}>Preparing in Kitchen</option>
+              <option value="Out for Delivery" ${order.status === 'Out for Delivery' ? 'selected' : ''}>Out for Delivery</option>
+              <option value="Delivered" ${order.status === 'Delivered' ? 'selected' : ''}>Delivered</option>
+            </select>
+          </div>
+
+          <div class="action-buttons-group">
+            <button class="btn-action whatsapp" onclick="openCustomerWhatsAppChat('${order.orderId}')">
+              💬 Customer WhatsApp
+            </button>
+            <button class="btn-action" onclick="printKitchenSlip('${order.orderId}')">
+              🖨️ Print KOT Slip
+            </button>
+          </div>
+        </div>
+      </div>
+    `;
+  }).join("");
+}
+
+// Direct Customer WhatsApp Chat from Dashboard
+function openCustomerWhatsAppChat(orderId) {
+  const order = allOrders.find(o => o.orderId === orderId);
+  if (!order) return;
+  const cleanPhone = order.customer.phone.replace(/\D/g, "");
+  const msg = `Hi ${order.customer.fullName}, thank you for ordering from Spice Street! Your order #${order.orderId} is currently: *${order.status}*. We will deliver it piping hot!`;
+  window.open(`https://wa.me/91${cleanPhone}?text=${encodeURIComponent(msg)}`, "_blank");
+}
+
+// Print Kitchen Order Ticket (KOT)
+function printKitchenSlip(orderId) {
+  const order = allOrders.find(o => o.orderId === orderId);
+  if (!order) return;
+
+  const printWin = window.open("", "_blank", "width=450,height=600");
+  const itemsRows = order.items.map(i => `<tr><td>${i.quantity}x</td><td>${i.name}</td><td style="text-align:right">₹${i.price * i.quantity}</td></tr>`).join("");
+
+  printWin.document.write(`
+    <html>
+      <head>
+        <title>KOT - Order #${order.orderId}</title>
+        <style>
+          body { font-family: monospace; font-size: 13px; padding: 20px; line-height: 1.4; color: #000; }
+          h2, h3 { text-align: center; margin: 0; }
+          .divider { border-top: 1px dashed #000; margin: 10px 0; }
+          table { width: 100%; border-collapse: collapse; margin: 10px 0; }
+          td { padding: 4px 0; }
+        </style>
+      </head>
+      <body>
+        <h2>SPICE STREET</h2>
+        <h3>KITCHEN ORDER TICKET (KOT)</h3>
+        <div class="divider"></div>
+        <div><strong>Order ID:</strong> #${order.orderId}</div>
+        <div><strong>Time:</strong> ${order.displayDate || new Date().toLocaleTimeString()}</div>
+        <div><strong>Customer:</strong> ${order.customer.fullName} (${order.customer.phone})</div>
+        <div><strong>Address:</strong> ${order.customer.address.street || ''}, ${order.customer.address.city || ''}</div>
+        <div class="divider"></div>
+        <table>
+          <thead><tr><th align="left">QTY</th><th align="left">ITEM</th><th align="right">PRICE</th></tr></thead>
+          <tbody>${itemsRows}</tbody>
+        </table>
+        <div class="divider"></div>
+        <div style="font-size: 15px; font-weight: bold; display: flex; justify-content: space-between;">
+          <span>GRAND TOTAL:</span>
+          <span>₹${order.pricing.grandTotal}</span>
+        </div>
+        <div><strong>Payment:</strong> ${order.payment.method.toUpperCase()} (${order.payment.status})</div>
+        ${order.customer.deliveryInstructions ? `<div><strong>Instruction:</strong> ${order.customer.deliveryInstructions}</div>` : ''}
+        <div class="divider"></div>
+        <div style="text-align: center; font-size: 11px;">Good Food • Great Mood</div>
+      </body>
+    </html>
+  `);
+  printWin.document.close();
+  printWin.focus();
+  setTimeout(() => {
+    printWin.print();
+  }, 400);
+}
+
+// Toast notification for dashboard
+function showToast(msg) {
+  const toast = document.getElementById("dashboard-toast");
+  if (!toast) return;
+  toast.textContent = msg;
+  toast.style.display = "block";
+  setTimeout(() => {
+    toast.style.display = "none";
+  }, 3500);
+}
+
+</script>
 </body>
 </html>
+
